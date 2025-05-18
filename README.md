@@ -24,35 +24,7 @@ Ranking expressions on a scale of 0-5 according to their importance for understa
 0: Not related to the content domain
 1-4: Related to the content domain with varying levels of importance
 5: Critical to understanding the text, an essential prerequisite
-Project Structure
-.
-├── data/                       # Data files
-│   ├── raw/                    # Raw Wikipedia pages
-│   ├── processed/              # Processed data
-│   └── models/                 # Saved models
-├── src/
-│   ├── stage_a/                # Code for Stage A - Expression Identification
-│   │   ├── train.py
-│   │   ├── predict.py
-│   │   └── utils.py
-│   ├── stage_b/                # Code for Stage B - Content Domain Filtering
-│   │   ├── embedding.py
-│   │   ├── similarity.py
-│   │   └── filter.py
-│   ├── stage_c/                # Code for Stage C - Importance Ranking
-│   │   ├── train_ranker.py
-│   │   ├── rank.py
-│   │   └── evaluate.py
-│   └── utils/                  # General utility functions
-│       ├── data_loader.py
-│       ├── preprocess.py
-│       └── evaluation.py
-├── notebooks/                  # Jupyter notebooks for analysis and visualization
-│   ├── exploratory_analysis.ipynb
-│   ├── model_evaluation.ipynb
-│   └── results_visualization.ipynb
-├── requirements.txt            # Project dependencies
-└── README.md                   # This document
+
 Installation and Execution
 bash
 # Clone the repository
