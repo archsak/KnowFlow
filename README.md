@@ -7,7 +7,7 @@ The goal is to help readers understand complex texts by identifying and classify
 
 Potential Expression Identification: Identifying expressions that would constitute hyperlinks in a Wikipedia page
 Content Domain Filtering: Analyzing the relevance of expressions to the content domain of the document
-Importance Ranking: Ranking expressions on a scale of 0-5 according to their importance for understanding the text
+Importance Ranking: Ranking expressions on a scale of 0-3 according to their importance for understanding the text
 
 #The Model
 The system operates in three stages:
@@ -20,10 +20,11 @@ Creating vector representations (embeddings) for each expression and for the ent
 Calculating cosine similarity between the article vector and the expression vectors
 Filtering expressions that pass a minimum similarity threshold indicating they belong to the same content domain
 Stage C: Importance Ranking
-Ranking expressions on a scale of 0-5 according to their importance for understanding the text:
+Ranking expressions on a scale of 0-3 according to their importance for understanding the text, based on a supervised model trained on human-ranked data:
 0: Not related to the content domain
-1-4: Related to the content domain with varying levels of importance
-5: Critical to understanding the text, an essential prerequisite
+1: Related to the content domain but not essential for understanding
+2: Moderately important for understanding the text
+3: Critical to understanding the text, an essential prerequisite
 
 Installation and Execution
 bash
@@ -40,8 +41,9 @@ python src/utils/download_data.py
 
 # Run model stages
 python src/stage_a/train.py
-python src/stage_b/embedding.py
+python src/stage_b/filter.py
 python src/stage_c/train_ranker.py
+python src/stage_c/prerequisite_extractor.py
 
 # System Requirements
 Python 3.8+
@@ -51,6 +53,6 @@ NumPy, Pandas, Scikit-learn
 NLTK
 
 # Authors
-Miriam Pasikiv
+Miriam Pasikov
 Lipaz Holzman
 Aharon Sinai
