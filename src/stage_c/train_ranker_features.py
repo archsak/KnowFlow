@@ -5,8 +5,6 @@ import numpy as np
 from sklearn.model_selection import train_test_split, GridSearchCV
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import classification_report, confusion_matrix
-import matplotlib.pyplot as plt
-import seaborn as sns
 import joblib
 from typing import List, Dict, Tuple
 import re
@@ -344,18 +342,12 @@ def train_and_save_model(training_df: pd.DataFrame, model_output_path: str, perf
     
     # Confusion Matrix
     cm = confusion_matrix(y_test, y_pred)
-    plt.figure(figsize=(8, 6))
-    sns.heatmap(cm, annot=True, fmt='d', cmap='Blues',
-               xticklabels=sorted(y.unique()),
-               yticklabels=sorted(y.unique()))
-    plt.xlabel('Predicted')
-    plt.ylabel('True')
-    plt.title('Confusion Matrix')
-    
-    # Save confusion matrix
+    print("\nConfusion Matrix:")
+    print(cm)
+    # Save confusion matrix as CSV
     os.makedirs('results', exist_ok=True)
-    plt.savefig('results/confusion_matrix.png')
-    print("\nConfusion matrix saved to 'results/confusion_matrix.png'")
+    np.savetxt('results/confusion_matrix.csv', cm, delimiter=",", fmt='%d')
+    print("\nConfusion matrix saved to 'results/confusion_matrix.csv'")
     
     # Save feature importances
     feature_importance.to_csv('results/feature_importance.csv', index=False)

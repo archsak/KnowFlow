@@ -8,8 +8,6 @@ from torch.utils.data import Dataset, DataLoader
 from transformers import AutoTokenizer, AutoModel, AdamW, get_linear_schedule_with_warmup
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import classification_report, confusion_matrix
-import matplotlib.pyplot as plt
-import seaborn as sns
 import time
 import tqdm
 
@@ -317,4 +315,114 @@ def train_encoder_model(
             train_loss += loss.item()
             
             # Backward pass
-           
+            loss.backward()
+            optimizer.step()
+            scheduler.step()
+            
+            # Update progress bar
+            progress_bar.set_postfix(loss=train_loss / (progress_bar.n + 1))
+        
+        avg_train_loss = train_loss / len(train_loader)
+        print(f"Training loss: {avg_train_loss:.4f}")
+        
+        # Validation phase
+        model.eval()
+        val_loss = 0
+        all_preds = []
+        all_labels = []
+        with torch.no_grad():
+            for batch in tqdm.tqdm(val_loader, desc="Validation"):
+                input_ids = batch['input_ids'].to(device)
+                attention_mask = batch['attention_mask'].to(device)
+                token_type_ids = batch.get('token_type_ids', torch.zeros_like(input_ids)).to(device)
+                labels = batch['rank'].to(device)
+                outputs = model(
+                    input_ids=input_ids,
+                    attention_mask=attention_mask,
+                    token_type_ids=token_type_ids if 'token_type_ids' in batch else None
+                )
+                loss = criterion(outputs, labels)
+                val_loss += loss.item()
+                preds = torch.argmax(outputs, dim=1)
+                all_preds.extend(preds.cpu().numpy())
+                all_labels.extend(labels.cpu().numpy())
+        avg_val_loss = val_loss / len(val_loader)
+        print(f"Validation loss: {avg_val_loss:.4f}")
+        print(classification_report(all_labels, all_preds, zero_division=0))
+        cm = confusion_matrix(all_labels, all_preds)
+        print("Confusion Matrix:")
+        print(cm)
+        np.savetxt(os.path.join(output_dir, "encoder_confusion_matrix.csv"), cm, delimiter=",", fmt='%d')
+        
+        # Save best model
+        if avg_val_loss < best_val_loss:
+            best_val_loss = avg_val_loss
+            best_model_state = {k: v.cpu() for k, v in model.state_dict().items()}
+    
+    # Load best model state
+    if best_model_state is not None:
+        model.load_state_dict(best_model_state)
+        print("Restored best model state.")
+    
+    # Save final model
+    output_model_path = os.path.join(output_dir, model_output_name)
+    os.makedirs(output_dir, exist_ok=True)
+    torch.save(model.state_dict(), output_model_path)
+    print(f"Model saved to {output_model_path}")
+    
+    return model
+
+def evaluate_model(model, test_data, tokenizer, device):
+    """
+    Evaluate the trained model on test data
+    
+    Args:
+        model: Trained model
+        test_data: DataFrame with 'expression', 'document_text', and 'human_rank'
+        tokenizer: Tokenizer used for encoding inputs
+        device: Device to evaluate on ('cuda' or 'cpu')
+    
+    Returns:
+        DataFrame with test expressions, predicted ranks, and human ranks
+    """
+    model.eval()
+    all_preds = []
+    all_labels = []
+    
+    with torch.no_grad():
+        for _, row in test_data.iterrows():
+            expression = row['expression']
+            document_text = row['document_text']
+            human_rank = row['human_rank']
+            
+            # Tokenize inputs
+            encoding = tokenizer(
+                expression,
+                document_text,
+                truncation=True,
+                padding='max_length',
+                max_length=512,
+                return_tensors='pt'
+            )
+            
+            input_ids = encoding['input_ids'].squeeze().to(device)
+            attention_mask = encoding['attention_mask'].squeeze().to(device)
+            token_type_ids = encoding.get('token_type_ids', torch.zeros_like(input_ids)).squeeze().to(device)
+            
+            # Forward pass
+            outputs = model(
+                input_ids=input_ids.unsqueeze(0),
+                attention_mask=attention_mask.unsqueeze(0),
+                token_type_ids=token_type_ids.unsqueeze(0) if token_type_ids is not None else None
+            )
+            
+            preds = torch.argmax(outputs, dim=1)
+            all_preds.append(preds.cpu().numpy()[0])
+            all_labels.append(human_rank)
+    
+    return pd.DataFrame({
+        'expression': test_data['expression'],
+        'document_text': test_data['document_text'],
+        'predicted_rank': all_preds,
+        'human_rank': all_labels
+    })

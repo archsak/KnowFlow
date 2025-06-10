@@ -6,8 +6,6 @@ import torch
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import classification_report, confusion_matrix
 from sklearn.linear_model import LogisticRegression
-import matplotlib.pyplot as plt
-import seaborn as sns
 import joblib
 import pickle
 from typing import Dict, List, Tuple, Optional
@@ -575,18 +573,12 @@ def train_ensemble_model(
     
     # Confusion matrix
     cm = confusion_matrix(y_true, y_pred)
-    plt.figure(figsize=(8, 6))
-    sns.heatmap(cm, annot=True, fmt='d', cmap='Blues',
-               xticklabels=[0, 1, 2, 3],
-               yticklabels=[0, 1, 2, 3])
-    plt.xlabel('Predicted')
-    plt.ylabel('True')
-    plt.title('Ensemble Model Confusion Matrix')
-    
-    # Create results directory
+    print("\nConfusion Matrix:")
+    print(cm)
+    # Save confusion matrix as CSV
     os.makedirs("results", exist_ok=True)
-    plt.savefig('results/ensemble_confusion_matrix.png')
-    print("\nConfusion matrix saved to 'results/ensemble_confusion_matrix.png'")
+    np.savetxt('results/ensemble_confusion_matrix.csv', cm, delimiter=",", fmt='%d')
+    print("\nConfusion matrix saved to 'results/ensemble_confusion_matrix.csv'")
     
     # Save the ensemble model
     ensemble_output_dir = os.path.join(output_dir, output_name)
