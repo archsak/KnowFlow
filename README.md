@@ -42,8 +42,18 @@ python src/utils/download_data.py
 # Run model stages
 python src/stage_a/train.py
 python src/stage_b/filter.py
+
+# Stage C has two different implementations that can be compared:
+# Feature-based model (uses manually engineered features)
 python src/stage_c/train_ranker.py
 python src/stage_c/prerequisite_extractor.py
+
+# Encoder-based model (uses deep learning encoder)
+python src/stage_c/train_ranker_encoder.py
+python src/stage_c/prerequisite_extractor_encoder.py
+
+# Compare model results
+python src/stage_c/compare_models.py
 
 # System Requirements
 Python 3.8+

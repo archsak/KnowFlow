@@ -5,7 +5,7 @@ import torch
 from transformers import AutoTokenizer, AutoModel
 from sklearn.metrics.pairwise import cosine_similarity
 import json
-from typing import List, Dict, Tuple, Optional
+from typing import List, Dict
 
 class ContentDomainFilter:
     """
@@ -153,17 +153,17 @@ class ContentDomainFilter:
         print(f"Results saved to {output_path}")
 
 
-def process_wiki_page(page_id: str, 
+def process_page(page_title: str, 
                      raw_data_dir: str, 
                      stage_a_output_dir: str,
                      stage_b_output_dir: str,
                      filter_model: ContentDomainFilter) -> Dict[str, float]:
     """
-    Process a single Wikipedia page through the filter.
+    Process a single page through the filter.
     
     Args:
-        page_id: ID of the Wikipedia page
-        raw_data_dir: Directory containing raw Wikipedia pages
+        page_title: Title of the page to process
+        raw_data_dir: Directory containing raw pages
         stage_a_output_dir: Directory containing Stage A outputs (identified expressions)
         stage_b_output_dir: Directory to save Stage B outputs
         filter_model: Initialized ContentDomainFilter instance
@@ -172,11 +172,11 @@ def process_wiki_page(page_id: str,
         Dictionary of filtered expressions with their similarity scores
     """
     # Load the raw document text
-    with open(os.path.join(raw_data_dir, f"{page_id}.txt"), 'r', encoding='utf-8') as f:
+    with open(os.path.join(raw_data_dir, f"{page_title}.txt"), 'r', encoding='utf-8') as f:
         document_text = f.read()
     
     # Load expressions identified by Stage A
-    with open(os.path.join(stage_a_output_dir, f"{page_id}_links.json"), 'r', encoding='utf-8') as f:
+    with open(os.path.join(stage_a_output_dir, f"{page_title}_links.json"), 'r', encoding='utf-8') as f:
         expressions = json.load(f)
     
     # Filter expressions
@@ -186,7 +186,7 @@ def process_wiki_page(page_id: str,
     os.makedirs(stage_b_output_dir, exist_ok=True)
     
     # Save results
-    output_path = os.path.join(stage_b_output_dir, f"{page_id}_filtered.json")
+    output_path = os.path.join(stage_b_output_dir, f"{page_title}_filtered.json")
     filter_model.save_results(filtered_expressions, output_path)
     
     return filtered_expressions
@@ -200,7 +200,7 @@ def main():
     raw_data_dir = "data/raw"
     stage_a_output_dir = "data/processed/stage_a"
     stage_b_output_dir = "data/processed/stage_b"
-    model_name = "bert-base-multilingual-cased"  # Use appropriate model for your language
+    model_name = "bert-base-multilingual-cased"
     similarity_threshold = 0.5  # Adjust based on experimentation
     
     # Initialize the content domain filter
@@ -208,19 +208,19 @@ def main():
                                       similarity_threshold=similarity_threshold)
     
     # Get all page IDs from Stage A output
-    page_ids = [f.split('_')[0] for f in os.listdir(stage_a_output_dir) 
+    page_titles = [f.split('_')[0] for f in os.listdir(stage_a_output_dir) 
                if f.endswith('_links.json')]
     
     # Process each page
-    for page_id in page_ids:
-        print(f"Processing page: {page_id}")
-        filtered_expressions = process_wiki_page(page_id, 
+    for page_title in page_titles:
+        print(f"Processing page: {page_title}")
+        filtered_expressions = process_page(page_title, 
                                                raw_data_dir, 
                                                stage_a_output_dir, 
                                                stage_b_output_dir, 
                                                filter_model)
         
-        print(f"Filtered {len(filtered_expressions)} expressions for page {page_id}")
+        print(f"Filtered {len(filtered_expressions)} expressions for page {page_title}")
 
 
 if __name__ == "__main__":
