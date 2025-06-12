@@ -1,0 +1,219 @@
+thumb|upright|Arnold Schoenberg, inventor of the twelve-tone technique
+
+The twelve-tone technique—also known as dodecaphony, twelve-tone serialism, and (in British usage) twelve-note composition—is a method of musical composition. The technique is a means of ensuring that all 12 notes of the chromatic scale are sounded equally often in a piece of music while preventing the emphasis of any one notePerle 1977, 2. through the use of tone rows, orderings of the 12 pitch classes. All 12 notes are thus given more or less equal importance, and the music avoids being in a key.
+
+The technique was first devised by Austrian composer Josef Matthias Hauer, who published his "law of the twelve tones" in 1919. In 1923, Arnold Schoenberg (1874–1951) developed his own, better-known version of 12-tone technique, which became associated with the "Second Viennese School" composers, who were the primary users of the technique in the first decades of its existence. Over time, the technique increased greatly in popularity and eventually became widely influential on Mid 20th-century composers. Many important composers who had originally not subscribed to or actively opposed the technique, such as Aaron Copland and Igor Stravinsky, eventually adopted it in their music.
+
+Schoenberg himself described the system as a "Method of composing with twelve tones which are related only with one another".Schoenberg 1975, 218. It is commonly considered a form of serialism.
+
+Schoenberg's fellow countryman and contemporary Hauer also developed a similar system using unordered hexachords or tropes—independent of Schoenberg's development of the twelve-tone technique. Other composers have created systematic use of the chromatic scale, but Schoenberg's method is considered to be most historically and aesthetically significant.Whittall 2008, 25.
+
+History of use
+
+The twelve-tone technique is most often attributed to Austrian composer Arnold Schoenberg. He recalls using it in 1921 and describing it to pupils two years later.Schoenberg 1975, 213. Simultaneously, Josef Matthias Hauer was formulating a similar theory in his writings. In the second edition of his book Vom Wesen Des Musikalischen (On the Essence of Music, 1923), Hauer wrote that the law of the atonal melody requires all twelve tones to be played repeatedly.Hauer, Josef Matthias, 1883-1959. Vom Wesen Des Musikalischen: Ein Lehrbuch Der Zwölftöne-musik. Berlin-Lichterfelde: Schlesinger (R. Lienau), 1923. 51.
+
+The method was used during the next twenty years almost exclusively by the composers of the Second Viennese School—Alban Berg, Anton Webern, and Schoenberg himself. Although, another important composer in this period was Elisabeth Lutyens who wrote more than 50 pieces using the serial method.
+
+The twelve tone technique was preceded by "freely" atonal pieces of 1908–1923 which, though "free", often have as an "integrative element ... a minute intervallic cell" which in addition to expansion may be transformed as with a tone row, and in which individual notes may "function as pivotal elements, to permit overlapping statements of a basic cell or the linking of two or more basic cells".Perle 1977, 9–10. The twelve-tone technique was also preceded by "nondodecaphonic serial composition" used independently in the works of Alexander Scriabin, Igor Stravinsky, Béla Bartók, Carl Ruggles, and others.Perle 1977, 37. Oliver Neighbour argues that Bartók was "the first composer to use a group of twelve notes consciously for a structural purpose", in 1908 with the third of his fourteen bagatelles.Neighbour 1955, 53. "Essentially, Schoenberg and Hauer systematized and defined for their own dodecaphonic purposes a pervasive technical feature of 'modern' musical practice, the ostinato". Additionally, John Covach argues that the strict distinction between the two, emphasized by authors including Perle, is overemphasized:
+
+The distinction often made between Hauer and the Schoenberg school—that the former's music is based on unordered hexachords while the latter's is based on an ordered series—is false: while he did write pieces that could be thought of as "trope pieces", much of Hauer's twelve-tone music employs an ordered series.John Covach quoted in Whittall 2008, 24.
+
+The "strict ordering" of the Second Viennese school, on the other hand, "was inevitably tempered by practical considerations: they worked on the basis of an interaction between ordered and unordered pitch collections."Whittall 2008, 24.
+
+Rudolph Reti, an early proponent, says: "To replace one structural force (tonality) by another (increased thematic oneness) is indeed the fundamental idea behind the twelve-tone technique", arguing it arose out of Schoenberg's frustrations with free atonality,Reti 1958 providing a "positive premise" for atonality. In Hauer's breakthrough piece Nomos, Op. 19 (1919) he used twelve-tone sections to mark out large formal divisions, such as with the opening five statements of the same twelve-tone series, stated in groups of five notes making twelve five-note phrases.
+
+Felix Khuner contrasted Hauer's more mathematical concept with Schoenberg's more musical approach. Schoenberg's idea in developing the technique was for it to "replace those structural differentiations provided formerly by tonal harmonies". As such, twelve-tone music is usually atonal, and treats each of the 12 semitones of the chromatic scale with equal importance, as opposed to earlier classical music which had treated some notes as more important than others (particularly the tonic and the dominant note).
+
+The technique became widely used by the fifties, taken up by composers such as Milton Babbitt, Luciano Berio, Pierre Boulez, Luigi Dallapiccola, Ernst Krenek, Riccardo Malipiero, and, after Schoenberg's death, Igor Stravinsky. Some of these composers extended the technique to control aspects other than the pitches of notes (such as duration, method of attack and so on), thus producing serial music. Some even subjected all elements of music to the serial process.
+
+Charles Wuorinen said in a 1962 interview that while "most of the Europeans say that they have 'gone beyond' and 'exhausted' the twelve-tone system", in America, "the twelve-tone system has been carefully studied and generalized into an edifice more impressive than any hitherto known."Chase 1987, 587.
+
+American composer Scott Bradley, best known for his musical scores for works like Tom & Jerry and Droopy Dog, utilized the 12-tone technique in his work. Bradley described his use thus:
+
+An example of Bradley's use of the technique to convey building tension occurs in the Tom & Jerry short "Puttin' on the Dog", from 1944. In a scene where the mouse, wearing a dog mask, runs across a yard of dogs "in disguise", a chromatic scale represents both the mouse's movements, and the approach of a suspicious dog, mirrored octaves lower. Apart from his work in cartoon scores, Bradley also composed tone poems that were performed in concert in California.
+
+Rock guitarist Ron Jarzombek used a twelve-tone system for composing Blotted Science's extended play The Animation of Entomology. He put the notes into a clock and rearranged them to be used that are side by side or consecutive. He called his method "Twelve-Tone in Fragmented Rows."
+
+Tone row
+
+The basis of the twelve-tone technique is the tone row, an ordered arrangement of the twelve notes of the chromatic scale (the twelve equal tempered pitch classes). There are four postulates or preconditions to the technique which apply to the row (also called a set or series), on which a work or section is based:Perle 1977, 3.
+ The row is a specific ordering of all twelve notes of the chromatic scale (without regard to octave placement).
+ No note is repeated within the row.
+ The row may be subjected to interval-preserving transformations—that is, it may appear in inversion (denoted I), retrograde (R), or retrograde-inversion (RI), in addition to its "original" or prime form (P).
+ The row in any of its four transformations may begin on any degree of the chromatic scale; in other words it may be freely transposed. (Transposition being an interval-preserving transformation, this is technically covered already by 3.) Transpositions are indicated by an integer between 0 and 11 denoting the number of semitones: thus, if the original form of the row is denoted P0, then P1 denotes its transposition upward by one semitone (similarly I1 is an upward transposition of the inverted form, R1 of the retrograde form, and RI1 of the retrograde-inverted form).
+
+(In Hauer's system postulate 3 does not apply.)
+
+A particular transformation (prime, inversion, retrograde, retrograde-inversion) together with a choice of transpositional level is referred to as a set form or row form. Every row thus has up to 48 different row forms. (Some rows have fewer due to symmetry; see the sections on derived rows and invariance below.)
+
+Example
+Suppose the prime form of the row is as follows:
+
+400px|B, B, G, C, E, C, D, A, F, E, A, F
+
+Then the retrograde is the prime form in reverse order:
+
+400px|F, A, E, F, A, D, C, E, C, G, B, B
+
+The inversion is the prime form with the intervals inverted (so that a rising minor third becomes a falling minor third, or equivalently, a rising major sixth):
+
+400px|B, C, E, A, G, B, A, C, E, F, D, F
+
+And the retrograde inversion is the inverted row in retrograde:
+
+400px|F, D, F, E, C, A, B, G, A, E, C, B
+
+P, R, I and RI can each be started on any of the twelve notes of the chromatic scale, meaning that 47 permutations of the initial tone row can be used, giving a maximum of 48 possible tone rows. However, not all prime series will yield so many variations because transposed transformations may be identical to each other. This is known as invariance. A simple case is the ascending chromatic scale, the retrograde inversion of which is identical to the prime form, and the retrograde of which is identical to the inversion (thus, only 24 forms of this tone row are available).
+
+thumb|350px|Prime, retrograde, inverted, and retrograde-inverted forms of the ascending chromatic scale. P and RI are the same (to within transposition), as are R and I.
+
+In the above example, as is typical, the retrograde inversion contains three points where the sequence of two pitches are identical to the prime row. Thus the generative power of even the most basic transformations is both unpredictable and inevitable. Motivic development can be driven by such internal consistency.
+
+Application in composition
+Note that rules 1–4 above apply to the construction of the row itself, and not to the interpretation of the row in the composition. (Thus, for example, postulate 2 does not mean, contrary to common belief, that no note in a twelve-tone work can be repeated until all twelve have been sounded.) While a row may be expressed literally on the surface as thematic material, it need not be, and may instead govern the pitch structure of the work in more abstract ways. Even when the technique is applied in the most literal manner, with a piece consisting of a sequence of statements of row forms, these statements may appear consecutively, simultaneously, or may overlap, giving rise to harmony.
+
+thumb|center|upright=2.5|Schoenberg's annotated opening of his Wind Quintet Op. 26 shows the distribution of the pitches of the row among the voices and the balance between the hexachords, 1–6 and 7–12, in the principal voice and accompanimentWhittall 2008, 52.
+
+Durations, dynamics and other aspects of music other than the pitch can be freely chosen by the composer, and there are also no general rules about which tone rows should be used at which time (beyond their all being derived from the prime series, as already explained). However, individual composers have constructed more detailed systems in which matters such as these are also governed by systematic rules (see serialism).
+
+ Topography 
+Analyst Kathryn Bailey has used the term 'topography' to describe the particular way in which the notes of a row are disposed in her work on the dodecaphonic music of Webern. She identifies two types of topography in Webern's music: block topography and linear topography.
+
+The former, which she views as the 'simplest', is defined as follows: 'rows are set one after the other, with all notes sounding in the order prescribed by this succession of rows, regardless of texture'. The latter is more complex: the musical texture 'is the product of several rows progressing simultaneously in as many voices' (note that these 'voices' are not necessarily restricted to individual instruments and therefore cut across the musical texture, operating as more of a background structure).
+
+ Elisions, Chains, and Cycles 
+Serial rows can be connected through elision, a term that describes 'the overlapping of two rows that occur in succession, so that one or more notes at the juncture are shared (are played only once to serve both rows)'. When this elision incorporates two or more notes it creates a row chain; when multiple rows are connected by the same elision (typically identified as the same in set-class terms) this creates a row chain cycle, which therefore provides a technique for organising groups of rows.
+
+Properties of transformations
+
+The tone row chosen as the basis of the piece is called the prime series (P). Untransposed, it is notated as P0. Given the twelve pitch classes of the chromatic scale, there are 12 factorialLoy 2007, 310. (479,001,600) tone rows, although this is far higher than the number of unique tone rows (after taking transformations into account). There are 9,985,920 classes of twelve-tone rows up to equivalence (where two rows are equivalent if one is a transformation of the other).Benson 2007, 348.
+
+Appearances of P can be transformed from the original in three basic ways:
+ transposition up or down, giving Pχ.
+ reversing the order of the pitches, giving the retrograde (R)
+ turning each interval direction to its opposite, giving the inversion (I).
+
+The various transformations can be combined. These give rise to a set-complex of forty-eight forms of the set, 12 transpositions of the four basic forms: P, R, I, RI. The combination of the retrograde and inversion transformations is known as the retrograde inversion (RI).
+
+{| class="wikitable"
+|RI is:
+|RI of P,
+|R of I,
+|and I of R.
+|-
+|R is:
+|R of P,
+|RI of I,
+|and I of RI.
+|-
+|I is:
+|I of P,
+|RI of R,
+|and R of RI.
+|-
+|P is:
+|R of R,
+|I of I,
+|and RI of RI.
+|}
+
+thus, each cell in the following table lists the result of the transformations, a four-group, in its row and column headers:
+
+{| class="wikitable"
+|P:
+|RI:
+|R:
+|I:
+|-
+|RI:
+|P
+|I
+|R
+|-
+|R:
+|I
+|P
+|RI
+|-
+|I:
+|R
+|RI
+|P
+|}
+
+However, there are only a few numbers by which one may multiply a row and still end up with twelve tones. (Multiplication is in any case not interval-preserving.)
+
+Derivation
+
+Derivation is transforming segments of the full chromatic, fewer than 12 pitch classes, to yield a complete set, most commonly using trichords, tetrachords, and hexachords. A derived set can be generated by choosing appropriate transformations of any trichord except 0,3,6, the diminished triad. A derived set can also be generated from any tetrachord that excludes the interval class 4, a major third, between any two elements. The opposite, partitioning, uses methods to create segments from sets, most often through registral difference.
+
+Combinatoriality
+
+Combinatoriality is a side-effect of derived rows where combining different segments or sets such that the pitch class content of the result fulfills certain criteria, usually the combination of hexachords which complete the full chromatic.
+
+Invariance
+
+Invariant formations are also the side effect of derived rows where a segment of a set remains similar or the same under transformation. These may be used as "pivots" between set forms, sometimes used by Anton Webern and Arnold Schoenberg.Perle 1977, 91–93.
+
+Invariance is defined as the "properties of a set that are preserved under [any given] operation, as well as those relationships between a set and the so-operationally transformed set that inhere in the operation",Babbitt 1960, 249–250. a definition very close to that of mathematical invariance. George Perle describes their use as "pivots" or non-tonal ways of emphasizing certain pitches. Invariant rows are also combinatorial and derived.
+
+Cross partition
+thumb|Aggregates spanning several local set forms in Schoenberg's Von heute auf morgen.Haimo 1990, 13.
+
+A cross partition is an often monophonic or homophonic technique which, "arranges the pitch classes of an aggregate (or a row) into a rectangular design", in which the vertical columns (harmonies) of the rectangle are derived from the adjacent segments of the row and the horizontal columns (melodies) are not (and thus may contain non-adjacencies).Alegant 2010, 20.
+
+For example, the layout of all possible 'even' cross partitions is as follows:Alegant 2010, 21.
+{|
+|style="width:30px;"|62
+|style="width:30px;"|43
+|style="width:30px;"|34
+|style="width:30px;"|26
+|-
+|**||***||****||******
+|-
+|**||***||****||******
+|-
+|**||***||****
+|-
+|**||***
+|-
+|**
+|-
+|**
+|}
+
+One possible realization out of many for the order numbers of the 34 cross partition, and one variation of that, are:
+ 0 3 6 9 0 5 6 e
+ 1 4 7 t 2 3 7 t
+ 2 5 8 e 1 4 8 9
+
+Thus if one's tone row was 0 e 7 4 2 9 3 8 t 1 5 6, one's cross partitions from above would be:
+ 0 4 3 1 0 9 3 6
+ e 2 8 5 7 4 8 5
+ 7 9 t 6 e 2 t 1
+
+Cross partitions are used in Schoenberg's Op. 33a Klavierstück and also by Berg but Dallapicolla used them more than any other composer.Alegant 2010, 22, 24.
+
+Other
+In practice, the "rules" of twelve-tone technique have been bent and broken many times, not least by Schoenberg himself. For instance, in some pieces two or more tone rows may be heard progressing at once, or there may be parts of a composition which are written freely, without recourse to the twelve-tone technique at all. Offshoots or variations may produce music in which:
+ the full chromatic is used and constantly circulates, but permutational devices are ignored
+ permutational devices are used but not on the full chromatic
+
+Also, some composers, including Stravinsky, have used cyclic permutation, or rotation, where the row is taken in order but using a different starting note. Stravinsky also preferred the inverse-retrograde, rather than the retrograde-inverse, treating the former as the compositionally predominant, "untransposed" form.Spies 1965, 118.
+
+Although usually atonal, twelve tone music need not be—several pieces by Berg, for instance, have tonal elements.
+
+One of the best known twelve-note compositions is Variations for Orchestra by Arnold Schoenberg. "Quiet", in Leonard Bernstein's Candide, satirizes the method by using it for a song about boredom, and Benjamin Britten used a twelve-tone row—a "tema seriale con fuga"—in his Cantata Academica: Carmen Basiliense (1959) as an emblem of academicism.Brett 2007.
+
+Schoenberg's mature practice
+Ten features of Schoenberg's mature twelve-tone practice are characteristic, interdependent, and interactive:Haimo 1990, 41.
+ Hexachordal inversional combinatoriality
+ Aggregates
+ Linear set presentation
+ Partitioning
+ Isomorphic partitioning
+ Invariants
+ Hexachordal levels
+ Harmony, "consistent with and derived from the properties of the referential set"
+ Metre, established through "pitch-relational characteristics"
+ Multidimensional set presentations.

@@ -1,0 +1,25 @@
+The certainty effect is the psychological effect resulting from the reduction of probability from certain to probable . It is an idea introduced in prospect theory. 
+
+Normally a reduction in the probability of winning a reward (e.g., a reduction from 80% to 20% in the chance of winning a reward) creates a psychological effect such as displeasure to individuals, which leads to the perception of loss from the original probability thus favoring a risk-averse decision. However, the same reduction results in a larger psychological effect when it is done from certainty than from uncertainty.
+
+Example
+ illustrated the certainty effect by the following examples.
+
+First, consider this example:
+
+Which of the following options do you prefer?
+A. a sure gain of $30
+B. 80% chance to win $45 and 20% chance to win nothing
+
+In this case, 78% of participants chose option A while only 22% chose option B. This demonstrates the typical risk-aversion phenomenon in prospect theory and framing effect because the expected value of option B ($45x0.8=$36) exceeds that of A by 20%.
+
+Now, consider this problem:
+
+Which of the following options do you prefer?
+
+C. 25% chance to win $30 and 75% chance to win nothing
+D. 20% chance to win $45 and 80% chance to win nothing
+
+In this case, 42% of participants chose option C while 58% chose option D. 
+
+As before, the expected value of the first option ($30x0.25=$7.50) was 20% lower than that of option D ($45x0.2=9) however, when neither option was certain, risk-taking increased.

@@ -1,0 +1,194 @@
+The Stanford prison experiment (SPE), also referred to as the Zimbardo prison experiment (ZPE), was a controversial psychological experiment performed in August 1971 at Stanford University. It was designed to be a two-week simulation of a prison environment that examined the effects of situational variables on participants' reactions and behaviors. Stanford University psychology professor Philip Zimbardo managed the research team who administered the study. Zimbardo ended the experiment early after realizing the guard participants'  abuse of the prisoners had gone too far. 
+
+Participants were recruited from the local community through an advertisement in the newspapers offering $15 per day ($116.18 in 2025) to male students who wanted to participate in a "psychological study of prison life". 24 participants were chosen after assessments of psychological stability and then assigned randomly to the role of prisoners or prison guards. Critics have questioned the validity of these methods.
+
+Those volunteers selected to be "guards" were given uniforms designed specifically to de-individuate them, and they were instructed to prevent prisoners from escaping. The experiment started officially when "prisoners" were arrested by real police of Palo Alto. During the next five days, psychological abuse of the prisoners by the "guards" became increasingly brutal. After psychologist Christina Maslach visited to evaluate the conditions, she was troubled to see how study participants were behaving and she confronted Zimbardo. He ended the experiment on the sixth day.
+
+The experiment has been referenced and critiqued as an example of an unethical psychological experiment, and the harm inflicted on the participants in this and other experiments during the post-World War II era prompted American universities to improve their ethical requirements and institutional review for human experiment subjects in order to prevent them from being similarly harmed. Other researchers have found it difficult to reproduce the study, especially given those constraints.
+
+Certain critics have described the study as unscientific and fraudulent. In particular, Thibault Le Texier has established that the guards were asked directly to behave in certain ways in order to confirm Zimbardo's conclusions, which were largely written in advance of the experiment. Zimbardo claimed that Le Texier's article was mostly ad hominem and ignored available data that contradicts his counterarguments, but the original participants, who were interviewed for the National Geographic documentary The Stanford Prison Experiment: Unlocking the Truth, have largely confirmed many of Le Texier's claims.
+
+Funding and methodology
+The official website of the SPE describes the experiment goal as follows:
+
+A 1996 article from the Stanford News Service described the experiment goal in a more detailed way:
+
+The study was funded by the US Office of Naval Research to understand antisocial behavior. The United States Navy and the United States Marine Corps wanted to investigate conflict between military guards and prisoners.
+
+Criticism of the SPE still continues today. Many researchers have critiqued Zimbardo's Stanford Prison Experiment for its method, whether it meets the criteria to be a scientific experiment, and whether the guard orientation created a demand bias.
+
+Publishing 
+Before publishing in American Psychologist and other peer-reviewed journals, the researchers reported the findings in Naval Research Reviews, International Journal of Criminology and Penology (IJCP), and the New York Times Magazine. David Amodio, psychology instructor at both New York University and the University of Amsterdam, dismissed Zimbardo's study, stating that releasing the article to an "obscure journal" demonstrated that Zimbardo was unable to convince fellow psychologists of the validity and reliability of his study. This action by Zimbardo violated the tradition of scientific dissemination by publishing in other journals before publishing in a scientific peer-reviewed journal.
+
+Zimbardo has stated that the grant agreement with the Office of Naval Research included a requirement to publish data in their journal, Naval Research Reviews. He states that the International Journal of Criminology and Penology invited Zimbardo to write about his study in their journal, and he then wrote an article with the New York Times Magazine to share the findings with a broad audience. He states that the article still needed to pass through the very strict requirements of the American Psychologist, the official journal of the American Psychological Association, in order to be published. After publishing the article in the American Psychologist, the findings were also reported in other peer-reviewed journals and books.
+
+Preparation
+Recruitment and selection
+thumb|Newspaper clipping of recruitment advertisement|alt=Photo of newspaper clipping reading: Male college students needed for psychological study of prison life. $15 per day for 1–2 weeks beginning Aug 15. For further information & applications, come to Room 248, Jordan Hall, Stanford U.
+
+After Zimbardo received approval from the university to perform the experiment, study participants were recruited using an advertisement in the "help wanted" section of the Palo Alto Times and The Stanford Daily newspapers in August 1971:
+
+thumb|Screening applicants|alt=Photo of a seminar room with a large table. Eight white male people are sitting at the table filling out papers spread out on the table. Another white male is standing at the side observing them.|left
+
+75 men applied, and, after screening assessments and interviews, 24 were selected to participate in a two-week prison simulation. The applicants were predominantly white, middle-class, and appeared to be stable psychologically and healthy. The group of subjects was selected intentionally to exclude those with criminal backgrounds, psychological impairments, or medical problems.
+
+On a random basis, half of the subjects were assigned the role of guard (nine plus three potential substitutes), and half were assigned to the role of prisoner (also nine plus three potential substitutes). They agreed to participate for a 7- to 14-day period for $15 per day (roughly equivalent to $116.18 ).
+
+ Prison environment 
+thumb|Prisoners in bed in cell|alt=Photo taken through iron bars. Behind the bars, three people are lying on beds side by side, wearing identical white smocks with numbers on the chest.
+
+The day before the experiment began, small mock prison cells were arranged to hold three prisoners each. There was a small corridor for the prison yard, a closet for solitary confinement, and a bigger room across from the prisoners for the guards and warden.
+
+The experiment was performed in a  section of the basement of Jordan Hall, Stanford's psychology building. The prison had two fabricated walls: one at the entrance and one at the cell wall to block observation. Each cell () was unlit, was intended to house 3 prisoners and had a cot (with mattress, sheet, and pillow) for each prisoner. Prisoners were confined and were to stay in their cells and the yard all day and night until the study was finished. In contrast, the guards were to stay in a different environment, separate from the prisoners. The guards were given access to special areas for rest and relaxation, were told to work in teams of three for eight-hour shifts, and were not required to stay on-site after their shift.
+
+ Roles 
+Zimbardo assumed the role of Superintendent, and an undergraduate research assistant, David Jaffe, assumed the role of  Warden.
+
+Digitized recordings available on the official SPE website were widely discussed in 2017, particularly one where warden David Jaffe tried to influence the behavior of one of the guards by encouraging him to participate more and be more "tough" for the benefit of the experiment.
+
+ Orientation 
+The researchers had an orientation session for the guards the day before the experiment began, during which the guards were instructed not to harm the prisoners physically or withhold food or drink, but to maintain law and order. The researchers provided the guards with wooden batons to establish their status, deindividuating clothing similar to that of an actual prison guard (khaki shirt and pants from a local military surplus store), and mirrored sunglasses to prevent eye contact and create anonymity.
+
+Based on recordings from the experiment, guards were instructed by the researchers to refer to prisoners by number rather than by name. This, according to Zimbardo, was intended to diminish the prisoners' individuality.Zimbardo (2007), The Lucifer Effect , p.54. With no control, prisoners learned they had little effect on what happened to them, ultimately causing them to stop responding and give up.
+
+Zimbardo has explained that guard orientations in the prison system instructed the guards to exert power over the prisoners. Further, Zimbardo asserts that his fellow researcher explicitly instructed the guards not to inflict physical harm on the prisoners, but at the same time make the prisoners feel that they were in an actual prison.
+
+Critiques of scientific validity 
+In 1975, Ali Banuazizi and Siamak Movahedi argued that the behavior of the participants in the SPE was a result of demand characteristics and not the prison environment, that there is no single definition of prisoner behavior, and that participants were simply acting in the role in which they had been cast. Participants' behavior may have also been influenced by knowing that they were watched (Hawthorne effect). Instead of being restrained by fear of an observer, guards may have behaved more aggressively when supervisors observing them did not restrain them. The study was also criticized for demand characteristics in 2012 by psychologist Peter Gray, who argued that participants in psychological experiments are more likely to do what they believe the researchers want them to do, and specifically in the case of the SPE, "to act out their stereotyped views of what prisoners and guards do."
+
+In 2007, Thomas Carnahan and Sam McFarland argued that the experiment suffers from selection bias, as the recruiting posters for SPE specifically advertised participation in a study about prison life. Carnahan and McFarland argued that those who applied to participate with the SPE thus likely already had traits associated with abusiveness, aggression, authoritarianism, Machiavellianism, social dominance orientation, and narcissism. Further, low dispositional empathy and altruism would also be indicators of someone who would volunteer.
+
+In 2018 Thibault Le Texier, a French researcher, in his book,  (The History of a Lie), questions the scientific validity and merit of the SPE. He further discussed his critiques in an article published by the APA in 2019. Le Texier asserts his arguments using testimonies of those participants who were assigned as guards. In his opinion, the sadism and submission displayed in the SPE was directly caused by Zimbardo's instructions to the guards and the guards' desire to please the researchers. In particular, he has established that the guards were asked directly to behave in certain ways in order to confirm Zimbardo's conclusions, which were largely written in advance of the experiment. Zimbardo and colleagues contend that Le Texier's critiques were mostly ad hominem and ignored available data that contradicts his counterarguments.
+
+In 2020, Dutch historian Rutger Bregman claimed the experiment to be dubious. He states that the guards were urged to act aggressively towards the prisoners. In his book Humankind: A Hopeful History, he is of the opinion that in similar experiments, researchers intentionally created hostility between groups and then interpreted the findings to suit their needs.
+
+Participant guard David Eshelman acknowledged that his theater background lent itself well to his role as guard, that he purposely thought of new ways to demean the prisoners – on one shift, Eshelman instructed the prisoners to simulate sodomy."'John Wayne' (name withheld) Interview: 'The Science of Evil'". Primetime: Basic Instincts. KATU. January 3, 2007 Zimbardo has responded to this argument by stating that other guards acted similarly or engaged with Eshelman in the treatment of prisoners. While it is possible that one guard adopted his behavior from a movie (Eshelman identified with the warden in Cool Hand Luke), others did not. Also, guards on a different shift than Eshelman exacted similar acts of emotional and mental brutality. Zimbardo further argues that the behaviors of the participant guards were not unlike those of real-world prison atrocities or the actions taken by American soldiers in the Abu Ghraib prison. Most of the guards have stated since the SPE that they were intentionally acting.
+
+The BBC prison study has indicated the importance of direction, of the form displayed by Zimbardo when briefing guards in the Stanford experiment, in the emergence of tyranny.
+
+ Carlo Prescott as a prison consultant 
+
+In 2005, an article was published by Carlo Prescott in The Stanford Daily, explaining that the antagonistic tactics used by the guards were ones that he experienced during his time spent in San Quentin. He shared each one in detail with the researchers prior to the experiment. In Prescott's opinion, the participants with the experiment, having no experience as prison guards, could not have acted in the ways they did unless they had been told of the explicit details of the actions they took.
+
+Zimbardo has stated that he believed that the article was not written by Prescott, but rather by the screenwriter and producer Michael Lazarou, who had attempted unsuccessfully to get the movie rights to the story of the SPE. In Zimbardo's opinion, Prescott would not have written in such a legalistic way, and Zimbardo claims that, in telephone records and emails obtained by Brett Emory, the SPE movie's producer asserted Prescott was not the author.Zimbardo, P., Hardwick, D. (2021). Zimbardo My Life Revealed. Giunti Psychometrics
+
+Events 
+
+ Saturday, August 14: Set up 
+The small mock prison cells were set up, and the participants who had been assigned a guard role attended an orientation where they were briefed and given uniforms.
+
+Sunday, August 15: Day 1
+thumb|Arrest of prisoners|alt=Photo of a person being arrested in the street by a policeman. The policeman is fixing the person's arms behind his back and pushing him towards a police car. One person kneeling at the side of the car is taking pictures. Two children in the foreground are watching the scene.
+
+The participants who had been assigned a prisoner role were mock-arrested by the local Palo Alto police at their homes or assigned sites. The participants were intentionally not informed that they would be arrested, as the researchers wanted it to come as a surprise. This was a breach of the ethics of Zimbardo's own contract that all of the participants had signed. The arrest involved charging them with armed robbery and burglary, Penal Codes 211 and 459, respectively. The Palo Alto police department assisted Zimbardo's team with the simulated arrests and performed full booking procedures on the prisoners at the Palo Alto City police headquarters, which included warning of Miranda rights, fingerprinting, and taking of mug shots. All of these actions were video-documented by a local San Francisco television station reporter using Zimbardo's car. Meanwhile, three guards prepared for the arrival of the inmates. The prisoners were then transported to the mock prison from the police station, sirens wailing. In the "Stanford County Jail" they were systematically strip searched and given their new identities (inmate identification number) and uniform.
+
+Prisoners wore uncomfortable, ill-fitting smocks without any underwear and stocking caps, as well as a chain around one ankle. Guards were instructed to call prisoners by their assigned numbers, sewn on their uniforms, instead of by name, thereby dehumanizing prisoners. The prisoners were then greeted by the warden, who conveyed the seriousness of their offence and their new status as prisoners. With the rules of the prison presented to them, the inmates retired to their cells for the rest of the first day of the experiment.
+
+Monday, August 16: Day 2
+thumb|Prisoners lineup|alt=Several white male people lined up along a white wall. They are wearing identical white smocks with numbertags on their chests. Their hair is covered by nylon and cotton bonnets.Guards referred to prisoners by their identification numbers and confined them to their small cells. At 2:30 am the prisoners rebelled against guards' wake up calls of whistles and clanging of batons. Prisoners refused to leave their cells to eat in the yard, ripped off their inmate number tags, took off their stocking caps and insulted the guards.
+
+thumb|Parole hearing|alt=B/w photo of several white and one black person who are sitting at a table with a whiteboard on the wall behind. They are all looking to one white male person sitting at the table wearing a white t-shirt with a number on the chest.
+In response, guards sprayed fire extinguishers at the prisoners to reassert control. The three back-up guards were called in to help regain control of the prison. Guards removed all of the prisoners' clothes, removed mattresses and sentenced the main instigators to time in the special detention unit. They attempted to dissuade any further rebellion using psychological warfare. One of the guards said to the other that, "these are dangerous prisoners".
+
+ Tuesday, August 17: Day 3 
+In order to restrict further acts of disobedience, the guards separated and rewarded prisoners who had minor roles in the rebellion. The three spent time in the "good" cell where they received clothing, beds, and food denied to the rest of the jail population. After an estimated 12 hours, the three returned to their old cells that lacked beds.
+
+Guards were allowed to abuse their power to humiliate the inmates. They had the prisoners count off and do pushups arbitrarily, restricted access to the bathrooms, and forced them to relieve themselves in a bucket in their cells.
+
+ Prisoner 8612 
+The first prisoner to leave the experiment was Douglas Korpi, prisoner 8612. After 36 hours, he had an apparent mental breakdown in which he yelled, "Jesus Christ, I'm burning up inside" and "I can't stand another night! I just can't take it anymore!" Upon seeing his suffering, research assistant Craig Haney released Korpi.
+
+In 1992, in a documentary movie about the study, Quiet Rage, Korpi asserted that the prison experiment had deeply affected him, and that experience caused him to later become a prison psychologist. However, in a 2017 interview, Korpi stated that his breakdown had been fake, and that he did it only so that he could leave and return to studying for his Graduate Record Exam; he had originally thought that he could study while "imprisoned", but the "prison staff" would not allow him. Korpi expressed regret that he had not filed a false imprisonment charge at the time.
+
+Zimbardo responded to this criticism in 2018. First, while this experiment has been criticized overall for its ethics, Zimbardo stated that he needed to treat the breakdown as real and release the prisoner. Further, Zimbardo believes Korpi's 2017 interview was a lie.
+
+thumb|Prisoner breaks down.|alt=Photo of a white male person sitting in a seminar chair, bending over and hiding his face in his elbow. He is wearing a long white cotton smock and no pants.
+
+Wednesday, August 18: Day 4
+Witnessing that guards were dividing prisoners based on their good or rebellious behavior, the inmates started to distance themselves from one another. Rioters believed that other prisoners were snitches and vice versa. Other prisoners considered the rebels as a threat to the status quo since they wanted to have their sleeping cots and clothes again.
+
+ Prisoner 819 
+
+"Prisoner 819" began showing symptoms of distress and began crying in his cell. A priest was brought in to speak with him, but the young man refused to talk with him and instead asked for a medical doctor. After hearing him cry, Zimbardo reassured him of his actual identity and removed the prisoner. When "Prisoner 819" was speaking with Zimbardo, the guards cajoled the remaining inmates to loudly and repeatedly decry that "819 did a bad thing". "Prisoner 819" broke down immensely as he heard them calling him "bad". Zimbardo released 819 and gave him his pay. 
+
+Thursday, August 19: Day 5
+The day was scheduled for visitations by friends and family of the inmates in order to simulate the prison experience.thumb|Guards walking in SPE yard|alt=Black and white photo of a white hallway with a plaque reading "Stanford County Prison". Two white male guards in uniforms wearing sunglasses walk along the hallway. One white male guard is sitting on top of a table in a corner in the background.|left
+
+Zimbardo and the guards made visitors wait for long periods of time to see their loved ones. Only two visitors could see any one prisoner and only for just ten minutes while a guard watched. Parents grew concerned about their sons' well-being and whether they had enough to eat. Some parents left with plans to contact lawyers to gain early release of their children.
+
+On the same day, Zimbardo's colleague Gordon H. Bower arrived to check on the experiment and questioned Zimbardo about what the independent variable of the research was. Christina Maslach also visited the prison that night and was distressed after observing the guards abusing the prisoners, forcing them to wear bags over their heads. She challenged Zimbardo about his lack of caring oversight and the immorality of the study. Finally, she made evident that Zimbardo had been changed by his role as Superintendent into someone she did not recognize and did not like. Her direct challenge, as well as the shared opinion from others, such as Curtis Banks (researcher), prompted Zimbardo to end the SPE the next day.
+
+ Friday, August 20: Day 6 
+thumb|David Jaffe, Craig Haney and Zimbardo|alt=Photo of three white male people wearing shirts and ties talking to each other in front of a white wall. They are standíng beside a tape recording machine.
+thumb|Debriefing|alt=B/w photograph of a group of male people dressed in casual shirts, sitting in a circle in a room looking in the same direction. The room is furnished with desks and a TV-set.
+Due to Maslach's objections, the parents' concerns, and the increasing brutality exhibited by guards in the experiment, Zimbardo ended the study on day 6. Zimbardo gathered the participants (guards, prisoners, and researchers) to let them know that the experiment was over, and he arranged to pay them for the six days the experiment lasted. Zimbardo then met for several hours of informed debriefing first with all of the prisoners, then the guards, and finally everyone came together to share their experiences. Next, all participants were asked to complete a personal retrospective to be mailed to him subsequently. Finally, all participants were invited to return a week later to share their opinions and emotions.
+
+Later, the physical components of the Stanford County Jail were taken down and out of the basement of Jordan Hall as the cells returned to their usual function as graduate student offices. Zimbardo and his graduate student research team, Craig Haney and Curtis Banks, began compiling the multiple sources of data that would be the basis for several articles they soon wrote, both about their experiment and for Zimbardo's later expanded and detailed review of the SPE in The Lucifer Effect (2007).
+
+Interpretation and reproducibility of results 
+
+According to Zimbardo's interpretation of the SPE, it demonstrated that the simulated-prison situation, rather than individual personality traits, caused the participants' behavior. Using this situational attribution, the results are compatible with those of the Milgram experiment, where participants complied with orders to administer seemingly dangerous and potentially lethal electric shocks to a shill. Others have posited that the guards assumed aggressive roles due to encouragement from researchers rather than conforming to the situation.
+
+Conclusions and observations drawn by the experimenters were largely subjective and anecdotal, and the experiment is practically impossible for other researchers to reproduce accurately. In 1973, Erich Fromm argued, as only a third of the guards displayed sadistic behaviors, SPE is more accurately an example of how a situation cannot influence a person's behavior. He states that there were generalizations in the experiment's results and argued that the personality of an individual does affect behavior when imprisoned. This ran counter to the study's conclusion that the prison situation itself controls the individual's behavior. Fromm also argued that the methods employed to screen participants could not determine the amount of sadism in the subjects.
+
+The experiment has also been used to illustrate cognitive dissonance theory and the power of authority.
+
+ BBC prison study 
+Psychologists Alex Haslam and Steve Reicher conducted the BBC Prison Study in 2002 to examine Zimbardo's themes of tyranny and resistance, and they published the results in 2006. It was a partial replication of the SPE performed with the assistance of the BBC, which broadcast a documentary series about the SPE called The Experiment.
+
+As in the SPE, there was a makeshift prison, and all participants were male. Unlike the SPE's invitation to participate, Haslam and Reicher advertised their study as a university-backed social science experiment to be shown by television. Guards were not instructed on how to behave, only to figure out how to manage a prison. Those selected as prisoners were instructed to daily complete a questionnaire. Both prisoners and guards in this study wore microphones on their shirts, and cameras followed all participants' actions.
+
+Their results and conclusions differed from Zimbardo's and resulted in a number of publications concerning tyranny, stress, and leadership. The results were published in major academic journals such as British Journal of Social Psychology, Journal of Applied Psychology, Social Psychology Quarterly, and Personality and Social Psychology Review. The BBC Prison Study has now been taught as a core study on the UK A-level Psychology OCR syllabus.
+
+While Haslam and Reicher's procedure was not a direct replication of Zimbardo's, their study casts further doubt on the generality of his conclusions. Specifically, it questions the notion that people slip mindlessly into roles. Their research also indicates the importance of leadership in the emergence of tyranny, such as the type displayed by Zimbardo when briefing guards in the Stanford experiment.
+
+Zimbardo initially regarded Haslam and Reicher's study as a reality show as both prisoner and guard knew they were being televised and probably over-acted in their role for the purpose of entertaining watchers of the documentary. He felt that there were definite similarities to reality shows; prisoners had a confessional to describe their feelings, and there were contests for the prisoners. Despite its dissimilarities, Zimbardo believes the results of the BBC study replicated his own in that the participants were affected by the situation. In 2018, Zimbardo, Reicher, and Haslam issued a joint statement asserting that both experiments were valid. They also agreed that behaviors observed in all participants could have been caused by more than the situation. They urged people to continue research into toxic behaviors, arguing that their studies were unique and need replications to demonstrate reliability and significance.
+
+Legacy 
+One positive result of the study is that it has altered the way US prisons are managed. For example, juveniles accused of federal crimes are no longer housed before trial with adult prisoners, due to the risk of violence against them.
+
+Zimbardo submitted a statement to the 1971 US House Committee on the Judiciary about the experiment's findings.
+
+ Comparisons to Abu Ghraib 
+When acts of prisoner torture and abuse at the Abu Ghraib prison in Iraq were publicized in March 2004, Zimbardo was struck by the similarity with his own experiment. He was dismayed by official military and government representatives shifting the blame for the torture and abuses in the Abu Ghraib American military prison onto "a few bad apples", rather than acknowledging the possibly systemic problems of a formally established military incarceration system. Zimbardo was then quoted saying "I argue that we all have the capacity for love and evil—to be Mother Theresa, to be Hitler or Saddam Hussein. It's the situation that brings that out".
+
+Eventually, Zimbardo became involved with the defense team of lawyers representing one of the Abu Ghraib prison guards, Staff Sergeant Ivan "Chip" Frederick. Zimbardo was granted full access to all investigation and background reports, and he testified as an expert witness in Frederick's court martial. The trial resulted in an eight-year prison sentence for Frederick in 2004.
+
+Zimbardo drew from his participation in the Frederick case to write the book The Lucifer Effect: Understanding How Good People Turn Evil, which deals with the similarities between his own Stanford prison experiment and the Abu Ghraib abuses.
+
+ In popular culture 
+Italian moviemaker Carlo Tuzii was the first director to film a story based on the experiment when, in 1977, he directed the television movie  ('The cage'), for Rai 1. Tuzii's original story called for a group of twenty young people from various social backgrounds, who were divided randomly into "guards" and "prisoners" and instructed to spend one month on opposite sides of an enormously high gate, with barbed wire on top, built in the middle of a large park. Before principal photography started, however, some concerns from RAI executives forced Tuzii and the screenwriters to alter the script into a very similar story to the actual Stanford experiment, including the outcome. Miguel Bosé featured as prisoner Carlo; progressive pop music band Pooh scored the movie and had a hit in Italy with a 7-inch edit of the theme tune.
+
+The 2001 German-language movie Das Experiment featuring Moritz Bleibtreu is based on the experiment. It was remade in 2010 in English as The Experiment and was directed by Paul T. Scheuring and starred Adrien Brody, Forest Whitaker, Cam Gigandet, Clifton Collins, Jr., and Maggie Grace.
+
+The 2015 movie The Stanford Prison Experiment is based on the experiment.
+
+The YouTube series Mind Field, hosted by Michael Stevens, features an episode discussing the experiment.
+
+In Season 3, Episode 2 of the television series Veronica Mars, entitled "My Big Fat Greek Rush Week", a similar experiment is featured.
+
+In The Overstory by Richard Powers, the fictional character Douglas Pavlicek is a prisoner in the experiment, an experience which influences later decisions.
+
+In Season 15, Episode 10 of television show American Dad, "American Data", Roger recruits Steve, Toshi, Snot and Barry into a similar experiment.
+
+In Volume 10, Chapter 92 of Prison School, Kate Takenomiya makes reference to and implements a similar scheme to the school's prison
+
+In 2024, Disney released a National Geographic three episode documentary series "The Stanford Prison Experiment: Unlocking the Truth" with first hand accounts of the original participants in the study.
+
+Ethical concerns 
+Some of the guards' behavior allegedly resulted in dangerous and psychologically damaging situations. Ethical concerns about the experiment often draw comparisons to the Milgram experiment, performed ten years earlier in 1961 at Yale University, where Stanley Milgram studied obedience to authority. With the treatment that the guards were giving to the prisoners, the guards would become so absorbed into their role as a guard that they would emotionally, physically, and mentally humiliate the prisoners:
+
+The experiment was perceived by many to involve questionable ethics, the most serious concern being that it was continued even after participants expressed their desire to withdraw. Despite the fact that participants were told they had the right to leave at any time, the researchers did not allow this. Although there was only limited ethical oversight at the time, some aspects of the study were in contradiction of the contract that was signed with participants.
+
+Since the time of the SPE, ethical guidelines for experiments involving human subjects have become more strict.The Belmont Report, Office of the Secretary, Ethical Principles and Guidelines for the Protection of Human Subjects of Research, The National Commission for the Protection of Human Subjects for Biomedical and Behavioral Research, April 18, 1979 The Stanford prison experiment resulted in the implementation of rules to preclude any harmful treatment of participants. Before they are implemented, human studies must now be reviewed by an institutional review board (US) or ethics committee (UK) and found to be in accordance with ethical guidelines set by the American Psychological Association or British Psychological Society. These guidelines involve the consideration of whether the potential benefit to science outweighs the possible risk for physical and psychological harm.
+
+A post-experimental debriefing is now considered an important ethical consideration to ensure that participants are not harmed in any way by their experience in an experiment. Though the researchers did perform debriefing sessions, they were several years after the SPE. By that time, numerous details were forgotten; nonetheless, Zimbardo has concluded from his follow-up research that participants experienced no lasting negative effects. The American Psychological Association specifies that the debriefing process should occur as soon as possible to assess any psychological harm that may have been done and to rehabilitate participants if necessary. If there is an unavoidable delay in debriefing, the researcher is obligated to take measures to minimize harm.
+
+Similar studies 
+In 1967, The Third Wave experiment involved the use of authoritarian dynamics similar to Nazi Party methods of mass control in a classroom setting by high school teacher Ron Jones in Palo Alto, California with the goal of demonstrating vividly to the class how the German public in World War II could have acted in the way it did. Although the veracity of Jones' accounts has been questioned, several participants with the study have gone on record to confirm the events.
+
+In both experiments, participants found it difficult to leave the study due to the roles they were assigned. Both studies examine human nature and the effects of authority. Personalities of the subjects were thought to have little influence on both experiments despite the test before the prison experiment.
+
+Both the Milgram and Zimbardo studies concluded that participants conform to social pressures. Conformity is strengthened by allowing some participants to feel more or less powerful than others. In both experiments, the people's behaviors altered to match the group stereotypes, demonstrating a tendency to conform to others passively, even if a particular subject is malevolent.
+
+A 2007 study on prison-life examined the potential relationship between participant self-selection and the disposition toward aggressive behaviors. They found that when responding to an advertisement, participants "were significantly higher on measures of aggressiveness, authoritarianism, Machiavellianism, narcissism, and social dominance than those who responded to a parallel ad that omitted the words 'of prison life,' and they were significantly lower in dispositional empathy and altruism".

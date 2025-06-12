@@ -1,0 +1,28 @@
+The swish function is a family of mathematical function defined as follows:
+
+ thumb|The swish function
+
+where  can be constant (usually set to 1) or trainable.
+
+The swish family was designed to smoothly interpolate between a linear function and the ReLU function.
+
+When considering positive values, Swish is a particular case of doubly parameterized sigmoid shrinkage function defined in . Variants of the swish function include Mish.
+
+Special values 
+For β = 0, the function is linear: f(x) = x/2.
+
+For β = 1, the function is the Sigmoid Linear Unit (SiLU).
+
+With β → ∞, the function converges to ReLU. 
+
+Thus, the swish family smoothly interpolates between a linear function and the ReLU function.
+
+Since , all instances of swish have the same shape as the default , zoomed by . One usually sets . When  is trainable, this constraint can be enforced by , where  is trainable.
+
+Derivatives 
+Because , it suffices to calculate its derivatives for the default case.so  is odd.so  is even.
+
+History
+SiLU was first proposed alongside the GELU in 2016, then again proposed in 2017 as the Sigmoid-weighted Linear Unit (SiL) in reinforcement learning. The SiLU/SiL was then again proposed as the SWISH over a year after its initial discovery, originally proposed without the learnable parameter β, so that β implicitly equaled 1. The swish paper was then updated to propose the activation with the learnable parameter β.
+
+In 2017, after performing analysis on ImageNet data, researchers from Google indicated that using this function as an activation function in artificial neural networks improves the performance, compared to ReLU and sigmoid functions. It is believed that one reason for the improvement is that the swish function helps alleviate the vanishing gradient problem during backpropagation.

@@ -1,0 +1,252 @@
+In number theory, Fermat's Last Theorem (sometimes called Fermat's conjecture, especially in older texts) states that no three positive integers , , and  satisfy the equation  for any integer value of  greater than . The cases  and  have been known since antiquity to have infinitely many solutions.Singh, pp. 18–20
+
+The proposition was first stated as a theorem by Pierre de Fermat around 1637 in the margin of a copy of Arithmetica. Fermat added that he had a proof that was too large to fit in the margin. Although other statements claimed by Fermat without proof were subsequently proven by others and credited as theorems of Fermat (for example, Fermat's theorem on sums of two squares), Fermat's Last Theorem resisted proof, leading to doubt that Fermat ever had a correct proof. Consequently, the proposition became known as a conjecture rather than a theorem. After 358 years of effort by mathematicians, the first successful proof was released in 1994 by Andrew Wiles and formally published in 1995. It was described as a "stunning advance" in the citation for Wiles's Abel Prize award in 2016. It also proved much of the Taniyama–Shimura conjecture, subsequently known as the modularity theorem, and opened up entire new approaches to numerous other problems and mathematically powerful modularity lifting techniques.
+
+The unsolved problem stimulated the development of algebraic number theory in the 19th and 20th centuries. It is among the most notable theorems in the history of mathematics and prior to its proof was in the Guinness Book of World Records as the "most difficult mathematical problem", in part because the theorem has the largest number of unsuccessful proofs.
+
+Overview 
+ Pythagorean origins 
+The Pythagorean equation, , has an infinite number of positive integer solutions for , , and ; these solutions are known as Pythagorean triples (with the simplest example being 3, 4, 5). Around 1637, Fermat wrote in the margin of a book that the more general equation  had no solutions in positive integers if  is an integer greater than 2. Although he claimed to have a general proof of his conjecture, Fermat left no details of his proof, and none has ever been found. His claim was discovered some 30 years later, after his death. This claim, which came to be known as Fermat's Last Theorem, stood unsolved for the next three and a half centuries.
+
+The claim eventually became one of the most notable unsolved problems of mathematics. Attempts to prove it prompted substantial development in number theory, and over time Fermat's Last Theorem gained prominence as an unsolved problem in mathematics.
+
+ Subsequent developments and solution 
+
+The special case , proved by Fermat himself, is sufficient to establish that if the theorem is false for some exponent  that is not a prime number, it must also be false for some smaller , so only prime values of  need further investigation.If the exponent  were not prime or 4, then it would be possible to write  either as a product of two smaller integers (), in which  is a prime number greater than 2, and then  for each of , , and . That is, an equivalent solution would also have to exist for the prime power  that is smaller than ; or else as  would be a power of 2 greater than 4, and writing , the same argument would hold. Over the next two centuries (1637–1839), the conjecture was proved for only the primes 3, 5, and 7, although Sophie Germain innovated and proved an approach that was relevant to an entire class of primes. In the mid-19th century, Ernst Kummer extended this and proved the theorem for all regular primes, leaving irregular primes to be analyzed individually. Building on Kummer's work and using sophisticated computer studies, other mathematicians were able to extend the proof to cover all prime exponents up to four million, but a proof for all exponents was considered exceedingly difficult or unachievable with the knowledge of the time.Singh, p. 223
+
+Around 1955, Japanese mathematicians Goro Shimura and Yutaka Taniyama suspected a link might exist between elliptic curves and modular forms, two completely different areas of mathematics. Known at the time as the Taniyama–Shimura conjecture, it had no apparent connection to Fermat's Last Theorem. It was widely seen as significant and important in its own right, but was (like Fermat's theorem) considered completely inaccessible to proof.Singh 1997, pp. 203–205, 223, 226
+
+In 1984, Gerhard Frey noticed an apparent link between these two previously unrelated and unsolved problems, and he gave an outline suggesting this could be proved. The full proof that the two problems were closely linked was accomplished in 1986 by Ken Ribet, building on a partial proof by Jean-Pierre Serre, who proved all but one part known as the "epsilon conjecture" (see: Ribet's Theorem and Frey curve). These papers by Frey, Serre and Ribet showed that if the Taniyama–Shimura conjecture could be proven for at least the semi-stable class of elliptic curves, a proof of Fermat's Last Theorem would also follow automatically. The connection is described below: any solution that could contradict Fermat's Last Theorem could also be used to contradict the Taniyama–Shimura conjecture. So if the Taniyama–Shimura conjecture were found to be true, then by definition, no solution contradicting Fermat's Last Theorem could exist, meaning that Fermat's Last Theorem must also be true.
+
+Although both problems were daunting and widely considered to be "completely inaccessible" to proof at the time, this was the first suggestion of a route by which Fermat's Last Theorem could be extended and proved for all numbers, not just some numbers. Unlike Fermat's Last Theorem, the Taniyama–Shimura conjecture was a major active research area and viewed as more within reach of contemporary mathematics.Singh, p. 144 quotes Wiles's reaction to this news: "I was electrified. I knew that moment that the course of my life was changing because this meant that to prove Fermat's Last Theorem all I had to do was to prove the Taniyama–Shimura conjecture. It meant that my childhood dream was now a respectable thing to work on." However, general opinion was that this simply showed the impracticality of proving the Taniyama–Shimura conjecture.Singh, p. 144 Mathematician John Coates' quoted reaction was a common one:
+
+On hearing that Ribet had proven Frey's link to be correct, English mathematician Andrew Wiles, who had a childhood fascination with Fermat's Last Theorem and had a background of working with elliptic curves and related fields, decided to try to prove the Taniyama–Shimura conjecture as a way to prove Fermat's Last Theorem. In 1993, after six years of working secretly on the problem, Wiles succeeded in proving enough of the conjecture to prove Fermat's Last Theorem. Wiles's paper was massive in size and scope. A flaw was discovered in one part of his original paper during peer review and required a further year and collaboration with a past student, Richard Taylor, to resolve. As a result, the final proof in 1995 was accompanied by a smaller joint paper showing that the fixed steps were valid. Wiles's achievement was reported widely in the popular press, and was popularized in books and television programs. The remaining parts of the Taniyama–Shimura–Weil conjecture, now proven and known as the modularity theorem, were subsequently proved by other mathematicians, who built on Wiles's work between 1996 and 2001. For his proof, Wiles was honoured and received numerous awards, including the 2016 Abel Prize.British mathematician Sir Andrew Wiles gets Abel math prize – The Washington Post.300-year-old math question solved, professor wins $700k – CNN.com.
+
+ Equivalent statements of the theorem 
+There are several alternative ways to state Fermat's Last Theorem that are mathematically equivalent to the original statement of the problem.
+
+In order to state them, we use the following notations: let  be the set of natural numbers  let  be the set of integers  and let  be the set of rational numbers , where  and  are in  with . In what follows we will call a solution to  where one or more of , , or  is zero a trivial solution. A solution where all three are nonzero will be called a non-trivial solution.
+
+For comparison's sake we start with the original formulation.
+ Original statement. With  (meaning that  are all positive whole numbers) and , the equation  has no solutions.
+
+Most popular treatments of the subject state it this way. It is also commonly stated over :
+ Equivalent statement 1: , where  , has no non-trivial solutions .
+
+The equivalence is clear if  is even. If  is odd and all three of  are negative, then we can replace  with  to obtain a solution in . If two of them are negative, it must be  and  or  and . If  are negative and  is positive, then we can rearrange to get  resulting in a solution in ; the other case is dealt with analogously. Now if just one is negative, it must be  or . If  is negative, and  and  are positive, then it can be rearranged to get  again resulting in a solution in ; if  is negative, the result follows symmetrically. Thus in all cases a nontrivial solution in  would also mean a solution exists in , the original formulation of the problem.
+ Equivalent statement 2: , where integer , has no non-trivial solutions .
+
+This is because the exponents of  and  are equal (to ), so if there is a solution in , then it can be multiplied through by an appropriate common denominator to get a solution in , and hence in .
+ Equivalent statement 3: , where integer , has no non-trivial solutions .
+
+A non-trivial solution , ,  ∈  to  yields the non-trivial solution ,  ∈  for . Conversely, a solution ,  ∈  to  yields the non-trivial solution  for .
+
+This last formulation is particularly fruitful, because it reduces the problem from a problem about surfaces in three dimensions to a problem about curves in two dimensions. Furthermore, it allows working over the field , rather than over the ring ; fields exhibit more structure than rings, which allows for deeper analysis of their elements.
+ Equivalent statement 4 – connection to elliptic curves: If , ,  is a non-trivial solution to ,  odd prime, then  (Frey curve) will be an elliptic curve without a modular form.
+
+Examining this elliptic curve with Ribet's theorem shows that it does not have a modular form. However, the proof by Andrew Wiles proves that any equation of the form  does have a modular form. Any non-trivial solution to  (with  an odd prime) would therefore create a contradiction, which in turn proves that no non-trivial solutions exist.
+
+In other words, any solution that could contradict Fermat's Last Theorem could also be used to contradict the modularity theorem. So if the modularity theorem were found to be true, then it would follow that no contradiction to Fermat's Last Theorem could exist either. As described above, the discovery of this equivalent statement was crucial to the eventual solution of Fermat's Last Theorem, as it provided a means by which it could be "attacked" for all numbers at once.
+
+Mathematical history 
+ Pythagoras and Diophantus 
+ Pythagorean triples 
+
+In ancient times it was known that a triangle whose sides were in the ratio 3:4:5 would have a right angle as one of its angles. This was used in construction and later in early geometry. It was also known to be one example of a general rule that any triangle where the length of two sides, each squared and then added together , equals the square of the length of the third side , would also be a right angle triangle. This is now known as the Pythagorean theorem, and a triple of numbers that meets this condition is called a Pythagorean triple; both are named after the ancient Greek Pythagoras. Examples include (3, 4, 5) and (5, 12, 13). There are infinitely many such triples, and methods for generating such triples have been studied in many cultures, beginning with the Babylonians and later ancient Greek, Chinese, and Indian mathematicians. Mathematically, the definition of a Pythagorean triple is a set of three integers  that satisfy the equation .
+
+ Diophantine equations 
+
+Fermat's equation,  with positive integer solutions, is an example of a Diophantine equation, named for the 3rd-century Alexandrian mathematician, Diophantus, who studied them and developed methods for the solution of some kinds of Diophantine equations. A typical Diophantine problem is to find two integers x and y such that their sum, and the sum of their squares, equal two given numbers A and B, respectively:
+ 
+ 
+
+Diophantus's major work is the Arithmetica, of which only a portion has survived.Singh, pp. 50–51 Fermat's conjecture of his Last Theorem was inspired while reading a new edition of the Arithmetica, that was translated into Latin and published in 1621 by Claude Bachet.Singh, pp. 56–58
+
+Diophantine equations have been studied for thousands of years. For example, the solutions to the quadratic Diophantine equation  are given by the Pythagorean triples, originally solved by the Babylonians (). Solutions to linear Diophantine equations, such as , may be found using the Euclidean algorithm (c. 5th century BC).
+Many Diophantine equations have a form similar to the equation of Fermat's Last Theorem from the point of view of algebra, in that they have no cross terms mixing two letters, without sharing its particular properties. For example, it is known that there are infinitely many positive integers x, y, and z such that , where n and m are relatively prime natural numbers.For example,  = .
+
+ Fermat's conjecture 
+thumb|Problem II.8 in the 1621 edition of the  of Diophantus. On the right is the margin that was too small to contain Fermat's alleged proof of his "last theorem".
+
+Problem II.8 of the  asks how a given square number is split into two other squares; in other words, for a given rational number k, find rational numbers u and v such that . Diophantus shows how to solve this sum-of-squares problem for  (the solutions being  and ).
+
+Around 1637, Fermat wrote his Last Theorem in the margin of his copy of the  next to Diophantus's sum-of-squares problem:Singh, pp. 60–62
+
+After Fermat's death in 1665, his son Clément-Samuel Fermat produced a new edition of the book (1670) augmented with his father's comments.Singh, pp. 62–66 Although not actually a theorem at the time (meaning a mathematical statement for which proof exists), the marginal note became known over time as Fermat's Last Theorem, as it was the last of Fermat's asserted theorems to remain unproved.Singh, p. 67
+
+It is not known whether Fermat had actually found a valid proof for all exponents n, but it appears unlikely. Only one related proof by him has survived, namely for the case , as described in the section .
+
+While Fermat posed the cases of  and of  as challenges to his mathematical correspondents, such as Marin Mersenne, Blaise Pascal, and John Wallis,Ribenboim, pp. 13, 24 he never posed the general case.van der Poorten, Notes and Remarks 1.2, p. 5 Moreover, in the last thirty years of his life, Fermat never again wrote of his "truly marvelous proof" of the general case, and never published it. Van der Poorten suggests that while the absence of a proof is insignificant, the lack of challenges means Fermat realised he did not have a proof; he quotes Weil as saying Fermat must have briefly deluded himself with an irretrievable idea. The techniques Fermat might have used in such a "marvelous proof" are unknown.
+
+Wiles and Taylor's proof relies on 20th-century techniques. Fermat's proof would have had to be elementary by comparison, given the mathematical knowledge of his time.
+
+While Harvey Friedman's grand conjecture implies that any provable theorem (including Fermat's last theorem) can be proved using only 'elementary function arithmetic', such a proof need be 'elementary' only in a technical sense and could involve millions of steps, and thus be far too long to have been Fermat's proof.
+
+ Proofs for specific exponents 
+
+thumb|right|Fermat's infinite descent for Fermat's Last Theorem case n=4 in the 1670 edition of the Arithmetica of Diophantus (pp. 338–339).
+
+ Exponent = 4 
+Only one relevant proof by Fermat has survived, in which he uses the technique of infinite descent to show that the area of a right triangle with integer sides can never equal the square of an integer. His proof is equivalent to demonstrating that the equation
+ 
+has no primitive solutions in integers (no pairwise coprime solutions). In turn, this proves Fermat's Last Theorem for the case , since the equation  can be written as .
+
+Alternative proofs of the case  were developed laterRibenboim, pp. 15–24 by Frénicle de Bessy (1676),Frénicle de Bessy, Traité des Triangles Rectangles en Nombres, vol. I, 1676, Paris. Reprinted in Mém. Acad. Roy. Sci., 5, 1666–1699 (1729) Leonhard Euler (1738),. Reprinted Opera omnia, ser. I, "Commentationes Arithmeticae", vol. I, pp. 38–58, Leipzig:Teubner (1915) Kausler (1802), Peter Barlow (1811), Adrien-Marie Legendre (1830), Schopis (1825), Olry Terquem (1846), Joseph Bertrand (1851), Victor Lebesgue (1853, 1859, 1862), Théophile Pépin (1883), Tafelmacher (1893), David Hilbert (1897), Reprinted in 1965 in Gesammelte Abhandlungen, vol. I by New York:Chelsea. Bendz (1901), Gambioli (1901), Leopold Kronecker (1901), Reprinted by New York:Springer-Verlag in 1978. Bang (1905), Sommer (1907), Bottari (1908), Karel Rychlík (1910), Nutzhorn (1912), Robert Carmichael (1913), Hancock (1931), Gheorghe Vrănceanu (1966), Reprinted in 1977 in Opera matematica, vol. 4, pp. 202–205, București: Editura Academiei Republicii Socialiste România. Grant and Perella (1999),Grant, Mike, and Perella, Malcolm, "Descending to the irrational", Mathematical Gazette 83, July 1999, pp. 263–267. Barbara (2007),Barbara, Roy, "Fermat's last theorem in the case ", Mathematical Gazette 91, July 2007, 260–262. and Dolan (2011).Dolan, Stan, "Fermat's method of descente infinie", Mathematical Gazette 95, July 2011, 269–271.
+
+ Other exponents 
+After Fermat proved the special case , the general proof for all n required only that the theorem be established for all odd prime exponents.Ribenboim, pp. 1–2 In other words, it was necessary to prove only that the equation  has no positive integer solutions  when n is an odd prime number. This follows because a solution  for a given n is equivalent to a solution for all the factors of n. For illustration, let n be factored into d and e, n = de. The general equation
+ an + bn = cn
+implies that  is a solution for the exponent e
+ (ad)e + (bd)e = (cd)e.
+
+Thus, to prove that Fermat's equation has no solutions for , it would suffice to prove that it has no solutions for at least one prime factor of every n. Each integer  is divisible by 4 or by an odd prime number (or both). Therefore, Fermat's Last Theorem could be proved for all n if it could be proved for  and for all odd primes p.
+
+In the two centuries following its conjecture (1637–1839), Fermat's Last Theorem was proved for three odd prime exponents p = 3, 5 and 7. The case  was first stated by Abu-Mahmud Khojandi (10th century), but his attempted proof of the theorem was incorrect. In 1770, Leonhard Euler gave a proof of p = 3,Euler L (1770) Vollständige Anleitung zur Algebra, Roy. Acad. Sci., St. Petersburg. but his proof by infinite descent contained a major gap.Ribenboim, pp. 24–25 However, since Euler himself had proved the lemma necessary to complete the proof in other work, he is generally credited with the first proof. Independent proofs were publishedRibenboim, pp. 33, 37–41 by Kausler (1802), Legendre (1823, 1830), Reprinted in 1955 by A. Blanchard (Paris). Reprinted in 1825 as the "Second Supplément" for a printing of the 2nd edition of Essai sur la Théorie des Nombres, Courcier (Paris). Also reprinted in 1909 in Sphinx-Oedipe, 4, 97–128. Calzolari (1855), Gabriel Lamé (1865), Peter Guthrie Tait (1872), Siegmund Günther (1878), Gambioli (1901), Krey (1909), Rychlík (1910), Stockhaus (1910), Carmichael (1915), Johannes van der Corput (1915), Axel Thue (1917), Reprinted in Selected Mathematical Papers (1977), Oslo: Universitetsforlaget, pp. 555–559 and Duarte (1944).
+
+The case  was proved independently by Legendre and Peter Gustav Lejeune Dirichlet around 1825.Ribenboim, p. 49Singh, p. 106 Alternative proofs were developedRibenboim, pp. 55–57 by Carl Friedrich Gauss (1875, posthumous), (Published posthumously) Lebesgue (1843), Lamé (1847), Gambioli (1901), Werebrusow (1905), Rychlík (1910), van der Corput (1915), and Guy Terjanian (1987).
+
+The case  was provedRibenboim, pp. 57–63 by Lamé in 1839. His rather complicated proof was simplified in 1840 by Lebesgue, and still simpler proofs were published by Angelo Genocchi in 1864, 1874 and 1876. Alternative proofs were developed by Théophile Pépin (1876) and Edmond Maillet (1897).
+
+Fermat's Last Theorem was also proved for the exponents n = 6, 10, and 14. Proofs for  were published by Kausler, Thue, Reprinted in Selected Mathematical Papers, pp. 19–30, Oslo: Universitetsforlaget (1977). Tafelmacher, Lind, Kapferer, Swift, and Breusch. Similarly, Dirichlet Reprinted in Werke, vol. I, pp. 189–194, Berlin: G. Reimer (1889); reprinted New York:Chelsea (1969). and Terjanian each proved the case n = 14, while Kapferer and Breusch each proved the case n = 10. Strictly speaking, these proofs are unnecessary, since these cases follow from the proofs for n = 3, 5, and 7, respectively. Nevertheless, the reasoning of these even-exponent proofs differs from their odd-exponent counterparts. Dirichlet's proof for n = 14 was published in 1832, before Lamé's 1839 proof for .
+
+All proofs for specific exponents used Fermat's technique of infinite descent, either in its original form, or in the form of descent on elliptic curves or abelian varieties. The details and auxiliary arguments, however, were often ad hoc and tied to the individual exponent under consideration. Since they became ever more complicated as p increased, it seemed unlikely that the general case of Fermat's Last Theorem could be proved by building upon the proofs for individual exponents. Although some general results on Fermat's Last Theorem were published in the early 19th century by Niels Henrik Abel and Peter Barlow, the first significant work on the general theorem was done by Sophie Germain.Singh, pp. 97–109
+
+ Early modern breakthroughs 
+ Sophie Germain 
+In the early 19th century, Sophie Germain developed several novel approaches to prove Fermat's Last Theorem for all exponents. First, she defined a set of auxiliary primes θ constructed from the prime exponent p by the equation , where h is any integer not divisible by three. She showed that, if no integers raised to the pth power were adjacent modulo θ (the non-consecutivity condition), then θ must divide the product xyz. Her goal was to use mathematical induction to prove that, for any given p, infinitely many auxiliary primes θ satisfied the non-consecutivity condition and thus divided xyz; since the product xyz can have at most a finite number of prime factors, such a proof would have established Fermat's Last Theorem. Although she developed many techniques for establishing the non-consecutivity condition, she did not succeed in her strategic goal. She also worked to set lower limits on the size of solutions to Fermat's equation for a given exponent p, a modified version of which was published by Adrien-Marie Legendre. As a byproduct of this latter work, she proved Sophie Germain's theorem, which verified the first case of Fermat's Last Theorem (namely, the case in which p does not divide xyz) for every odd prime exponent less than 270, and for all primes p such that at least one of , , , ,  and  is prime (specially, the primes p such that  is prime are called Sophie Germain primes). Germain tried unsuccessfully to prove the first case of Fermat's Last Theorem for all even exponents, specifically for , which was proved by Guy Terjanian in 1977. In 1985, Leonard Adleman, Roger Heath-Brown and Étienne Fouvry proved that the first case of Fermat's Last Theorem holds for infinitely many odd primes p.
+
+ Ernst Kummer and the theory of ideals 
+In 1847, Gabriel Lamé outlined a proof of Fermat's Last Theorem based on factoring the equation  in complex numbers, specifically the cyclotomic field based on the roots of the number 1. His proof failed, however, because it assumed incorrectly that such complex numbers can be factored uniquely into primes, similar to integers. This gap was pointed out immediately by Joseph Liouville, who later read a paper that demonstrated this failure of unique factorisation, written by Ernst Kummer.
+
+Kummer set himself the task of determining whether the cyclotomic field could be generalized to include new prime numbers such that unique factorisation was restored. He succeeded in that task by developing the ideal numbers.
+
+(It is often stated that Kummer was led to his "ideal complex numbers" by his interest in Fermat's Last Theorem; there is even a story often told that Kummer, like Lamé, believed he had proven Fermat's Last Theorem until Lejeune Dirichlet told him his argument relied on unique factorization; but the story was first told by Kurt Hensel in 1910 and the evidence indicates it likely derives from a confusion by one of Hensel's sources. Harold Edwards said the belief that Kummer was mainly interested in Fermat's Last Theorem "is surely mistaken". See the history of ideal numbers.)
+
+Using the general approach outlined by Lamé, Kummer proved both cases of Fermat's Last Theorem for all regular prime numbers. However, he could not prove the theorem for the exceptional primes (irregular primes) that conjecturally occur approximately 39% of the time; the only irregular primes below 270 are 37, 59, 67, 101, 103, 131, 149, 157, 233, 257 and 263.
+
+ Mordell conjecture 
+In the 1920s, Louis Mordell posed a conjecture that implied that Fermat's equation has at most a finite number of nontrivial primitive integer solutions, if the exponent n is greater than two.Singh, pp. 232–234 This conjecture was proved in 1983 by Gerd Faltings, and is now known as Faltings's theorem.
+
+ Computational studies 
+In the latter half of the 20th century, computational methods were used to extend Kummer's approach to the irregular primes. In 1954, Harry Vandiver used a SWAC computer to prove Fermat's Last Theorem for all primes up to 2521. By 1978, Samuel Wagstaff had extended this to all primes less than 125,000. (PDF)  By 1993, Fermat's Last Theorem had been proved for all primes less than four million.
+
+However, despite these efforts and their results, no proof existed of Fermat's Last Theorem. Proofs of individual exponents by their nature could never prove the general case: even if all exponents were verified up to an extremely large number X, a higher exponent beyond X might still exist for which the claim was not true. (This had been the case with some other past conjectures, such as with Skewes' number, and it could not be ruled out in this conjecture.)
+
+ Connection with elliptic curves 
+The strategy that ultimately led to a successful proof of Fermat's Last Theorem arose from the "astounding"Fermat's Last Theorem, Simon Singh, 1997,  Taniyama–Shimura–Weil conjecture, proposed around 1955—which many mathematicians believed would be near to impossible to prove, and was linked in the 1980s by Gerhard Frey, Jean-Pierre Serre and Ken Ribet to Fermat's equation. By accomplishing a partial proof of this conjecture in 1994, Andrew Wiles ultimately succeeded in proving Fermat's Last Theorem, as well as leading the way to a full proof by others of what is now known as the modularity theorem.
+
+ Taniyama–Shimura–Weil conjecture 
+
+Around 1955, Japanese mathematicians Goro Shimura and Yutaka Taniyama observed a possible link between two apparently completely distinct branches of mathematics, elliptic curves and modular forms. The resulting modularity theorem (at the time known as the Taniyama–Shimura conjecture) states that every elliptic curve is modular, meaning that it can be associated with a unique modular form.
+
+The link was initially dismissed as unlikely or highly speculative, but was taken more seriously when number theorist André Weil found evidence supporting it, though not proving it; as a result the conjecture was often known as the Taniyama–Shimura–Weil conjecture.
+
+Even after gaining serious attention, the conjecture was seen by contemporary mathematicians as extraordinarily difficult or perhaps inaccessible to proof. For example, Wiles's doctoral supervisor John Coates states that it seemed "impossible to actually prove", and Ken Ribet considered himself "one of the vast majority of people who believed [it] was completely inaccessible", adding that "Andrew Wiles was probably one of the few people on earth who had the audacity to dream that you can actually go and prove [it]."
+
+ Ribet's theorem for Frey curves 
+
+In 1984, Gerhard Frey noted a link between Fermat's equation and the modularity theorem, then still a conjecture. If Fermat's equation had any solution  for exponent , then it could be shown that the semi-stable elliptic curve (now known as a Frey-HellegouarchThis elliptic curve was first suggested in the 1960s by , but he did not call attention to its non-modularity. For more details, see )
+ y2 = 
+would have such unusual properties that it was unlikely to be modular. This would conflict with the modularity theorem, which asserted that all elliptic curves are modular. As such, Frey observed that a proof of the Taniyama–Shimura–Weil conjecture might also simultaneously prove Fermat's Last Theorem.Singh, pp. 194–198 By contraposition, a disproof or refutation of Fermat's Last Theorem would disprove the Taniyama–Shimura–Weil conjecture.
+
+In plain English, Frey had shown that, if this intuition about his equation was correct, then any set of four numbers (a, b, c, n) capable of disproving Fermat's Last Theorem, could also be used to disprove the Taniyama–Shimura–Weil conjecture. Therefore, if the latter were true, the former could not be disproven, and would also have to be true.
+
+Following this strategy, a proof of Fermat's Last Theorem required two steps. First, it was necessary to prove the modularity theorem, or at least to prove it for the types of elliptical curves that included Frey's equation (known as semistable elliptic curves). This was widely believed inaccessible to proof by contemporary mathematicians. Second, it was necessary to show that Frey's intuition was correct: that if an elliptic curve were constructed in this way, using a set of numbers that were a solution of Fermat's equation, the resulting elliptic curve could not be modular. Frey showed that this was plausible but did not go as far as giving a full proof. The missing piece (the so-called "epsilon conjecture", now known as Ribet's theorem) was identified by Jean-Pierre Serre who also gave an almost-complete proof and the link suggested by Frey was finally proved in 1986 by Ken Ribet.
+
+Following Frey, Serre and Ribet's work, this was where matters stood:
+
+ Fermat's Last Theorem needed to be proven for all exponents n that were prime numbers.
+ The modularity theorem—if proved for semi-stable elliptic curves—would mean that all semistable elliptic curves must be modular.
+ Ribet's theorem showed that any solution to Fermat's equation for a prime number could be used to create a semistable elliptic curve that could not be modular;
+ The only way that both of these statements could be true, was if no solutions existed to Fermat's equation (because then no such curve could be created), which was what Fermat's Last Theorem said. As Ribet's Theorem was already proved, this meant that a proof of the modularity theorem would automatically prove Fermat's Last theorem was true as well.
+
+ Wiles's general proof 
+
+thumb|upright=0.65|British mathematician Andrew Wiles
+
+Ribet's proof of the epsilon conjecture in 1986 accomplished the first of the two goals proposed by Frey. Upon hearing of Ribet's success, Andrew Wiles, an English mathematician with a childhood fascination with Fermat's Last Theorem, and who had worked on elliptic curves, decided to commit himself to accomplishing the second half: proving a special case of the modularity theorem (then known as the Taniyama–Shimura conjecture) for semistable elliptic curves.Singh, p. 205
+
+Wiles worked on that task for six years in near-total secrecy, covering up his efforts by releasing prior work in small segments as separate papers and confiding only in his wife. His initial study suggested proof by induction, and he based his initial work and first significant breakthrough on Galois theory before switching to an attempt to extend horizontal Iwasawa theory for the inductive argument around 1990–91 when it seemed that there was no existing approach adequate to the problem. However, by mid-1991, Iwasawa theory also seemed to not be reaching the central issues in the problem.Singh, pp. 237–238 In response, he approached colleagues to seek out any hints of cutting-edge research and new techniques, and discovered an Euler system recently developed by Victor Kolyvagin and Matthias Flach that seemed "tailor made" for the inductive part of his proof. Wiles studied and extended this approach, which worked. Since his work relied extensively on this approach, which was new to mathematics and to Wiles, in January 1993 he asked his Princeton colleague, Nick Katz, to help him check his reasoning for subtle errors. Their conclusion at the time was that the techniques Wiles used seemed to work correctly.Singh, pp. 239–243
+
+By mid-May 1993, Wiles was ready to tell his wife he thought he had solved the proof of Fermat's Last Theorem, and by June he felt sufficiently confident to present his results in three lectures delivered on 21–23 June 1993 at the Isaac Newton Institute for Mathematical Sciences.Singh, pp. 244–253 Specifically, Wiles presented his proof of the Taniyama–Shimura conjecture for semistable elliptic curves; together with Ribet's proof of the epsilon conjecture, this implied Fermat's Last Theorem. However, it became apparent during peer review that a critical point in the proof was incorrect. It contained an error in a bound on the order of a particular group. The error was caught by several mathematicians refereeing Wiles's manuscript including Katz (in his role as reviewer), who alerted Wiles on 23 August 1993.Singh, p. 257
+
+The error would not have rendered his work worthless: each part of Wiles's work was highly significant and innovative by itself, as were the many developments and techniques he had created in the course of his work, and only one part was affected. However, without this part proved, there was no actual proof of Fermat's Last Theorem. Wiles spent almost a year trying to repair his proof, initially by himself and then in collaboration with his former student Richard Taylor, without success.Singh, pp. 269–277A Year Later, Snag Persists In Math Proof 28 June 199426 June – 2 July; A Year Later Fermat's Puzzle Is Still Not Quite Q.E.D. 3 July 1994 By the end of 1993, rumours had spread that under scrutiny, Wiles's proof had failed, but how seriously was not known. Mathematicians were beginning to pressure Wiles to disclose his work whether it was complete or not, so that the wider community could explore and use whatever he had managed to accomplish. But instead of being fixed, the problem, which had originally seemed minor, now seemed very significant, far more serious, and less easy to resolve.Singh, pp. 175–185
+
+Wiles states that on the morning of 19 September 1994, he was on the verge of giving up and was almost resigned to accepting that he had failed, and to publishing his work so that others could build on it and fix the error. He adds that he was having a final look to try and understand the fundamental reasons why his approach could not be made to work, when he had a sudden insight: that the specific reason why the Kolyvagin–Flach approach would not work directly  meant that his original attempts using Iwasawa theory could be made to work, if he strengthened it using his experience gained from the Kolyvagin–Flach approach. Fixing one approach with tools from the other approach would resolve the issue for all the cases that were not already proven by his refereed paper. He described later that Iwasawa theory and the Kolyvagin–Flach approach were each inadequate on their own, but together they could be made powerful enough to overcome this final hurdle.
+
+On 24 October 1994, Wiles submitted two manuscripts, "Modular elliptic curves and Fermat's Last Theorem" and "Ring theoretic properties of certain Hecke algebras", the second of which was co-authored with Taylor and proved that certain conditions were met that were needed to justify the corrected step in the main paper. The two papers were vetted and published as the entirety of the May 1995 issue of the Annals of Mathematics. The proof's method of identification of a deformation ring with a Hecke algebra (now referred to as an R=T theorem) to prove modularity lifting theorems has been an influential development in algebraic number theory.
+
+These papers established the modularity theorem for semistable elliptic curves, the last step in proving Fermat's Last Theorem, 358 years after it was conjectured.
+
+ Subsequent developments 
+The full Taniyama–Shimura–Weil conjecture was finally proved by Diamond (1996), Conrad et al. (1999), and Breuil et al. (2001) who, building on Wiles's work, incrementally chipped away at the remaining cases until the full result was proved. The now fully proved conjecture became known as the modularity theorem.
+
+Several other theorems in number theory similar to Fermat's Last Theorem also follow from the same reasoning, using the modularity theorem. For example: no cube can be written as a sum of two coprime nth powers, . (The case  was already known by Euler.)
+
+Relationship to other problems and generalizations 
+Fermat's Last Theorem considers solutions to the Fermat equation:  with positive integers , , and  and an integer  greater than 2. There are several generalizations of the Fermat equation to more general equations that allow the exponent  to be a negative integer or rational, or to consider three different exponents.
+
+ Generalized Fermat equation 
+The generalized Fermat equation generalizes the statement of Fermat's last theorem by considering positive integer solutions a, b, c, m, n, k satisfying
+
+In particular, the exponents m, n, k need not be equal, whereas Fermat's last theorem considers the case 
+
+The Beal conjecture, also known as the Mauldin conjecture and the Tijdeman-Zagier conjecture, states that there are no solutions to the generalized Fermat equation in positive integers a, b, c, m, n, k with a, b, and c being pairwise coprime and all of m, n, k being greater than 2.
+
+The Fermat–Catalan conjecture generalizes Fermat's last theorem with the ideas of the Catalan conjecture. The conjecture states that the generalized Fermat equation has only finitely many solutions (a, b, c, m, n, k) with distinct triplets of values (am, bn, ck), where a, b, c are positive coprime integers and m, n, k are positive integers satisfying
+
+The statement is about the finiteness of the set of solutions because there are 10 known solutions.
+
+ Inverse Fermat equation 
+When we allow the exponent  to be the reciprocal of an integer; that is,  for some integer , we have the inverse Fermat equation .
+All solutions of this equation were computed by Hendrik Lenstra in 1992. In the case in which the mth roots are required to be real and positive, all solutions are given by
+ 
+ 
+ 
+for positive integers r, s, t with s and t coprime.
+
+ Rational exponents 
+For the Diophantine equation  with n not equal to 1, Bennett, Glass, and Székely proved in 2004 for , that if n and m are coprime, then there are integer solutions if and only if 6 divides m, and , , and  are different complex 6th roots of the same real number.
+
+ Negative integer exponents 
+ n = −1 
+All primitive integer solutions (that is, those with no prime factor common to all of a, b, and c) to the optic equation  can be written as
+ 
+ 
+ 
+for positive, coprime integers m, k.
+
+ n = −2 
+The case  also has an infinitude of solutions, and these have a geometric interpretation in terms of right triangles with integer sides and an integer altitude to the hypotenuse. All primitive solutions to  are given by
+ 
+ 
+ 
+for coprime integers u, v with . The geometric interpretation is that a and b are the integer legs of a right triangle and d is the integer altitude to the hypotenuse. Then the hypotenuse itself is the integer
+ 
+so  is a Pythagorean triple.
+
+ n < −2 
+There are no solutions in integers for  for integers . If there were, the equation could be multiplied through by  to obtain , which is impossible by Fermat's Last Theorem.
+
+ abc conjecture 
+
+The abc conjecture roughly states that if three positive integers a, b and c (hence the name) are coprime and satisfy , then the radical d of abc is usually not much smaller than c. In particular, the abc conjecture in its most standard formulation implies Fermat's last theorem for n that are sufficiently large. The modified Szpiro conjecture is equivalent to the abc conjecture and therefore has the same implication. An effective version of the abc conjecture, or an effective version of the modified Szpiro conjecture, implies Fermat's Last Theorem outright.
+
+Prizes and incorrect proofs 
+In 1816, and again in 1850, the French Academy of Sciences offered a prize for a general proof of Fermat's Last Theorem.Singh, p. 105 In 1857, the academy awarded 3,000 francs and a gold medal to Kummer for his research on ideal numbers, although he had not submitted an entry for the prize. Another prize was offered in 1883 by the Academy of Brussels.
+
+In 1908, the German industrialist and amateur mathematician Paul Wolfskehl bequeathed 100,000 gold marks—a large sum at the time—to the Göttingen Academy of Sciences to offer as a prize for a complete proof of Fermat's Last Theorem.Singh, pp. 120–125, 131–133, 295–296 On 27 June 1908, the academy published nine rules for awarding the prize. Among other things, these rules required that the proof be published in a peer-reviewed journal; the prize would not be awarded until two years after the publication; and that no prize would be given after 13 September 2007, roughly a century after the competition was begun.Singh, pp. 120–125 Wiles collected the Wolfskehl prize money, then worth $50,000, on 27 June 1997.Singh, p. 284 In March 2016, Wiles was awarded the Norwegian government's Abel Prize worth €600,000 for "his stunning proof of Fermat's Last Theorem by way of the modularity conjecture for semistable elliptic curves, opening a new era in number theory".
+
+Prior to Wiles's proof, thousands of incorrect proofs were submitted to the Wolfskehl committee, amounting to roughly  of correspondence.Singh, p. 295 In the first year alone (1907–1908), 621 attempted proofs were submitted, although by the 1970s, the rate of submission had decreased to roughly 3–4 attempted proofs per month. According to some claims, Edmund Landau tended to use a special preprinted form for such proofs, where the location of the first mistake was left blank to be filled by one of his graduate students.Wheels, Life and Other Mathematical Amusements, Martin Gardner According to F. Schlichting, a Wolfskehl reviewer, most of the proofs were based on elementary methods taught in schools, and often submitted by "people with a technical education but a failed career".Singh, pp. 295–296 In the words of mathematical historian Howard Eves, "Fermat's Last Theorem has the peculiar distinction of being the mathematical problem for which the greatest number of incorrect proofs have been published."
+
+In popular culture 
+
+The popularity of the theorem outside science has led to it being described as achieving "that rarest of mathematical accolades: A niche role in pop culture."thumb|Czech postage stamp commemorating Wiles' proof
+
+Arthur Porges' 1954 short story "The Devil and Simon Flagg" features a mathematician who bargains with the Devil that the latter cannot produce a proof of Fermat's Last Theorem within twenty-four hours.
+
+In the 1989 Star Trek: The Next Generation episode "The Royale", Captain Picard states that the theorem is still unproven in the 24th century. The proof was released five years after the episode originally aired.
+
+The 1997 book Fermat's Last Theorem by author Simon Singh became the first mathematics book to become a number-one seller in the United Kingdom, while Singh's documentary The Proof, on which the book was based, won a BAFTA award in 1997.
+
+In a 1998 episode of The Simpsons (that is, "The Wizard of Evergreen Terrace"), Homer Simpson writes the equation  on a blackboard, which appears to be a counterexample to Fermat's Last Theorem. The equation is wrong, but it appears to be correct if entered in a calculator with 10 significant figures.

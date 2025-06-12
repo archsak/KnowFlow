@@ -1,0 +1,135 @@
+Graph neural networks (GNN) are specialized artificial neural networks that are designed for tasks whose inputs are graphs.
+
+One prominent example is molecular drug design.  Each input sample is a graph representation of a molecule, where atoms form the nodes and chemical bonds between atoms form the edges.  In addition to the graph representation, the input also includes known chemical properties for each of the atoms.  Dataset samples may thus differ in length, reflecting the varying numbers of atoms in molecules, and the varying number of bonds between them. The task is to predict the efficacy of a given molecule for a specific medical application, like eliminating E. coli bacteria.
+
+The key design element of GNNs is the use of pairwise message passing, such that graph nodes iteratively update their representations by exchanging information with their neighbors. Several GNN architectures have been proposed, which implement different flavors of message passing,  started by recursive or convolutional constructive approaches. , it is an open question whether it is possible to define GNN architectures "going beyond" message passing, or instead every GNN can be built on message passing over suitably defined graphs.
+
+thumb|Basic building blocks of a graph neural network (GNN).  Permutation equivariant layer.  Local pooling layer.  Global pooling (or readout) layer. Colors indicate features.
+
+In the more general subject of "geometric deep learning", certain existing neural network architectures can be interpreted as GNNs operating on suitably defined graphs. A convolutional neural network layer, in the context of computer vision, can be considered a GNN applied to graphs whose nodes are pixels and only adjacent pixels are connected by edges in the graph. A transformer layer, in natural language processing, can be considered a GNN applied to complete graphs whose nodes are words or tokens in a passage of natural language text.
+
+Relevant application domains for GNNs include natural language processing, social networks, citation networks, molecular biology, chemistry, physics and NP-hard combinatorial optimization problems.
+
+Open source libraries implementing GNNs include PyTorch Geometric (PyTorch), TensorFlow GNN (TensorFlow), Deep Graph Library (framework agnostic), jraph (Google JAX), and GraphNeuralNetworks.jl/GeometricFlux.jl (Julia, Flux).
+
+Architecture 
+
+The architecture of a generic GNN implements the following fundamental layers:
+ Permutation equivariant: a permutation equivariant layer maps a representation of a graph into an updated representation of the same graph. In the literature, permutation equivariant layers are implemented via pairwise message passing between graph nodes. Intuitively, in a message passing layer, nodes update their representations by aggregating the messages received from their immediate neighbours. As such, each message passing layer increases the receptive field of the GNN by one hop.
+ Local pooling: a local pooling layer coarsens the graph via downsampling. Local pooling is used to increase the receptive field of a GNN, in a similar fashion to pooling layers in convolutional neural networks. Examples include k-nearest neighbours pooling, top-k pooling, and self-attention pooling.
+ Global pooling: a global pooling layer, also known as readout layer, provides fixed-size representation of the whole graph. The global pooling layer must be permutation invariant, such that permutations in the ordering of graph nodes and edges do not alter the final output. Examples include element-wise sum, mean or maximum.
+
+It has been demonstrated that GNNs cannot be more expressive than the Weisfeiler–Leman Graph Isomorphism Test. In practice, this means that there exist different graph structures (e.g., molecules with the same atoms but different bonds) that cannot be distinguished by GNNs. More powerful GNNs operating on higher-dimension geometries such as simplicial complexes can be designed. , whether or not future architectures will overcome the message passing primitive is an open research question.
+
+thumb|Non-isomorphic graphs that cannot be distinguished by a GNN due to the limitations of the Weisfeiler-Lehman Graph Isomorphism Test. Colors indicate node features.
+
+Message passing layers 
+thumb|Node representation update in a Message Passing Neural Network (MPNN) layer. Node  receives messages sent by all of its immediate neighbours  to . Messages are computing via the message function , which accounts for the features of both senders and receiver.
+
+Message passing layers are permutation-equivariant layers mapping a graph into an updated representation of the same graph. Formally, they can be expressed as message passing neural networks (MPNNs).
+
+Let  be a graph, where  is the node set and  is the edge set. Let  be the neighbourhood of some node . Additionally, let  be the features of node , and  be the features of edge . An MPNN layer can be expressed as follows:
+
+where  and  are differentiable functions (e.g., artificial neural networks), and  is a permutation invariant aggregation operator that can accept an arbitrary number of inputs (e.g., element-wise sum, mean, or max). In particular,  and  are referred to as update and message functions, respectively. Intuitively, in an MPNN computational block, graph nodes update their representations by aggregating the messages received from their neighbours.
+
+The outputs of one or more MPNN layers are node representations  for each node  in the graph. Node representations can be employed for any downstream task, such as node/graph classification or edge prediction.
+
+Graph nodes in an MPNN update their representation aggregating information from their immediate neighbours. As such, stacking  MPNN layers means that one node will be able to communicate with nodes that are at most  "hops" away. In principle, to ensure that every node receives information from every other node, one would need to stack a number of MPNN layers equal to the graph diameter. However, stacking many MPNN layers may cause issues such as oversmoothing and oversquashing. Oversmoothing refers to the issue of node representations becoming indistinguishable. Oversquashing refers to the bottleneck that is created by squeezing long-range dependencies into fixed-size representations. Countermeasures such as skip connections (as in residual neural networks), gated update rules and jumping knowledge can mitigate oversmoothing. Modifying the final layer to be a fully-adjacent layer, i.e., by considering the graph as a complete graph, can mitigate oversquashing in problems where long-range dependencies are required.
+
+Other "flavours" of MPNN have been developed in the literature, such as graph convolutional networks and graph attention networks, whose definitions can be expressed in terms of the MPNN formalism.
+
+ Graph convolutional network 
+The graph convolutional network (GCN) was first introduced by Thomas Kipf and Max Welling in 2017.
+
+A GCN layer defines a first-order approximation of a localized spectral filter on graphs. GCNs can be understood as a generalization of convolutional neural networks to graph-structured data.
+
+The formal expression of a GCN layer reads as follows:
+
+where  is the matrix of node representations ,  is the matrix of node features ,  is an activation function (e.g., ReLU),  is the graph adjacency matrix with the addition of self-loops,  is the graph degree matrix with the addition of self-loops, and  is a matrix of trainable parameters.
+
+In particular, let  be the graph adjacency matrix: then, one can define  and , where  denotes the identity matrix. This normalization ensures that the eigenvalues of  are bounded in the range , avoiding numerical instabilities and exploding/vanishing gradients.
+
+A limitation of GCNs is that they do not allow multidimensional edge features . It is however possible to associate scalar weights  to each edge by imposing , i.e., by setting each nonzero entry in the adjacency matrix equal to the weight of the corresponding edge.
+
+ Graph attention network 
+The graph attention network (GAT) was introduced by Petar Veličković et al. in 2018.
+
+Graph attention network is a combination of a GNN and an attention layer.
+The implementation of attention layer in graphical neural networks helps provide attention or focus to the important information from the data instead of focusing on the whole data.
+
+A multi-head GAT layer can be expressed as follows:
+
+where  is the number of attention heads,  denotes vector concatenation,  is an activation function (e.g., ReLU),  are attention coefficients, and  is a matrix of trainable parameters for the -th attention head.
+
+For the final GAT layer, the outputs from each attention head are averaged before the application of the activation function. Formally, the final GAT layer can be written as:
+
+Attention in Machine Learning is a technique that mimics cognitive attention. In the context of learning on graphs, the attention coefficient  measures how important is node  to node .
+
+Normalized attention coefficients are computed as follows:
+
+where  is a vector of learnable weights,  indicates transposition,  are the edge features (if present), and  is a modified ReLU activation function. Attention coefficients are normalized to make them easily comparable across different nodes.
+
+A GCN can be seen as a special case of a GAT where attention coefficients are not learnable, but fixed and equal to the edge weights .
+
+ Gated graph sequence neural network 
+The gated graph sequence neural network (GGS-NN) was introduced by Yujia Li et al. in 2015. The GGS-NN extends the GNN formulation by Scarselli et al. to output sequences. The message passing framework is implemented as an update rule to a gated recurrent unit (GRU) cell.
+
+A GGS-NN can be expressed as follows:
+
+where  denotes vector concatenation,  is a vector of zeros,  is a matrix of learnable parameters,  is a GRU cell, and  denotes the sequence index. In a GGS-NN, the node representations are regarded as the hidden states of a GRU cell. The initial node features  are zero-padded up to the hidden state dimension of the GRU cell. The same GRU cell is used for updating representations for each node.
+
+Local pooling layers 
+Local pooling layers coarsen the graph via downsampling. We present here several learnable local pooling strategies that have been proposed. For each case, the input is the initial graph is represented by a matrix  of node features, and the graph adjacency matrix . The output is the new matrix of node features, and the new graph adjacency matrix .
+
+ Top-k pooling 
+We first set
+
+where  is a learnable projection vector. The projection vector  computes a scalar projection value for each graph node.
+
+The top-k pooling layer  can then be formalised as follows:
+
+where  is the subset of nodes with the top-k highest projection scores,  denotes element-wise matrix multiplication, and  is the sigmoid function. In other words, the nodes with the top-k highest projection scores are retained in the new adjacency matrix . The  operation makes the projection vector  trainable by backpropagation, which otherwise would produce discrete outputs.
+
+ Self-attention pooling 
+We first set
+
+where  is a generic permutation equivariant GNN layer (e.g., GCN, GAT, MPNN).
+
+The Self-attention pooling layer can then be formalised as follows:
+
+where  is the subset of nodes with the top-k highest projection scores,  denotes element-wise matrix multiplication.
+
+The self-attention pooling layer can be seen as an extension of the top-k pooling layer. Differently from top-k pooling, the self-attention scores computed in self-attention pooling account both for the graph features and the graph topology.
+
+Heterophilic Graph Learning 
+Homophily principle, i.e., nodes with the same labels or similar attributes are more likely to be connected, has been commonly believed to be the main reason for the superiority of Graph Neural Networks (GNNs) over traditional Neural Networks (NNs) on graph-structured data, especially on node-level tasks. However, recent work has identified a non-trivial set of datasets where GNN’s performance compared to the NN’s is not satisfactory. Heterophily, i.e., low homophily, has been considered the main cause of this empirical observation. People have begun to revisit and re-evaluate most existing graph models in the heterophily scenario across various kinds of graphs, e.g., heterogeneous graphs, temporal graphs and hypergraphs. Moreover, numerous graph-related applications are found to be closely related to the heterophily problem, e.g. graph fraud/anomaly detection, graph adversarial attacks and robustness, privacy, federated learning and point cloud segmentation, graph clustering, recommender systems, generative models, link prediction, graph classification and coloring, etc. In the past few years, considerable effort has been devoted to studying and addressing the heterophily issue in graph learning.
+
+Applications 
+
+ Protein folding 
+
+Graph neural networks are one of the main building blocks of AlphaFold, an artificial intelligence program developed by Google's DeepMind for solving the protein folding problem in biology. AlphaFold achieved first place in several CASP competitions.
+
+ Social networks 
+
+Social networks are a major application domain for GNNs due to their natural representation as social graphs. GNNs are used to develop recommender systems based on both social relations and item relations.
+
+ Combinatorial optimization 
+
+GNNs are used as fundamental building blocks for several combinatorial optimization algorithms. Examples include computing shortest paths or Eulerian circuits for a given graph, deriving chip placements superior or competitive to handcrafted human solutions, and improving expert-designed branching rules in branch and bound.
+
+ Cyber security 
+
+When viewed as a graph, a network of computers can be analyzed with GNNs for anomaly detection. Anomalies within provenance graphs often correlate to malicious activity within the network. GNNs have been used to identify these anomalies on individual nodes and within paths to detect malicious processes, or on the edge level to detect lateral movement.
+
+ Water distribution networks 
+
+Water distribution systems can be modelled as graphs, being then a straightforward application of GNN. This kind of algorithm has been applied to water demand forecasting, interconnecting District Measuring Areas to improve the forecasting capacity. Other application of this algorithm on water distribution modelling is the development of metamodels.
+
+ Computer Vision 
+
+To represent an image as a graph structure, the image is first divided into multiple patches, each of which is treated as a node in the graph. Edges are then formed by connecting each node to its nearest neighbors based on spatial or feature similarity. This graph-based representation enables the application of graph learning models to visual tasks. The relational structure helps to enhance feature extraction and improve performance on image understanding.
+
+ Text and NLP 
+
+Graph-based representation of text helps to capture deeper semantic relationships between words. Many studies have used graph networks to enhance performance in various text processing tasks such as text classification, question answering, Neural Machine Translation (NMT), event extraction, fact verification, etc.

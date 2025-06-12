@@ -1,0 +1,40 @@
+Autoassociative memory, also known as auto-association memory or an autoassociation network, is any type of memory that is able to retrieve a piece of data from only a tiny sample of itself. They are very effective in de-noising or removing interference from the input and can be used to determine whether the given input is “known” or “unknown”.
+
+In artificial neural network, examples include variational autoencoder, denoising autoencoder, Hopfield network.
+
+In reference to computer memory, the idea of associative memory is also referred to as Content-addressable memory (CAM).
+
+The net is said to recognize a “known” vector if the net produces a pattern of activation on the output units which is same as one of the vectors stored in it.
+
+Background
+Standard memories (data storage) are organized by being indexed by positional memory addresses which are also used for data retrieval.
+
+Autoassociative memories are organized in such a way that data is stored in a graph like system with connection weights based on the number of inherent associative connections between two memories which makes it possible to query it using a memory already contained in the associative memory as query-key and retrieve that memory and closely connected memories at the same time. Hopfield networks have been shown to act as autoassociative memory since they are capable of remembering data by observing a portion of that data.
+
+ Iterative Autoassociative Net 
+In some cases, an auto-associative net does not reproduce a stored pattern the first time around, but if the result of the first showing is input to the net again, the stored pattern is reproduced. They are of 3 further kinds — Recurrent linear auto-associator, Brain-State-in-a-Box net, and Discrete Hopfield net. The Hopfield Network is the most well known example of an autoassociative memory.
+
+ Hopfield Network 
+
+Hopfield networks serve as content-addressable ("associative") memory systems with binary threshold nodes, and they have been shown to act as autoassociative since they are capable of remembering data by observing a portion of that data.
+
+Heteroassociative memory
+Heteroassociative memories, on the other hand, can recall an associated piece of datum from one category upon presentation of data from another category. For example: It is possible that the associative recall is a transformation from the pattern “banana” to the different pattern “monkey.”
+
+Bidirectional associative memory (BAM)
+
+Bidirectional associative memories (BAM) are artificial neural networks that have long been used for performing heteroassociative recall.
+
+Example
+
+For example, the sentence fragments presented below are sufficient for most English-speaking adult humans to recall the missing information.
+
+ "To be or not to be, that is _____."
+ "I came, I saw, _____."
+
+Many readers will realize the missing information is in fact:
+
+ "To be or not to be, that is the question."
+ "I came, I saw, I conquered."
+
+This demonstrates the capability of autoassociative networks to recall the whole by using some of its parts.

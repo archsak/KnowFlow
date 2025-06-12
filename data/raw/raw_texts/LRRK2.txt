@@ -1,0 +1,30 @@
+Leucine-rich repeat kinase 2 (LRRK2), also known as dardarin (from the Basque word "dardara" which means trembling) and PARK8 (from early identified association with Parkinson's disease), is a large, multifunctional kinase enzyme that in humans is encoded by the LRRK2 gene. LRRK2 is a member of the leucine-rich repeat kinase family. Variants of this gene are associated with an increased risk of Parkinson's disease and Crohn's disease.
+
+Function 
+
+The LRRK2 gene encodes a protein with an armadillo repeats (ARM) region, an ankyrin repeat (ANK) region, a leucine-rich repeat (LRR) domain, a kinase domain, a RAS domain, a GTPase domain, and a WD40 domain. The protein is present largely in the cytoplasm but also associates with the mitochondrial outer membrane.
+
+LRRK2  interacts with the C-terminal R2 RING finger domain of parkin, and parkin interacted with the COR domain of LRRK2. Expression of mutant LRRK2 induced apoptotic cell death in neuroblastoma cells and in mouse cortical neurons.
+
+Expression of LRRK2 mutants implicated in autosomal dominant Parkinson's disease causes shortening and simplification of the dendritic tree in vivo and in cultured neurons. This is mediated in part by alterations in macroautophagy, and can be prevented by protein kinase A regulation of the autophagy protein LC3. The G2019S and R1441C mutations elicit post-synaptic calcium imbalance, leading to excess mitochondrial clearance from dendrites by mitophagy. LRRK2 is also a substrate for chaperone-mediated autophagy.
+
+Disease-associated mutant alleles of LRRK2 (R1441C, G2019S, I2020T) generally show elevated kinase activity.
+
+LRRK2 activity has been tied to generation of reactive-oxygen species (ROS) which are associated with Parkinson's disease pathogenesis. This activity is dependent on LRRK2-mediated phosphorylation of NADPH oxidase 2 (NOX2). Specifically, LRRK2 activity promotes activatory phosphorylation of the p47phox subunit of NOX2 at S345.
+
+Clinical significance 
+
+Mutations in this gene have been associated with Parkinson's disease type 8.
+
+The G2019S mutation results in enhanced kinase activity, and is a relatively common cause of familial Parkinson's disease in Caucasians. It may also cause sporadic Parkinson's disease. The mutated Gly amino acid is conserved in all kinase domains of all species.
+
+The G2019S mutation is one of a small number of LRRK2 mutations proven to cause Parkinson's disease. Of these, G2019S is the most common in the Western World, accounting for ~2% of all Parkinson's disease cases in North American Caucasians. This mutation is enriched in certain populations, being found in approximately 20% of all Ashkenazi Jewish Parkinson's disease patients and in approximately 40% of all Parkinson's disease patients of North African Berber Arab ancestry.
+
+Unexpectedly, genome-wide association studies have found an association between LRRK2 and Crohn's disease as well as with Parkinson's disease, suggesting that the two diseases share common pathways.
+
+Attempts have been made to grow crystals of the LRRK2 aboard the International Space Station, as the low-gravity environment renders the protein less susceptible to sedimentation and convection, and thus more crystallizable.
+
+Mutations in the LRRK2 gene is the main factor in contributing to the genetic development of Parkinson's disease, and over 100 mutations in this gene have been shown to increase the chance of PD development. These mutations are most commonly seen in North African Arab Berber, Chinese, and Japanese populations.“Young-Onset Parkinson's.” Parkinson's Foundation, 2 Oct. 2018, www.parkinson.org/Understanding-Parkinsons/What-is-Parkinsons/Young-Onset-Parkinsons.
+
+ Therapeutics development 
+Multiple preclinical studies have found that inhibition or silencing of LRRK2 may be therapeutically beneficial for treatment of Parkinson's disease. There have been efforts to develop therapeutics for Parkinson's disease targeting LRRK2, including LRRK2 inhibitors and antisense oligonucleotides (ASOs) targeting LRRK2.

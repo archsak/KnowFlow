@@ -1,0 +1,18 @@
+Neural differential equations are a class of models in machine learning that combine neural networks with the mathematical framework of differential equations. These models provide an alternative approach to neural network design, particularly for systems that evolve over time or through continuous transformations.
+
+The most common type, a neural ordinary differential equation (neural ODE), defines the evolution of a system's state using an ordinary differential equation whose dynamics are governed by a neural network: In this formulation, the neural network parameters θ determine how the state changes at each point in time. This approach contrasts with conventional neural networks, where information flows through discrete layers indexed by natural numbers. Neural ODEs instead use continuous layers indexed by positive real numbers, where the function  represents the network's state at any given layer depth t.
+
+Neural ODEs can be understood as continuous-time control systems, where their ability to interpolate data can be interpreted in terms of controllability. They have found applications in time series analysis, generative modeling, and the study of complex dynamical systems.
+
+Connection with residual neural networks 
+Neural ODEs can be interpreted as a residual neural network with a continuum of layers rather than a discrete number of layers. Applying the Euler method with a unit time step to a neural ODE yields the forward propagation equation of a residual neural network:
+
+with ℓ being the ℓ-th layer of this residual neural network. While the forward propagation of a residual neural network is done by applying a sequence of transformations starting at the input layer, the forward propagation computation of a neural ODE is done by solving a differential equation. More precisely, the output  associated to the input  of the neural ODE is obtained by solving the initial value problem
+
+and assigning the value  to .
+
+Universal differential equations 
+
+In physics-informed contexts where additional information is known, neural ODEs can be combined with an existing first-principles model to build a physics-informed neural network model called universal differential equations (UDE). For instance, an UDE version of the Lotka-Volterra model can be written as
+
+where the terms  and  are correction terms parametrized by neural networks.
