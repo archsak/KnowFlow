@@ -194,12 +194,24 @@ def write_all_links_to_csv(article_titles, filename="check3.csv"):
                     seen_pairs.add(pair)
 
 
-
-
 write_all_links_to_csv(article_titles)
 
 
 
 
 
+# CODE FOR CHANGING : TO . IN NAMES OF FILES
+# import pandas as pd
 
+# # Path to your CSV
+# csv_path = "data/raw/ranked_pages/rated_wiki_pages.csv"
+
+# # Load, modify, and save back
+# df = pd.read_csv(csv_path)
+
+# if 'source_article' in df.columns:
+#     df['source_article'] = df['source_article'].str.replace(":", ".", regex=False)
+#     df.to_csv(csv_path, index=False)
+#     print("✅ Updated source_article values and saved CSV.")
+# else:
+#     print("❌ 'source_article' column not found in the CSV.")
