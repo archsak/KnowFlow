@@ -219,14 +219,14 @@ def load_training_data(ranked_pages_dir: str,
         # Load human-ranked data
         try:
             human_ranks_df = pd.read_csv(ranked_file_path)
-            if not ({'expression', 'rank'}.issubset(human_ranks_df.columns)):
+            if not ({'concept', 'score'}.issubset(human_ranks_df.columns)):
                 print(f"Warning: CSV file {ranked_file_name} is missing required columns. Skipping.")
                 continue
                 
             # Process each expression
             for _, row in human_ranks_df.iterrows():
-                expression = row['expression']
-                human_rank = int(row['rank'])  # Ensure rank is integer
+                expression = row['concept']
+                human_rank = int(row['score'])  # Ensure rank is integer
                 
                 # Get similarity score if available
                 similarity_score = None
