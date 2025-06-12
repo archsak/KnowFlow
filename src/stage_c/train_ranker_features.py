@@ -189,7 +189,8 @@ def load_training_data(ranked_pages_dir: str,
             continue
         
         page_title = ranked_file_name.replace(".csv", "")
-        ranked_file_path = os.path.join(ranked_pages_dir, ranked_file_name)
+        ranked_file_path = os.path.join(ranked_pages_dir, 'rated_wiki_pages.csv')
+        #ranked_file_path = os.path.join(ranked_pages_dir, ranked_file_name)
         raw_file_path = os.path.join(raw_data_dir, f"{page_title}.txt")
         
         # Skip if raw document text is not available
@@ -371,7 +372,7 @@ def main():
     """
     # Configuration
     ranked_pages_dir = "data/raw/ranked_pages"  # Directory with human-ranked CSVs
-    raw_data_dir = "data/raw"  # Directory with raw text files
+    raw_data_dir = "data/raw_texts"  # Directory with raw text files
     stage_b_output_dir = "data/processed/stage_b"  # Optional: Directory with Stage B similarity scores
     model_output_path = "models/stage_c_ranker.joblib"  # Path to save the trained model
     perform_grid_search = False  # Set to True to perform hyperparameter tuning (takes longer)
