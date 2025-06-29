@@ -472,16 +472,6 @@ class KnowFlowBERTDetector:
         print("\nEvaluating on test set:")
         self._evaluate_test_set(test_loader)
         
-        # Save embeddings for stage B
-        print("\nSaving document embeddings for stage B...")
-        embeddings_dir = os.path.join("data/processed/stage_a/embeddings")
-        for article in articles:
-            self.save_document_embedding(
-                article['text'],
-                article['title'],
-                embeddings_dir
-            )
-        
         print("Training completed!")
     
     def _evaluate_test_set(self, test_loader):
@@ -659,30 +649,6 @@ class KnowFlowBERTDetector:
         self.model.eval()
         
         print(f"Model loaded from {filepath}")
-    
-    def save_document_embedding(self, document_text: str, page_title: str, embeddings_dir: str):
-        """Save document embedding for reuse in stage B."""
-        os.makedirs(embeddings_dir, exist_ok=True)
-        
-        # Get document embedding using the trained model
-        encoding = self.tokenizer(
-            document_text,
-            truncation=True,
-            padding='max_length',
-            max_length=512,
-            return_tensors='pt'
-        )
-        encoding = {k: v.to(self.device) for k, v in encoding.items()}
-        
-        with torch.no_grad():
-            outputs = self.model(**encoding)
-            embedding = outputs.last_hidden_state.mean(dim=1).cpu().numpy()[0]
-        
-        # Save embedding
-        output_path = os.path.join(embeddings_dir, f"{page_title}_embedding.npy")
-        np.save(output_path, embedding)
-        
-        return embedding
 
 
 def main():
@@ -729,11 +695,6 @@ def main():
     #     detector = KnowFlowBERTDetector()
     #     detector.load_model(args.model_path)
     #     detector.evaluate_with_gold_standard(confidence_threshold=args.threshold)
-
-    detector = KnowFlowBERTDetector()
-    articles = detector.get_wikipedia_data(num_articles=100)
-    detector.train(articles, epochs=3, batch_size=8)
-    detector.save_model()
 
 if __name__ == "__main__":
     main()
