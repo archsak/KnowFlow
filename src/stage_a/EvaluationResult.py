@@ -26,7 +26,7 @@ class EvaluationMetrics:
     false_negatives: int
     
     def __str__(self):
-        return f"P: {self.precision:.3f}, R: {self.recall:.3f}, F1: {self.f1_score:.3f}"
+        return f"precision: {self.precision:.3f}, recall: {self.recall:.3f}, F1: {self.f1_score:.3f}"
 
 
 @dataclass
@@ -58,7 +58,7 @@ class GoldStandardEvaluator:
         # Create output directory if it doesn't exist
         os.makedirs(output_dir, exist_ok=True)
     
-    def evaluate_article(self, title: str, predicted_links: List[Dict]) -> ArticleEvaluation:
+    def evaluate_article(self, title: str, predicted_links: List[Dict], actual_links: List[Dict]) -> ArticleEvaluation:
         """
         Evaluate predictions for a single article against Wikipedia gold standard.
         
@@ -70,9 +70,7 @@ class GoldStandardEvaluator:
             ArticleEvaluation object with detailed metrics
         """
         # Get gold standard data with section filtering
-        article_data = self.extractor.get_article_data(title)
-        if not article_data:
-            raise ValueError(f"Could not fetch article: {title}")
+   
         
         # Extract and normalize phrases
         predicted_phrases = set()
@@ -82,7 +80,7 @@ class GoldStandardEvaluator:
                 predicted_phrases.add(phrase)
         
         actual_phrases = set()
-        for link in article_data['links']:
+        for link in actual_links:
             phrase = self._normalize_phrase(link['display_text'])
             if phrase:
                 actual_phrases.add(phrase)
@@ -155,21 +153,28 @@ class GoldStandardEvaluator:
                     print(f"    Skipping {title} - could not fetch")
                     continue
                 
+                print("here")
+                
                 # Get model predictions
                 predicted_links = model.predict_links(
                     article_data['clean_text'], 
                     threshold=confidence_threshold
                 )
                 
+                print("here2")
+                print('article_data: ', article_data['links'])
+                
                 # Evaluate against gold standard
-                evaluation = self.evaluate_article(title, predicted_links)
+                evaluation = self.evaluate_article(title, predicted_links, article_data['links'])
+                print('evaluation: ', evaluation)
                 article_evaluations.append(evaluation)
                 successful_evaluations += 1
                 
+                print("here3")
                 # Collect data for file output
                 self._collect_comparison_data(evaluation, comparison_data)
                 
-                print(f"   {evaluation.metrics}")
+                print(f"{evaluation.metrics}")
                 
             except Exception as e:
                 print(f"   Error processing {title}: {e}")

@@ -6,6 +6,10 @@ Dependencies:
 pip install transformers torch datasets scikit-learn numpy
 """
 
+
+print("✅ Sanity check: Bert.py was imported and ran")
+
+
 import torch
 import numpy as np
 from transformers import AutoTokenizer, AutoModel
@@ -357,29 +361,21 @@ class KnowFlowBERTDetector:
         cache_filename = 'knowflow_training_data.json'
         
         # Try to load cached data first
-        if use_cached:
-            try:
-                cached_data = self.extractor.load_dataset(cache_filename)
-                if cached_data and len(cached_data) >= num_articles:
-                    print(f"Using cached data: {len(cached_data)} articles")
-                    return cached_data[:num_articles]
-            except:
-                pass
+        # if use_cached:
+        #     try:
+        #         cached_data = self.extractor.load_dataset(cache_filename)
+        #         if cached_data and len(cached_data) >= num_articles:
+        #             print(f"Using cached data: {len(cached_data)} articles")
+        #             return cached_data[:num_articles]
+        #     except:
+        #         pass
         
         print("Fetching fresh Wikipedia data...")
         
         # Get diverse article titles
-        article_titles = get_diverse_article_titles()
+        article_titles = get_random_articles(num_articles)
+
         
-        # Add random articles if needed
-        if len(article_titles) < num_articles:
-            additional_titles = get_random_articles(num_articles - len(article_titles))
-            article_titles.extend(additional_titles)
-        
-        # Limit to requested number
-        article_titles = article_titles[:num_articles]
-        
-        # Fetch articles using WikipediaExtractor
         articles = self.extractor.get_training_dataset(
             article_titles, 
             save_cache=False  # We'll save with our own filename
@@ -393,7 +389,8 @@ class KnowFlowBERTDetector:
         
         return articles
     
-    def train(self, articles: List[Dict] = None, epochs: int = 3, batch_size: int = 16, 
+    
+    def train(self, articles: List[Dict] = None, epochs: int = 3, batch_size: int = 32, 
               learning_rate: float = 2e-5):
         """
         Train the BERT-based link detector.
@@ -567,10 +564,24 @@ class KnowFlowBERTDetector:
         if test_articles is None:
             # Use a different set of articles for testing
             test_articles = [
-                "Natural language processing", "Computer vision", "Robotics",
-                "Quantum computing", "Blockchain", "Biotechnology",
-                "Renewable energy", "Space exploration", "Archaeology",
-                "Linguistics", "Cognitive science", "Neuroscience"
+                # "Prime Number",
+                # "Attention Is All You Need", 
+                "BERT (language model)", 
+                # "GPT (language model)", 
+                # "AlexNet", 
+                # "Word2vec", 
+                # "U-Net",
+                # "Capsule neural network",
+                # "Neural differential equation", 
+                # "DeepDream", 
+                # "Batch normalization", 
+                # "Swish function", 
+                # "Microhistory",
+                # "Eurasia Group",
+                # "Miranda v. Arizona",
+                # "Cook–Levin theorem",   
+                # "Beowulf: The Monsters and the Critics",
+                # "Pathetic fallacy",
             ]
         
         print(f"Evaluating model with gold standard on {len(test_articles)} articles...")
@@ -585,32 +596,56 @@ class KnowFlowBERTDetector:
         
         return results
     
+    # def _extract_candidates(self, text: str) -> List[str]:
+    #     """Extract candidate phrases from text."""
+    #     candidates = set()
+    #     words = text.split()
+        
+    #     # Extract various n-grams as candidates
+    #     for i in range(len(words)):
+    #         # Single words (capitalized, longer than 2 chars)
+    #         word = words[i].strip('.,!?;:()"\'')
+    #         if len(word) > 2 :
+    #             candidates.add(word)
+            
+    #         # Bigrams
+    #         if i < len(words) - 1:
+    #             bigram = f"{words[i]} {words[i+1]}"
+    #             bigram_clean = bigram.strip('.,!?;:()"\'')
+    #             if len(bigram_clean) > 4:
+    #                 candidates.add(bigram_clean)
+            
+    #         # Trigrams
+    #         if i < len(words) - 2:
+    #             trigram = f"{words[i]} {words[i+1]} {words[i+2]}"
+    #             trigram_clean = trigram.strip('.,!?;:()"\'')
+    #             if len(trigram_clean) > 6:
+    #                 candidates.add(trigram_clean)
+        
+    #     print('candidates: ', candidates)
+    #     return list(candidates)
+    
+    
     def _extract_candidates(self, text: str) -> List[str]:
-        """Extract candidate phrases from text."""
-        candidates = set()
+        """Generate realistic candidate phrases based on training-time filtering."""
         words = text.split()
-        
-        # Extract various n-grams as candidates
+        processor = self.data_processor
+        max_phrase_length = 4
+        min_phrase_length = 1
+
+        candidates = set()
+
         for i in range(len(words)):
-            # Single words (capitalized, longer than 2 chars)
-            word = words[i].strip('.,!?;:()"\'')
-            if len(word) > 2 and word[0].isupper() and not word.isdigit():
-                candidates.add(word)
-            
-            # Bigrams
-            if i < len(words) - 1:
-                bigram = f"{words[i]} {words[i+1]}"
-                bigram_clean = bigram.strip('.,!?;:()"\'')
-                if len(bigram_clean) > 4:
-                    candidates.add(bigram_clean)
-            
-            # Trigrams
-            if i < len(words) - 2:
-                trigram = f"{words[i]} {words[i+1]} {words[i+2]}"
-                trigram_clean = trigram.strip('.,!?;:()"\'')
-                if len(trigram_clean) > 6:
-                    candidates.add(trigram_clean)
-        
+            for length in range(min_phrase_length, max_phrase_length + 1):
+                if i + length > len(words):
+                    break
+                phrase = ' '.join(words[i:i+length])
+                phrase_clean = phrase.strip('.,!?;:()"\'')
+                
+                if processor._is_valid_phrase(phrase_clean, min_phrase_length, max_phrase_length):
+                    candidates.add(phrase_clean)
+
+        print("num candidates: ", len(candidates))
         return list(candidates)
     
     def _get_context(self, text: str, phrase: str, window: int = 50) -> str:
@@ -653,48 +688,61 @@ class KnowFlowBERTDetector:
 
 def main():
     """Main function with command line interface."""
-    # parser = argparse.ArgumentParser(description='KnowFlow: BERT-based Link Phrase Detection')
-    # parser.add_argument('--mode', choices=['train', 'predict', 'evaluate'], 
-    #                    default='train', help='Mode to run')
-    # parser.add_argument('--articles', type=int, default=50, 
-    #                    help='Number of articles to fetch for training')
-    # parser.add_argument('--epochs', type=int, default=3, 
-    #                    help='Number of training epochs')
-    # parser.add_argument('--batch_size', type=int, default=16, 
-    #                    help='Training batch size')
-    # parser.add_argument('--threshold', type=float, default=0.5, 
-    #                    help='Confidence threshold for predictions')
-    # parser.add_argument('--text', type=str, 
-    #                    help='Text to analyze (for predict mode)')
-    # parser.add_argument('--model_path', type=str, default='knowflow_bert_model.pth',
-    #                    help='Path to save/load model')
+    parser = argparse.ArgumentParser(description='KnowFlow: BERT-based Link Phrase Detection')
+    parser.add_argument('--mode', choices=['train', 'predict', 'evaluate'], 
+                       default='train', help='Mode to run')
+    parser.add_argument('--articles', type=int, default=50, 
+                       help='Number of articles to fetch for training')
+    parser.add_argument('--epochs', type=int, default=3, 
+                       help='Number of training epochs')
+    parser.add_argument('--batch_size', type=int, default=16, 
+                       help='Training batch size')
+    parser.add_argument('--threshold', type=float, default=0.5, 
+                       help='Confidence threshold for predictions')
+    parser.add_argument('--text_file', type=str, help='Path to .txt file to analyze (for predict mode)')
+
+    parser.add_argument('--model_path', type=str, default='knowflow_bert_model.pth',
+                       help='Path to save/load model')
     
-    # args = parser.parse_args()
+    args = parser.parse_args()
     
-    # if args.mode == 'train':
-    #     detector = KnowFlowBERTDetector()
-    #     articles = detector.get_wikipedia_data(num_articles=args.articles)
-    #     detector.train(articles, epochs=args.epochs, batch_size=args.batch_size)
-    #     detector.save_model(args.model_path)
+    if args.mode == 'train':
+        detector = KnowFlowBERTDetector()
+        articles = detector.get_wikipedia_data(num_articles=args.articles)
+        detector.train(articles, epochs=args.epochs, batch_size=args.batch_size)
+        detector.save_model(args.model_path)
         
-    # elif args.mode == 'predict':
-    #     if not args.text:
-    #         print("Please provide text to analyze with --text")
-    #         return
+    elif args.mode == 'predict':
+
+        if not args.text_file:
+            print("Please provide a path to a text file with --text_file")
+            return
+
+        if not os.path.exists(args.text_file):
+            print(f"File not found: {args.text_file}")
+            return
+
+        with open(args.text_file, 'r', encoding='utf-8') as f:
+            text = f.read()
+
+        detector = KnowFlowBERTDetector()
+        detector.load_model(args.model_path)
+
+        predicted_links = detector.predict_links(text, threshold=args.threshold)
+
+        # print("Predicted links:")
+        # for link in predicted_links:
+        #     print(f"  • '{link['phrase']}' (confidence: {link['confidence']:.3f})")
+
         
-    #     detector = KnowFlowBERTDetector()
-    #     detector.load_model(args.model_path)
-        
-    #     predicted_links = detector.predict_links(args.text, threshold=args.threshold)
-        
-    #     print("Predicted links:")
-    #     for link in predicted_links:
-    #         print(f"  • '{link['phrase']}' (confidence: {link['confidence']:.3f})")
-    
-    # elif args.mode == 'evaluate':
-    #     detector = KnowFlowBERTDetector()
-    #     detector.load_model(args.model_path)
-    #     detector.evaluate_with_gold_standard(confidence_threshold=args.threshold)
+    elif args.mode == 'evaluate':
+
+        detector = KnowFlowBERTDetector()
+        detector.load_model(args.model_path)
+        detector.evaluate_with_gold_standard(confidence_threshold=args.threshold)
+
+
 
 if __name__ == "__main__":
+    print("hi")
     main()
