@@ -1,3 +1,34 @@
+# import os
+# import json
+# import pandas as pd
+# import numpy as np
+# from sklearn.model_selection import train_test_split, GridSearchCV
+# from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor
+# from sklearn.metrics import classification_report, confusion_matrix, cohen_kappa_score, accuracy_score
+# import joblib
+# from typing import List, Dict, Tuple
+# import re
+# import nltk
+# from nltk.corpus import stopwords
+# from nltk.tokenize import word_tokenize
+# import spacy
+
+# # Download nltk resources if needed
+# try:
+#     nltk.data.find('tokenizers/punkt')
+#     nltk.data.find('corpora/stopwords')
+# except LookupError:
+#     nltk.download('punkt')
+#     nltk.download('stopwords')
+
+# # Load spacy model for NLP tasks
+# try:
+#     nlp = spacy.load("en_core_web_sm")
+# except OSError:
+#     print("Downloading spaCy model...")
+#     os.system("python -m spacy download en_core_web_sm")
+#     nlp = spacy.load("en_core_web_sm")
+
 import os
 import json
 import pandas as pd
@@ -12,6 +43,9 @@ import nltk
 from nltk.corpus import stopwords
 from nltk.tokenize import word_tokenize
 import spacy
+
+# Import the get_raw_text function from Bert1
+from Bert1 import get_raw_text
 
 # Download nltk resources if needed
 try:
@@ -266,30 +300,106 @@ class FeatureExtractor:
     
 #     return training_df
 
+# def load_training_data(ranked_csv_path: str, 
+#                        raw_data_dir: str,
+#                        stage_b_output_dir: str = None) -> pd.DataFrame:
+#     """
+#     Loads human-ranked expressions from a single CSV file, raw text documents,
+#     and optional similarity scores to create training data.
+
+#     Args:
+#         ranked_csv_path: Path to the combined CSV file of human-ranked expressions.
+#         raw_data_dir: Directory containing raw text files (one per article).
+#         stage_b_output_dir: Optional directory containing Stage B similarity scores.
+
+#     Returns:
+#         A pandas DataFrame with extracted features and labels.
+#     """
+#     all_training_samples = []
+#     feature_extractor = FeatureExtractor()
+
+#     if not os.path.exists(ranked_csv_path):
+#         print(f"Error: Ranked CSV not found at {ranked_csv_path}")
+#         return pd.DataFrame()
+
+#     if not os.path.exists(raw_data_dir):
+#         print(f"Error: Raw text folder not found: {raw_data_dir}")
+#         return pd.DataFrame()
+
+#     try:
+#         ranked_df = pd.read_csv(ranked_csv_path)
+#     except Exception as e:
+#         print(f"Failed to load ranked CSV: {e}")
+#         return pd.DataFrame()
+
+#     # Validate expected columns
+#     if not {'source_article', 'concept', 'score'}.issubset(ranked_df.columns):
+#         print("Error: CSV must contain 'source_article', 'concept', and 'score' columns.")
+#         return pd.DataFrame()
+
+#     for page_title in ranked_df['source_article'].unique():
+#         raw_file_name = f"{page_title.replace(' ', '_')}.txt"
+#         raw_file_path = os.path.join(raw_data_dir, raw_file_name)
+
+#         if not os.path.exists(raw_file_path):
+#             print(f"Warning: Raw text for {page_title} not found at {raw_file_path}. Skipping.")
+#             continue
+
+#         try:
+#             with open(raw_file_path, 'r', encoding='utf-8') as f:
+#                 document_text = f.read()
+#         except Exception as e:
+#             print(f"Error reading raw text for {page_title}: {e}")
+#             continue
+
+#         # Load similarity scores if available
+#         similarity_scores = None
+#         if stage_b_output_dir:
+#             stage_b_file_path = os.path.join(stage_b_output_dir, f"{page_title}_filtered.json")
+#             if os.path.exists(stage_b_file_path):
+#                 try:
+#                     with open(stage_b_file_path, 'r', encoding='utf-8') as f:
+#                         similarity_scores = json.load(f)
+#                 except Exception as e:
+#                     print(f"Error loading Stage B scores for {page_title}: {e}")
+
+#         article_rows = ranked_df[ranked_df['source_article'] == page_title]
+#         for _, row in article_rows.iterrows():
+#             expression = row['concept']
+#             human_rank = int(row['score'])
+
+#             similarity_score = None
+#             if similarity_scores and expression in similarity_scores:
+#                 similarity_score = similarity_scores[expression]
+
+#             features = feature_extractor.extract_features(
+#                 document_text=document_text,
+#                 expression=expression,
+#                 similarity_score=similarity_score
+#             )
+
+#             features['expression'] = expression
+#             features['page_title'] = page_title
+#             features['human_rank'] = human_rank
+
+#             all_training_samples.append(features)
+
+#     if not all_training_samples:
+#         print("No training samples loaded.")
+#         return pd.DataFrame()
+
+#     loaded_df = pd.DataFrame(all_training_samples)
+#     loaded_df = loaded_df.fillna(-1)
+#     return loaded_df
+
 def load_training_data(ranked_csv_path: str, 
                        raw_data_dir: str,
                        stage_b_output_dir: str = None) -> pd.DataFrame:
-    """
-    Loads human-ranked expressions from a single CSV file, raw text documents,
-    and optional similarity scores to create training data.
-
-    Args:
-        ranked_csv_path: Path to the combined CSV file of human-ranked expressions.
-        raw_data_dir: Directory containing raw text files (one per article).
-        stage_b_output_dir: Optional directory containing Stage B similarity scores.
-
-    Returns:
-        A pandas DataFrame with extracted features and labels.
-    """
     all_training_samples = []
     feature_extractor = FeatureExtractor()
 
     if not os.path.exists(ranked_csv_path):
         print(f"Error: Ranked CSV not found at {ranked_csv_path}")
-        return pd.DataFrame()
-
-    if not os.path.exists(raw_data_dir):
-        print(f"Error: Raw text folder not found: {raw_data_dir}")
         return pd.DataFrame()
 
     try:
@@ -298,27 +408,17 @@ def load_training_data(ranked_csv_path: str,
         print(f"Failed to load ranked CSV: {e}")
         return pd.DataFrame()
 
-    # Validate expected columns
     if not {'source_article', 'concept', 'score'}.issubset(ranked_df.columns):
         print("Error: CSV must contain 'source_article', 'concept', and 'score' columns.")
         return pd.DataFrame()
 
     for page_title in ranked_df['source_article'].unique():
-        raw_file_name = f"{page_title.replace(' ', '_')}.txt"
-        raw_file_path = os.path.join(raw_data_dir, raw_file_name)
-
-        if not os.path.exists(raw_file_path):
-            print(f"Warning: Raw text for {page_title} not found at {raw_file_path}. Skipping.")
-            continue
-
         try:
-            with open(raw_file_path, 'r', encoding='utf-8') as f:
-                document_text = f.read()
+            document_text = get_raw_text(page_title)
         except Exception as e:
-            print(f"Error reading raw text for {page_title}: {e}")
+            print(f"Error fetching raw text for {page_title}: {e}")
             continue
 
-        # Load similarity scores if available
         similarity_scores = None
         if stage_b_output_dir:
             stage_b_file_path = os.path.join(stage_b_output_dir, f"{page_title}_filtered.json")
