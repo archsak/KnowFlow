@@ -8,6 +8,7 @@
 # from typing import List, Dict
 
 import os
+import sys
 import numpy as np
 import pandas as pd
 import torch
@@ -15,7 +16,7 @@ from transformers import AutoTokenizer, AutoModel
 from sklearn.metrics.pairwise import cosine_similarity
 import json
 from typing import List, Dict
-from Bert1 import get_raw_text
+from stage_a.Bert1 import get_raw_text
 
 class ContentDomainFilter:
     """
@@ -24,7 +25,7 @@ class ContentDomainFilter:
     that are sufficiently related to the text subject through cosine similarity of embeddings.
     """
     
-    def __init__(self, model_name: str = "bert-base-multilingual-cased", similarity_threshold: float = 0.5):
+    def __init__(self, model_name: str = "bert-base-uncased", similarity_threshold: float = 0.5, bert_model=None, tokenizer=None):
         """
         Initialize the filter with a language model supporting the target language.
         
@@ -37,8 +38,12 @@ class ContentDomainFilter:
         self.similarity_threshold = similarity_threshold
         
         # Load model and tokenizer
-        self.tokenizer = AutoTokenizer.from_pretrained(model_name)
-        self.model = AutoModel.from_pretrained(model_name)
+        if bert_model is not None and tokenizer is not None:
+            self.model = bert_model
+            self.tokenizer = tokenizer
+        else:
+            self.tokenizer = AutoTokenizer.from_pretrained(model_name)
+            self.model = AutoModel.from_pretrained(model_name)
         
         # Move model to GPU if available
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -270,7 +275,7 @@ def main():
     raw_data_dir = "data/raw"
     stage_a_output_dir = "data/processed/stage_a"
     stage_b_output_dir = "data/processed/stage_b"
-    model_name = "bert-base-multilingual-cased"
+    model_name = "bert-base-uncased"
     similarity_threshold = 0.5
 
     filter_model = ContentDomainFilter(model_name=model_name,

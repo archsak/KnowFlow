@@ -151,9 +151,6 @@ class FeatureExtractor:
         features['is_named_entity'] = 1 if is_entity else 0
         
         # If similarity score is provided from Stage B
-        if similarity_score is not None:
-            features['similarity_score'] = similarity_score
-        
         return features
 
 class PrerequisiteRanker:
@@ -220,11 +217,9 @@ class PrerequisiteRanker:
         
         # Extract features for each expression
         for expr in expressions_list:
-            similarity = filtered_expressions[expr]
             features = self.feature_extractor.extract_features(
                 document_text=document_text,
-                expression=expr,
-                similarity_score=similarity
+                expression=expr
             )
             all_features.append(features)
             

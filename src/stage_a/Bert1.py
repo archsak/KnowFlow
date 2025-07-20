@@ -62,15 +62,71 @@ class PreTokenizedDataset(Dataset):
 
 
 class LinkClassifier(nn.Module):
-    def __init__(self):
+    def __init__(self, bert_model=None):
         super().__init__()
-        self.bert = AutoModel.from_pretrained('bert-base-uncased')
+        if bert_model is not None:
+            self.bert = bert_model
+        else:
+            self.bert = AutoModel.from_pretrained('bert-base-uncased')
         self.classifier = nn.Linear(self.bert.config.hidden_size, 2)
 
     def forward(self, input_ids, attention_mask):
         outputs = self.bert(input_ids=input_ids, attention_mask=attention_mask)
         cls_output = outputs.last_hidden_state[:, 0, :]
         return self.classifier(cls_output)
+
+
+class KnowFlowBERT1Detector:
+    def __init__(self, model_path='models/bert1_link_detector.pt', device=None, bert_model=None, tokenizer=None):
+        if device is None:
+            self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+        else:
+            self.device = device
+        
+        print("Initializing KnowFlow BERT1 Detector...")
+        
+        if tokenizer:
+            self.tokenizer = tokenizer
+        else:
+            self.tokenizer = AutoTokenizer.from_pretrained('bert-base-uncased')
+            
+        self.model = LinkClassifier(bert_model=bert_model).to(self.device)
+        
+        if os.path.exists(model_path):
+            try:
+                self.model.load_state_dict(torch.load(model_path, map_location=self.device))
+                print(f"BERT1 model loaded successfully from {model_path}.")
+            except Exception as e:
+                print(f"Error loading BERT1 model: {e}")
+        else:
+            print(f"Warning: BERT1 model file not found at {model_path}.")
+        self.model.eval()
+
+    def predict_links(self, text: str, threshold=0.25) -> List[str]:
+        print("Generating candidates for BERT1...")
+        candidates = generate_candidates(text)
+        results = []
+        
+        print(f"Predicting links for {len(candidates)} candidates...")
+        for phrase in candidates:
+            encoded = self.tokenizer(
+                phrase,
+                text,
+                padding='max_length',
+                truncation=True,
+                max_length=128,
+                return_tensors='pt'
+            )
+            input_ids = encoded['input_ids'].to(self.device)
+            attention_mask = encoded['attention_mask'].to(self.device)
+            
+            with torch.no_grad():
+                logits = self.model(input_ids, attention_mask)
+                probs = torch.softmax(logits, dim=1)[0]
+                if probs[1].item() >= threshold:
+                    results.append(phrase)
+                    
+        return sorted(list(set(results)))
 
 
 def batch_tokenize(phrases, texts, tokenizer, batch_size=1024):

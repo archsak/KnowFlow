@@ -25,8 +25,8 @@ def main():
         run_stage("Stage C: Feature-based Model Training", "python src/stage_c/train_ranker_features.py")
     if os.path.exists("src/stage_c/prerequisite_extractor_features.py"):
         run_stage("Stage C: Feature-based Prediction", "python src/stage_c/prerequisite_extractor_features.py")
-    if os.path.exists("src/stage_c/train_ranker_encoder.py"):
-        run_stage("Stage C: Encoder-based Model Training", "python src/stage_c/train_ranker_encoder.py")
+    if os.path.exists("src/stage_c/train_ranker_encoder_clean.py"):
+        run_stage("Stage C: Encoder-based Model Training", "python src/stage_c/train_ranker_encoder_clean.py")
     if os.path.exists("src/stage_c/prerequisite_extractor_encoder.py"):
         run_stage("Stage C: Encoder-based Prediction", "python src/stage_c/prerequisite_extractor_encoder.py")
     if os.path.exists("src/stage_c/train_ranker_ensemble.py"):

@@ -1,674 +1,359 @@
-# import os
-# import json
-# import pandas as pd
-# import numpy as np
-# from sklearn.model_selection import train_test_split, GridSearchCV
-# from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor
-# from sklearn.metrics import classification_report, confusion_matrix, cohen_kappa_score, accuracy_score
-# import joblib
-# from typing import List, Dict, Tuple
-# import re
-# import nltk
-# from nltk.corpus import stopwords
-# from nltk.tokenize import word_tokenize
-# import spacy
-
-# # Download nltk resources if needed
-# try:
-#     nltk.data.find('tokenizers/punkt')
-#     nltk.data.find('corpora/stopwords')
-# except LookupError:
-#     nltk.download('punkt')
-#     nltk.download('stopwords')
-
-# # Load spacy model for NLP tasks
-# try:
-#     nlp = spacy.load("en_core_web_sm")
-# except OSError:
-#     print("Downloading spaCy model...")
-#     os.system("python -m spacy download en_core_web_sm")
-#     nlp = spacy.load("en_core_web_sm")
-
 import os
-import json
-import pandas as pd
-import numpy as np
-from sklearn.model_selection import train_test_split, GridSearchCV
-from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor
-from sklearn.metrics import classification_report, confusion_matrix, cohen_kappa_score, accuracy_score
-import joblib
-from typing import List, Dict, Tuple
+import sys
 import re
+import json
+from typing import Dict
+import joblib
+import numpy as np
+import pandas as pd
+import spacy
 import nltk
 from nltk.corpus import stopwords
-from nltk.tokenize import word_tokenize
-import spacy
+from sklearn.ensemble import RandomForestRegressor
+from sklearn.metrics import mean_squared_error, accuracy_score
 
-# Import the get_raw_text function from Bert1
-from Bert1 import get_raw_text
+# Add src to path to import get_raw_text
+sys.path.append('src')
+from stage_a.Bert1 import get_raw_text
 
-# Download nltk resources if needed
-try:
-    nltk.data.find('tokenizers/punkt')
-    nltk.data.find('corpora/stopwords')
-except LookupError:
-    nltk.download('punkt')
-    nltk.download('stopwords')
+# --- NLP Resource Loading ---
+def download_nlp_resources():
+    """Download necessary NLTK and spaCy resources if not found."""
+    try:
+        nltk.data.find('corpora/stopwords')
+    except LookupError:
+        print("Downloading NLTK stopwords...")
+        nltk.download('stopwords')
+    
+    try:
+        spacy.load("en_core_web_sm")
+    except OSError:
+        print("Downloading spaCy model 'en_core_web_sm'...")
+        os.system("python -m spacy download en_core_web_sm")
 
-# Load spacy model for NLP tasks
-try:
-    nlp = spacy.load("en_core_web_sm")
-except OSError:
-    print("Downloading spaCy model...")
-    os.system("python -m spacy download en_core_web_sm")
-    nlp = spacy.load("en_core_web_sm")
+download_nlp_resources()
+nlp = spacy.load("en_core_web_sm")
 
+# --- Feature Extraction ---
 class FeatureExtractor:
-    """
-    Extracts features from documents and expressions for ranking model training
-    """
+    """Extracts rich features for prerequisite ranking."""
     
     def __init__(self):
-        """Initialize feature extractor with required NLP resources"""
         self.stop_words = set(stopwords.words('english'))
     
     def extract_features(self, 
                          document_text: str, 
                          expression: str,
                          similarity_score: float = None) -> Dict[str, float]:
-        """
-        Extract features for an expression from the document
-        
-        Args:
-            document_text: Full text of the document
-            expression: The expression to extract features for
-            similarity_score: Optional similarity score from Stage B
-            
-        Returns:
-            Dictionary of feature names and values
-        """
+        """Extracts a dictionary of features for a given expression and document."""
         features = {}
-        
-        # Clean and normalize text for accurate matching
         doc_text_lower = document_text.lower()
         expr_lower = expression.lower()
         
-        # Basic expression properties
+        # Basic features
         features['expression_length'] = len(expression)
         features['expression_word_count'] = len(expression.split())
         
-        # Document-expression relationship features
-        features['appears_in_document'] = 1 if expr_lower in doc_text_lower else 0
+        # Occurrence and position features
+        pattern = r'\b' + re.escape(expr_lower) + r'\b'
+        all_matches = [m.start() for m in re.finditer(pattern, doc_text_lower)]
         
-        # Frequency features
-        if features['appears_in_document']:
-            # Simple count (may count substrings unintentionally)
-            simple_count = doc_text_lower.count(expr_lower)
+        features['occurrence_count'] = len(all_matches)
+        
+        if features['occurrence_count'] > 0:
+            doc_word_count = len(document_text.split())
+            features['occurrence_density'] = features['occurrence_count'] / (doc_word_count + 1e-6)
             
-            # More accurate count with word boundaries
-            # This regex looks for the expression with word boundaries
-            pattern = r'\b' + re.escape(expr_lower) + r'\b'
-            accurate_count = len(re.findall(pattern, doc_text_lower))
+            first_pos = all_matches[0]
+            features['first_occurrence_position'] = first_pos / len(document_text)
             
-            features['occurrence_count'] = accurate_count
-            features['occurrence_density'] = accurate_count / (len(document_text.split()) + 0.001)
+            # Positional indicators
+            features['in_first_10_percent'] = 1 if features['first_occurrence_position'] < 0.1 else 0
+            features['in_first_25_percent'] = 1 if features['first_occurrence_position'] < 0.25 else 0
             
-            # Position features
-            first_pos = doc_text_lower.find(expr_lower)
-            if first_pos >= 0:
-                features['first_occurrence_position'] = first_pos / len(document_text)
-                
-                # Check if expression appears in first paragraph
-                first_paragraph_end = document_text.find('\n\n')
-                if first_paragraph_end == -1:  # If no double newline, use first 500 chars as approximation
-                    first_paragraph_end = min(500, len(document_text))
-                features['in_first_paragraph'] = 1 if first_pos < first_paragraph_end else 0
-                
-                # Check if expression appears in first N% of document
-                features['in_first_10_percent'] = 1 if first_pos < (len(document_text) * 0.1) else 0
-                features['in_first_25_percent'] = 1 if first_pos < (len(document_text) * 0.25) else 0
-                
-                # Find all occurrences
-                # This regex counts non-overlapping occurrences with word boundaries
-                all_matches = [m.start() for m in re.finditer(pattern, doc_text_lower)]
-                
-                if all_matches:
-                    # Average position of all occurrences
-                    avg_pos = sum(all_matches) / (len(all_matches) * len(document_text))
-                    features['avg_occurrence_position'] = avg_pos
-                    
-                    # Distribution of occurrences
-                    if len(all_matches) > 1:
-                        # Standard deviation of positions, normalized by document length
-                        std_pos = np.std([pos / len(document_text) for pos in all_matches])
-                        features['position_std'] = std_pos
-                        
-                        # Calculate if occurrences are clustered or spread throughout
-                        # Position spread = (last position - first position) / document length
-                        position_spread = (all_matches[-1] - all_matches[0]) / len(document_text)
-                        features['position_spread'] = position_spread
-                    else:
-                        features['position_std'] = 0
-                        features['position_spread'] = 0
+            if len(all_matches) > 1:
+                features['position_spread'] = (all_matches[-1] - first_pos) / len(document_text)
+                normalized_positions = [pos / len(document_text) for pos in all_matches]
+                features['position_std'] = np.std(normalized_positions)
             else:
-                features['first_occurrence_position'] = -1
-                features['in_first_paragraph'] = 0
-                features['in_first_10_percent'] = 0
-                features['in_first_25_percent'] = 0
-                features['avg_occurrence_position'] = -1
-                features['position_std'] = -1
-                features['position_spread'] = -1
+                features['position_spread'] = 0
+                features['position_std'] = 0
         else:
+            # Default values if expression is not found
+            features['occurrence_density'] = 0
             features['first_occurrence_position'] = -1
-            features['in_first_paragraph'] = 0
             features['in_first_10_percent'] = 0
             features['in_first_25_percent'] = 0
-            features['avg_occurrence_position'] = -1
-            features['position_std'] = -1
             features['position_spread'] = -1
-        
+            features['position_std'] = -1
+
         # Linguistic features using spaCy
         doc = nlp(expression)
+        pos_counts = doc.count_by(spacy.attrs.POS)
         
-        # Part of speech features
-        pos_counts = {}
-        for token in doc:
-            pos = token.pos_
-            pos_counts[pos] = pos_counts.get(pos, 0) + 1
-            
-        # Some common POS tags
-        for pos in ['NOUN', 'VERB', 'ADJ', 'PROPN']:
-            features[f'pos_{pos}_count'] = pos_counts.get(pos, 0)
-            features[f'pos_{pos}_ratio'] = pos_counts.get(pos, 0) / max(len(doc), 1)
-            
-        # Named entity recognition
-        is_entity = any(ent.text for ent in doc.ents)
-        features['is_named_entity'] = 1 if is_entity else 0
+        for pos_id, count in pos_counts.items():
+            pos_name = doc.vocab.strings[pos_id]
+            features[f'pos_{pos_name}_count'] = count
         
-        # If similarity score is provided from Stage B
-        if similarity_score is not None:
-            features['similarity_score'] = similarity_score
+        features['is_named_entity'] = 1 if doc.ents else 0
         
+        # Optional similarity score from Stage B
         return features
 
-# def load_training_data(ranked_pages_dir: str, 
-#                        raw_data_dir: str,
-#                        stage_b_output_dir: str = None) -> pd.DataFrame:
-#     """
-#     Loads human-ranked expressions, raw text, and optionally similarity scores
-#     from Stage B to create a training dataset with rich features.
-
-#     Args:
-#         ranked_pages_dir: Directory containing CSV files with human-ranked expressions
-#                           (columns: 'expression', 'rank'). File names are page titles.
-#         raw_data_dir: Directory containing raw text files for documents.
-#         stage_b_output_dir: Optional directory with Stage B similarity scores.
-
-#     Returns:
-#         A pandas DataFrame with features and human ranks for training.
-#     """
-#     all_training_samples = []
-#     feature_extractor = FeatureExtractor()
-
-#     if not os.path.exists(ranked_pages_dir):
-#         print(f"Error: Ranked pages directory not found: {ranked_pages_dir}")
-#         return pd.DataFrame()
-    
-#     if not os.path.exists(raw_data_dir):
-#         print(f"Error: Raw data directory not found: {raw_data_dir}")
-#         return pd.DataFrame()
-
-#     for ranked_file_name in os.listdir(ranked_pages_dir):
-#         if not ranked_file_name.endswith(".csv"):
-#             continue
-        
-#         page_title = ranked_file_name.replace(".csv", "")
-#         ranked_file_path = os.path.join(ranked_pages_dir, 'rated_wiki_pages.csv')
-#         #ranked_file_path = os.path.join(ranked_pages_dir, ranked_file_name)
-#         raw_file_path = os.path.join(raw_data_dir, f"{page_title}.txt")
-        
-#         # Skip if raw document text is not available
-#         if not os.path.exists(raw_file_path):
-#             print(f"Warning: Raw text file for {page_title} not found at {raw_file_path}. Skipping.")
-#             continue
-            
-#         # Load raw document text
-#         try:
-#             with open(raw_file_path, 'r', encoding='utf-8') as f:
-#                 document_text = f.read()
-#         except Exception as e:
-#             print(f"Error reading document text for {page_title}: {e}")
-#             continue
-            
-#         # Load similarity scores if available
-#         similarity_scores = None
-#         if stage_b_output_dir:
-#             stage_b_file_path = os.path.join(stage_b_output_dir, f"{page_title}_filtered.json")
-#             if os.path.exists(stage_b_file_path):
-#                 try:
-#                     with open(stage_b_file_path, 'r', encoding='utf-8') as f:
-#                         similarity_scores = json.load(f)
-#                 except Exception as e:
-#                     print(f"Error loading Stage B scores for {page_title}: {e}")
-
-#         # Load human-ranked data
-#         try:
-#             human_ranks_df = pd.read_csv(ranked_file_path)
-#             if not ({'concept', 'score'}.issubset(human_ranks_df.columns)):
-#                 print(f"Warning: CSV file {ranked_file_name} is missing required columns. Skipping.")
-#                 continue
-                
-#             # Process each expression
-#             for _, row in human_ranks_df.iterrows():
-#                 expression = row['concept']
-#                 human_rank = int(row['score'])  # Ensure rank is integer
-                
-#                 # Get similarity score if available
-#                 similarity_score = None
-#                 if similarity_scores and expression in similarity_scores:
-#                     similarity_score = similarity_scores[expression]
-                
-#                 # Extract features
-#                 features = feature_extractor.extract_features(
-#                     document_text=document_text,
-#                     expression=expression,
-#                     similarity_score=similarity_score
-#                 )
-                
-#                 # Add human rank and expression info to features
-#                 features['expression'] = expression
-#                 features['page_title'] = page_title
-#                 features['human_rank'] = human_rank
-                
-#                 all_training_samples.append(features)
-                
-#         except Exception as e:
-#             print(f"Error processing human ranks for {page_title}: {e}")
-#             continue
-            
-#     if not all_training_samples:
-#         print("No training samples could be loaded. Ensure data exists and paths are correct.")
-#         return pd.DataFrame()
-
-#     # Convert to DataFrame
-#     training_df = pd.DataFrame(all_training_samples)
-    
-#     # Handle missing values
-#     training_df = training_df.fillna(-1)
-#     training_df.to_csv("data/processed/training_data.csv", index=False)
-
-    
-#     return training_df
-
-# def load_training_data(ranked_csv_path: str, 
-#                        raw_data_dir: str,
-#                        stage_b_output_dir: str = None) -> pd.DataFrame:
-#     """
-#     Loads human-ranked expressions from a single CSV file, raw text documents,
-#     and optional similarity scores to create training data.
-
-#     Args:
-#         ranked_csv_path: Path to the combined CSV file of human-ranked expressions.
-#         raw_data_dir: Directory containing raw text files (one per article).
-#         stage_b_output_dir: Optional directory containing Stage B similarity scores.
-
-#     Returns:
-#         A pandas DataFrame with extracted features and labels.
-#     """
-#     all_training_samples = []
-#     feature_extractor = FeatureExtractor()
-
-#     if not os.path.exists(ranked_csv_path):
-#         print(f"Error: Ranked CSV not found at {ranked_csv_path}")
-#         return pd.DataFrame()
-
-#     if not os.path.exists(raw_data_dir):
-#         print(f"Error: Raw text folder not found: {raw_data_dir}")
-#         return pd.DataFrame()
-
-#     try:
-#         ranked_df = pd.read_csv(ranked_csv_path)
-#     except Exception as e:
-#         print(f"Failed to load ranked CSV: {e}")
-#         return pd.DataFrame()
-
-#     # Validate expected columns
-#     if not {'source_article', 'concept', 'score'}.issubset(ranked_df.columns):
-#         print("Error: CSV must contain 'source_article', 'concept', and 'score' columns.")
-#         return pd.DataFrame()
-
-#     for page_title in ranked_df['source_article'].unique():
-#         raw_file_name = f"{page_title.replace(' ', '_')}.txt"
-#         raw_file_path = os.path.join(raw_data_dir, raw_file_name)
-
-#         if not os.path.exists(raw_file_path):
-#             print(f"Warning: Raw text for {page_title} not found at {raw_file_path}. Skipping.")
-#             continue
-
-#         try:
-#             with open(raw_file_path, 'r', encoding='utf-8') as f:
-#                 document_text = f.read()
-#         except Exception as e:
-#             print(f"Error reading raw text for {page_title}: {e}")
-#             continue
-
-#         # Load similarity scores if available
-#         similarity_scores = None
-#         if stage_b_output_dir:
-#             stage_b_file_path = os.path.join(stage_b_output_dir, f"{page_title}_filtered.json")
-#             if os.path.exists(stage_b_file_path):
-#                 try:
-#                     with open(stage_b_file_path, 'r', encoding='utf-8') as f:
-#                         similarity_scores = json.load(f)
-#                 except Exception as e:
-#                     print(f"Error loading Stage B scores for {page_title}: {e}")
-
-#         article_rows = ranked_df[ranked_df['source_article'] == page_title]
-#         for _, row in article_rows.iterrows():
-#             expression = row['concept']
-#             human_rank = int(row['score'])
-
-#             similarity_score = None
-#             if similarity_scores and expression in similarity_scores:
-#                 similarity_score = similarity_scores[expression]
-
-#             features = feature_extractor.extract_features(
-#                 document_text=document_text,
-#                 expression=expression,
-#                 similarity_score=similarity_score
-#             )
-
-#             features['expression'] = expression
-#             features['page_title'] = page_title
-#             features['human_rank'] = human_rank
-
-#             all_training_samples.append(features)
-
-#     if not all_training_samples:
-#         print("No training samples loaded.")
-#         return pd.DataFrame()
-
-#     loaded_df = pd.DataFrame(all_training_samples)
-#     loaded_df = loaded_df.fillna(-1)
-#     return loaded_df
-
-def load_training_data(ranked_csv_path: str, 
-                       raw_data_dir: str,
+# --- Data Loading and Splitting ---
+def load_training_data(ranked_csv_path: str,
+                       raw_data_dir: str, # Note: raw_data_dir is unused, but kept for signature consistency
                        stage_b_output_dir: str = None) -> pd.DataFrame:
+    """
+    Loads human-ranked expressions from a single CSV file and fetches raw text
+    to create training data.
+    """
     all_training_samples = []
+
+    if not os.path.exists(ranked_csv_path):
+        print(f"Error: Ranked CSV not found at {ranked_csv_path}")
+        return pd.DataFrame()
+
+    ranked_df = pd.read_csv(ranked_csv_path)
+
+    if not {'source_article', 'concept', 'score'}.issubset(ranked_df.columns):
+        print("Error: CSV must contain 'source_article', 'concept', and 'score' columns.")
+        return pd.DataFrame()
+
+    # --- Efficient Text Caching ---
+    print("Caching article texts to prevent redundant fetching...")
+    unique_articles = ranked_df['source_article'].unique()
+    article_texts = {}
+    for title in unique_articles:
+        try:
+            article_texts[title] = get_raw_text(title)
+        except Exception as e:
+            print(f"Warning: Could not fetch text for '{title}'. It will be skipped. Error: {e}")
+    
+    print(f"Cached {len(article_texts)} article texts.")
+
+    for _, row in ranked_df.iterrows():
+        page_title = row['source_article']
+        
+        if page_title not in article_texts:
+            continue
+            
+        document_text = article_texts[page_title]
+
+        all_training_samples.append({
+            'expression': row['concept'],
+            'page_title': page_title,
+            'document_text': document_text,
+            'human_rank': int(row['score']),
+        })
+
+    if not all_training_samples:
+        print("No training samples could be loaded.")
+        return pd.DataFrame()
+
+    return pd.DataFrame(all_training_samples)
+
+
+def load_and_prepare_data(ranked_csv_path: str) -> pd.DataFrame:
+    """Loads and prepares the feature-rich dataset."""
+    all_samples = []
     feature_extractor = FeatureExtractor()
 
     if not os.path.exists(ranked_csv_path):
         print(f"Error: Ranked CSV not found at {ranked_csv_path}")
         return pd.DataFrame()
 
-    try:
-        ranked_df = pd.read_csv(ranked_csv_path)
-    except Exception as e:
-        print(f"Failed to load ranked CSV: {e}")
-        return pd.DataFrame()
-
-    if not {'source_article', 'concept', 'score'}.issubset(ranked_df.columns):
-        print("Error: CSV must contain 'source_article', 'concept', and 'score' columns.")
-        return pd.DataFrame()
-
-    for page_title in ranked_df['source_article'].unique():
+    ranked_df = pd.read_csv(ranked_csv_path)
+    
+    # --- Efficient Text Caching ---
+    print("Caching article texts to prevent redundant fetching...")
+    unique_articles = ranked_df['source_article'].unique()
+    article_texts = {}
+    for title in unique_articles:
         try:
-            document_text = get_raw_text(page_title)
+            article_texts[title] = get_raw_text(title)
         except Exception as e:
-            print(f"Error fetching raw text for {page_title}: {e}")
+            print(f"Warning: Could not fetch text for '{title}'. It will be skipped. Error: {e}")
+    
+    print(f"Cached {len(article_texts)} article texts.")
+
+    print("\nExtracting features for all samples...")
+    for _, row in ranked_df.iterrows():
+        page_title = row['source_article']
+        expression = row['concept']
+        
+        # Skip if text could not be fetched
+        if page_title not in article_texts:
             continue
+            
+        document_text = article_texts[page_title]
+        
+        features = feature_extractor.extract_features(document_text, expression)
+        features['expression'] = expression
+        features['page_title'] = page_title
+        features['human_rank'] = int(row['score'])
+        all_samples.append(features)
 
-        similarity_scores = None
-        if stage_b_output_dir:
-            stage_b_file_path = os.path.join(stage_b_output_dir, f"{page_title}_filtered.json")
-            if os.path.exists(stage_b_file_path):
-                try:
-                    with open(stage_b_file_path, 'r', encoding='utf-8') as f:
-                        similarity_scores = json.load(f)
-                except Exception as e:
-                    print(f"Error loading Stage B scores for {page_title}: {e}")
+    return pd.DataFrame(all_samples).fillna(0)
 
-        article_rows = ranked_df[ranked_df['source_article'] == page_title]
-        for _, row in article_rows.iterrows():
-            expression = row['concept']
-            human_rank = int(row['score'])
+def split_data_by_articles(df, train_ratio=0.7, val_ratio=0.15, random_state=42):
+    """Splits data by articles to prevent data leakage."""
+    unique_articles = df['page_title'].unique()
+    np.random.seed(random_state)
+    np.random.shuffle(unique_articles)
+    
+    n_articles = len(unique_articles)
+    train_end = int(n_articles * train_ratio)
+    val_end = int(n_articles * (train_ratio + val_ratio))
+    
+    train_articles = unique_articles[:train_end]
+    val_articles = unique_articles[train_end:val_end]
+    test_articles = unique_articles[val_end:]
+    
+    train_df = df[df['page_title'].isin(train_articles)]
+    val_df = df[df['page_title'].isin(val_articles)]
+    test_df = df[df['page_title'].isin(test_articles)]
+    
+    print("\nData split by articles:")
+    print(f"Train: {len(train_articles)} articles, {len(train_df)} samples")
+    print(f"Validation: {len(val_articles)} articles, {len(val_df)} samples")
+    print(f"Test: {len(test_articles)} articles, {len(test_df)} samples")
+    
+    return train_df, val_df, test_df
 
-            similarity_score = None
-            if similarity_scores and expression in similarity_scores:
-                similarity_score = similarity_scores[expression]
-
-            features = feature_extractor.extract_features(
-                document_text=document_text,
-                expression=expression,
-                similarity_score=similarity_score
-            )
-
-            features['expression'] = expression
-            features['page_title'] = page_title
-            features['human_rank'] = human_rank
-
-            all_training_samples.append(features)
-
-    if not all_training_samples:
-        print("No training samples loaded.")
+# --- Model Evaluation ---
+def evaluate_model(model, df, feature_extractor):
+    """Evaluates the feature-based model."""
+    if df.empty:
         return pd.DataFrame()
 
-    loaded_df = pd.DataFrame(all_training_samples)
-    loaded_df = loaded_df.fillna(-1)
-    return loaded_df
+    all_features = []
+    # Ensure 'document_text' column exists
+    if 'document_text' not in df.columns:
+        raise ValueError("Input DataFrame for evaluation must contain a 'document_text' column.")
 
-
-# def train_and_save_model(loaded_df: pd.DataFrame, model_output_path: str, perform_grid_search: bool = False):
-#     """
-#     Trains a classification model and saves it.
-
-#     Args:
-#         loaded_df: DataFrame with features and 'human_rank' as the label.
-#         model_output_path: Path to save the trained model.
-#         perform_grid_search: Whether to perform hyperparameter tuning with GridSearchCV.
-#     """
-#     if loaded_df.empty:
-#         print("Training data is empty. Cannot train model.")
-#         return
-
-#     # Separate features and target
-#     feature_columns = [col for col in loaded_df.columns 
-#                       if col not in ['expression', 'page_title', 'human_rank']]
+    for _, row in df.iterrows():
+        features = feature_extractor.extract_features(
+            document_text=row['document_text'],
+            expression=row['expression']
+        )
+        all_features.append(features)
     
-#     print(f"\nUsing {len(feature_columns)} features for training: {feature_columns}")
+    features_df = pd.DataFrame(all_features).fillna(0)
     
-#     X = loaded_df[feature_columns]
-#     y = loaded_df['human_rank']
+    # Align columns with model's expected features
+    if hasattr(model, 'feature_names_in_'):
+        model_features = model.feature_names_in_
+        for col in model_features:
+            if col not in features_df.columns:
+                features_df[col] = 0
+        features_df = features_df[model_features]
 
-#     # Split data
-#     X_train, X_test, y_train, y_test = train_test_split(
-#         X, y, test_size=0.2, random_state=42, stratify=y
-#     )
-
-#     print(f"\nTraining with {len(X_train)} samples, testing with {len(X_test)} samples.")
-#     print(f"Class distribution in training data:\n{y_train.value_counts(normalize=True)}")
-
-#     # Train model
-#     if perform_grid_search:
-#         # Grid search for hyperparameter tuning
-#         param_grid = {
-#             'n_estimators': [50, 100, 200],
-#             'max_depth': [None, 10, 20, 30],
-#             'min_samples_split': [2, 5, 10],
-#             'min_samples_leaf': [1, 2, 4]
-#         }
-        
-#         print("\nPerforming grid search for hyperparameter tuning...")
-#         grid_search = GridSearchCV(
-#             RandomForestClassifier(random_state=42, class_weight='balanced'),
-#             param_grid=param_grid,
-#             cv=5,
-#             scoring='f1_weighted',
-#             n_jobs=-1
-#         )
-        
-#         grid_search.fit(X_train, y_train)
-#         model = grid_search.best_estimator_
-#         print(f"Best parameters: {grid_search.best_params_}")
-        
-#     else:
-#         # Use default RandomForestClassifier with some reasonable settings
-#         model = RandomForestClassifier(
-#             n_estimators=100,
-#             random_state=42,
-#             class_weight='balanced'
-#         )
-#         model.fit(X_train, y_train)
-
-#     # Evaluate the model
-#     y_pred = model.predict(X_test)
+    predictions = model.predict(features_df)
     
-#     print("\nModel Evaluation on Test Set:")
-#     print(classification_report(y_test, y_pred, zero_division=0))
+    # Round and clip predictions
+    rounded_predictions = np.clip(np.round(predictions).astype(int), 0, 3)
     
-#     # Feature importance
-#     feature_importance = pd.DataFrame({
-#         'Feature': feature_columns,
-#         'Importance': model.feature_importances_
-#     }).sort_values(by='Importance', ascending=False)
+    result_df = df.copy()
+    result_df['predicted_rank'] = rounded_predictions
     
-#     print("\nTop 10 Most Important Features:")
-#     print(feature_importance.head(10))
-    
-#     # Confusion Matrix
-#     cm = confusion_matrix(y_test, y_pred)
-#     print("\nConfusion Matrix:")
-#     print(cm)
-#     # Save confusion matrix as CSV
-#     os.makedirs('results', exist_ok=True)
-#     np.savetxt('results/confusion_matrix.csv', cm, delimiter=",", fmt='%d')
-#     print("\nConfusion matrix saved to 'results/confusion_matrix.csv'")
-    
-#     # Save feature importances
-#     feature_importance.to_csv('results/feature_importance.csv', index=False)
-#     print("Feature importance saved to 'results/feature_importance.csv'")
-    
-#     # Save the trained model
-#     os.makedirs(os.path.dirname(model_output_path), exist_ok=True)
-#     joblib.dump(model, model_output_path)
-    
-#     # Save the feature columns for future use
-#     feature_columns_path = os.path.join(os.path.dirname(model_output_path), 'feature_columns.json')
-#     with open(feature_columns_path, 'w') as f:
-#         json.dump(feature_columns, f)
-        
-#     print(f"\nTrained ranker model saved to {model_output_path}")
-#     print(f"Feature columns list saved to {feature_columns_path}")
+    return result_df
 
 
-from sklearn.ensemble import RandomForestRegressor
-from sklearn.metrics import mean_squared_error, confusion_matrix
-import numpy as np
-import pandas as pd
-import json
-import os
-import joblib
-from sklearn.model_selection import train_test_split
+def detailed_prediction_analysis(predictions: np.ndarray, labels: np.ndarray, model_name: str):
+    """Provides a detailed analysis of prediction results and rounding methods."""
+    print(f"\n--- {model_name}: Detailed Test Set Analysis ---")
+    
+    # Continuous prediction stats
+    print(f"Continuous Prediction Stats: Min={predictions.min():.3f}, Max={predictions.max():.3f}, Mean={predictions.mean():.3f}")
 
-def train_and_save_model(loaded_df: pd.DataFrame, model_output_path: str, perform_grid_search: bool = False):
-    """
-    Trains a regression model (RandomForestRegressor), evaluates using MSE, and saves it.
+    # Analyze different rounding methods
+    methods = {'round': np.round, 'floor': np.floor, 'ceil': np.ceil}
+    best_accuracy = 0
+    best_method = ''
+    
+    print("\nRounding Method Comparison:")
+    for name, method in methods.items():
+        rounded_preds = np.clip(method(predictions).astype(int), 0, 3)
+        accuracy = accuracy_score(labels, rounded_preds)
+        mse = mean_squared_error(labels, rounded_preds)
+        print(f"Method: {name:5s} | Accuracy: {accuracy:.4f} | MSE: {mse:.4f}")
+        if accuracy > best_accuracy:
+            best_accuracy = accuracy
+            best_method = name
+            
+    print(f"\nBest rounding method: '{best_method}' with accuracy {best_accuracy:.4f}")
+    
+    # Final evaluation with the best method
+    final_preds = np.clip(methods[best_method](predictions).astype(int), 0, 3)
+    
+    print("\nDistribution of Final Predictions vs. Labels:")
+    pred_counts = pd.Series(final_preds).value_counts().sort_index()
+    label_counts = pd.Series(labels).value_counts().sort_index()
+    dist_df = pd.DataFrame({'predictions': pred_counts, 'labels': label_counts}).fillna(0).astype(int)
+    print(dist_df)
+    
+    return best_method
 
-    Args:
-        loaded_df: DataFrame with features and 'human_rank' as the target.
-        model_output_path: Path to save the trained model.
-        perform_grid_search: Unused for now.
-    """
-    if loaded_df.empty:
-        print("Training data is empty. Cannot train model.")
+# --- Main Training Logic ---
+def train_and_save_model(df: pd.DataFrame, model_output_path: str):
+    """Trains, evaluates, and saves the feature-based model."""
+    if df.empty:
+        print("Training data is empty. Aborting.")
         return
 
-    # Separate features and target
-    feature_columns = [col for col in loaded_df.columns 
-                      if col not in ['expression', 'page_title', 'human_rank']]
+    train_df, val_df, test_df = split_data_by_articles(df)
     
+    feature_columns = [col for col in df.columns if col not in ['expression', 'page_title', 'human_rank']]
+    print(f"\nTraining with {len(feature_columns)} features.")
     
-    X = loaded_df[feature_columns]
-    y = loaded_df['human_rank']
+    X_train = train_df[feature_columns]
+    y_train = train_df['human_rank']
+    X_val = val_df[feature_columns]
+    y_val = val_df['human_rank']
+    X_test = test_df[feature_columns]
+    y_test = test_df['human_rank']
 
-    # Split data
-    X_train, X_test, y_train, y_test = train_test_split(
-        X, y, test_size=0.2, random_state=42
-    )
-
-
-    # Train regressor
-    model = RandomForestRegressor(
-        n_estimators=100,
-        random_state=42
-    )
+    # Train model
+    model = RandomForestRegressor(n_estimators=150, random_state=42, n_jobs=-1)
+    print("Training RandomForestRegressor model...")
     model.fit(X_train, y_train)
 
-    # Predict and round to nearest integer
-    y_pred_continuous = model.predict(X_test)
-    y_pred_rounded = np.round(y_pred_continuous).astype(int)
+    # --- Evaluation ---
+    # Validation set
+    val_preds_continuous = model.predict(X_val)
+    val_preds_rounded = np.clip(np.round(val_preds_continuous).astype(int), 0, 3)
+    val_accuracy = accuracy_score(y_val, val_preds_rounded)
+    print(f"\nValidation Accuracy (standard rounding): {val_accuracy:.4f}")
 
-    # Evaluate with MSE
-    mse = mean_squared_error(y_test, y_pred_rounded)
-    print(f"\nMean Squared Error (MSE): {mse:.4f}")
-    
-    accuracy = accuracy_score(y_test, y_pred_rounded)
-    print(f"Accuracy (rounded predictions match true class): {accuracy:.4f}")
+    # Test set
+    test_preds_continuous = model.predict(X_test)
+    detailed_prediction_analysis(test_preds_continuous, y_test.values, "Feature-based RF Model")
 
-
-
-    # Save the trained model
+    # --- Save Model ---
     os.makedirs(os.path.dirname(model_output_path), exist_ok=True)
     joblib.dump(model, model_output_path)
-
-    print(f"\nTrained ranker model saved to {model_output_path}")
-
-
+    print(f"\nModel saved to {model_output_path}")
+    
+    # Save feature columns for consistency
+    feature_columns_path = os.path.join(os.path.dirname(model_output_path), 'features_columns.json')
+    with open(feature_columns_path, 'w') as f:
+        json.dump(feature_columns, f)
+    print(f"Feature columns saved to {feature_columns_path}")
 
 def main():
-    """
-    Main function to load data, train the ranker model, and save it.
-    """
+    """Main execution function."""
+    print("=== Stage C: Feature-based Prerequisite Ranker Training ===")
+    
     # Configuration
-    ranked_csv_path = "data/raw/ranked_pages/rated_wiki_pages.csv"  # Directory with human-ranked CSVs
-    raw_data_dir = "data/raw/raw_texts"  # Directory with raw text files
-    stage_b_output_dir = "data/processed/stage_b"  # Optional: Directory with Stage B similarity scores
-    model_output_path = "models/stage_c_ranker.joblib"  # Path to save the trained model
-    perform_grid_search = False  # Set to True to perform hyperparameter tuning (takes longer)
+    ranked_csv_path = "data/raw/ranked_pages/rated_wiki_pages.csv"
+    model_output_path = "models/stage_c_ranker_features.joblib"
 
-    print("Starting Stage C model training...")
-    print(f"Loading data from ranked pages directory: {ranked_csv_path}")
-    print(f"Loading raw text from directory: {raw_data_dir}")
-    print(f"Using similarity scores from Stage B (optional): {stage_b_output_dir}")
+    # Run pipeline
+    master_df = load_and_prepare_data(ranked_csv_path)
+    train_and_save_model(master_df, model_output_path)
     
-    # Create required directories
-    os.makedirs("models", exist_ok=True)
-    
-    # Load and prepare training data with features
-    training_df = load_training_data(
-        ranked_csv_path=ranked_csv_path,
-        raw_data_dir=raw_data_dir,
-        stage_b_output_dir=stage_b_output_dir  # Can be None if you don't want to use similarity scores
-    )
-
-    if training_df.empty:
-        print("Failed to load training data. Exiting.")
-        return
-
-    # print(f"\nLoaded {len(training_df)} training samples.")
-    # print(f"Rank distribution in loaded data:\n{training_df['human_rank'].value_counts().sort_index()}")
-    
-    # # Show a few examples
-    # print("\nSample data (first few rows with selected columns):")
-    # sample_columns = ['expression', 'expression_length', 'occurrence_count', 'human_rank']
-    # available_columns = [col for col in sample_columns if col in training_df.columns]
-    # print(training_df[available_columns].head())
-
-    # Train and save the model
-    train_and_save_model(training_df, model_output_path, perform_grid_search)
-    
-    print("\nStage C model training finished.")
+    print("\n--- Training complete ---")
 
 if __name__ == "__main__":
     main()

@@ -1,0 +1,12 @@
+pandas
+numpy
+scikit-learn
+torch
+transformers
+nltk
+spacy
+joblib
+tqdm
+PyMuPDF
+python-docx
+werkzeug

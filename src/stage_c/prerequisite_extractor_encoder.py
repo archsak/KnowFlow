@@ -10,7 +10,7 @@ class PrerequisiteRankerEncoder:
     """
     Ranks expressions based on their importance for understanding text
     using a pre-trained encoder-based deep learning model.
-    Assigns importance scores from 0-3.
+    Assigns importance scores from 0-3 using regression.
     """
     
     def __init__(self, model_path: str, device: str = None):
@@ -36,31 +36,42 @@ class PrerequisiteRankerEncoder:
         try:
             checkpoint = torch.load(model_path, map_location=self.device)
             self.encoder_name = checkpoint['encoder_name']
-            self.class_mapping = checkpoint['class_mapping']
+            self.use_regression = checkpoint.get('use_regression', True)
             
             # Load tokenizer
-            tokenizer_path = os.path.join(os.path.dirname(model_path), 'encoder_tokenizer')
+            tokenizer_path = os.path.join(os.path.dirname(model_path), 'tokenizer')
             if os.path.exists(tokenizer_path):
                 self.tokenizer = AutoTokenizer.from_pretrained(tokenizer_path)
             else:
                 print(f"Tokenizer not found at {tokenizer_path}, loading from HuggingFace")
                 self.tokenizer = AutoTokenizer.from_pretrained(self.encoder_name)
                 
-            # Initialize model architecture
+            # Initialize model architecture (same as training script)
             from transformers import AutoModel
             
             class PrerequisiteRankerModel(nn.Module):
-                def __init__(self, encoder_name, num_classes=4):
+                def __init__(self, encoder_name, use_regression=True):
                     super(PrerequisiteRankerModel, self).__init__()
                     self.encoder = AutoModel.from_pretrained(encoder_name)
+                    self.use_regression = use_regression
                     hidden_size = self.encoder.config.hidden_size
-                    self.classifier = nn.Sequential(
-                        nn.Dropout(0.1),
-                        nn.Linear(hidden_size, 256),
-                        nn.ReLU(),
-                        nn.Dropout(0.1),
-                        nn.Linear(256, num_classes)
-                    )
+                    
+                    if use_regression:
+                        self.regressor = nn.Sequential(
+                            nn.Dropout(0.1),
+                            nn.Linear(hidden_size, 256),
+                            nn.ReLU(),
+                            nn.Dropout(0.1),
+                            nn.Linear(256, 1)  # Single output for regression
+                        )
+                    else:
+                        self.classifier = nn.Sequential(
+                            nn.Dropout(0.1),
+                            nn.Linear(hidden_size, 256),
+                            nn.ReLU(),
+                            nn.Dropout(0.1),
+                            nn.Linear(256, 4)  # 4 classes for ranks 0-3
+                        )
                 
                 def forward(self, input_ids, attention_mask, token_type_ids=None):
                     outputs = self.encoder(
@@ -69,16 +80,21 @@ class PrerequisiteRankerEncoder:
                         token_type_ids=token_type_ids if token_type_ids is not None else None
                     )
                     cls_output = outputs.last_hidden_state[:, 0, :]
-                    logits = self.classifier(cls_output)
-                    return logits
+                    
+                    if self.use_regression:
+                        output = self.regressor(cls_output)
+                        return output.squeeze(-1)  # Remove last dimension for regression
+                    else:
+                        logits = self.classifier(cls_output)
+                        return logits
             
             # Create model and load state
-            self.model = PrerequisiteRankerModel(encoder_name=self.encoder_name)
+            self.model = PrerequisiteRankerModel(encoder_name=self.encoder_name, use_regression=self.use_regression)
             self.model.load_state_dict(checkpoint['model_state_dict'])
             self.model.to(self.device)
             self.model.eval()
             
-            print(f"Encoder model loaded from {model_path}")
+            print(f"Encoder model loaded from {model_path} (regression={self.use_regression})")
             
         except Exception as e:
             raise RuntimeError(f"Error loading model: {e}")
@@ -152,7 +168,13 @@ class PrerequisiteRankerEncoder:
                     attention_mask=attention_mask,
                     token_type_ids=token_type_ids
                 )
-                _, preds = torch.max(outputs, dim=1)
+                
+                if self.use_regression:
+                    # For regression: round to nearest integer and clamp to valid range
+                    preds = torch.round(outputs).clamp(0, 3).int()
+                else:
+                    # For classification: take argmax
+                    _, preds = torch.max(outputs, dim=1)
                 
             # Store predictions
             for j, expr in enumerate(batch_expressions):
@@ -200,77 +222,109 @@ def process_page_ranking(page_title: str,
         print(f"Warning: Raw text file not found for {page_title}: {raw_file_path}")
         return {}
         
-    with open(raw_file_path, 'r', encoding='utf-8') as f:
-        document_text = f.read()
-    
-    # Load filtered expressions from Stage B
-    stage_b_file_path = os.path.join(stage_b_output_dir, f"{page_title}_filtered.json")
-    if not os.path.exists(stage_b_file_path):
-        print(f"Warning: Stage B output file not found for {page_title}: {stage_b_file_path}")
+    try:
+        with open(raw_file_path, 'r', encoding='utf-8') as f:
+            document_text = f.read()
+    except Exception as e:
+        print(f"Error reading raw text for {page_title}: {e}")
         return {}
         
-    with open(stage_b_file_path, 'r', encoding='utf-8') as f:
-        filtered_expressions = json.load(f)
-
-    # Rank expressions using the encoder model
+    # Load Stage B filtered expressions
+    stage_b_file_path = os.path.join(stage_b_output_dir, f"{page_title}_filtered.json")
+    if not os.path.exists(stage_b_file_path):
+        print(f"Warning: Stage B file not found for {page_title}: {stage_b_file_path}")
+        return {}
+        
+    try:
+        with open(stage_b_file_path, 'r', encoding='utf-8') as f:
+            filtered_expressions = json.load(f)
+    except Exception as e:
+        print(f"Error loading Stage B data for {page_title}: {e}")
+        return {}
+        
+    if not filtered_expressions:
+        print(f"No filtered expressions found for {page_title}")
+        return {}
+        
+    print(f"Processing {page_title}: {len(filtered_expressions)} expressions")
+    
+    # Rank expressions
     ranked_expressions = ranker.rank_expressions(filtered_expressions, document_text)
-
+    
     # Save results
-    output_path = os.path.join(stage_c_output_dir, f"{page_title}_encoder_ranked_prerequisites.json")
+    output_path = os.path.join(stage_c_output_dir, f"{page_title}_ranked.json")
     save_ranked_expressions(ranked_expressions, output_path)
-
+    
     return ranked_expressions
 
 def main():
-    """Main function to process all pages using encoder model"""
+    """
+    Main function for ranking expressions using the encoder-based model
+    """
     # Configuration
-    raw_data_dir = "data/raw"
-    stage_b_output_dir = "data/processed/stage_b" 
-    stage_c_output_dir = "data/processed/stage_c/encoder"
+    model_path = "models/stage_c_ranker_encoder.pt"
+    raw_data_dir = "data/raw/raw_texts"
+    stage_b_output_dir = "data/processed/stage_b"
+    stage_c_output_dir = "data/processed/stage_c_encoder"
     
-    # Path to the trained encoder model
-    model_path = "models/encoder_ranker.pt"
+    print("=== Stage C: Encoder-based Expression Ranking ===")
+    print(f"Model path: {model_path}")
+    print(f"Raw data directory: {raw_data_dir}")
+    print(f"Stage B output directory: {stage_b_output_dir}")
+    print(f"Stage C output directory: {stage_c_output_dir}")
     
+    # Check if model exists
     if not os.path.exists(model_path):
-        print(f"Error: Encoder model not found at {model_path}.")
-        print("Please run train_ranker_encoder.py first.")
+        print(f"Error: Model not found at {model_path}")
+        print("Please train the encoder model first using train_ranker_encoder.py")
         return
         
     # Initialize ranker
     try:
-        ranker = PrerequisiteRankerEncoder(model_path=model_path)
-    except (FileNotFoundError, RuntimeError) as e:
-        print(f"Failed to initialize encoder ranker: {e}")
+        ranker = PrerequisiteRankerEncoder(model_path)
+    except Exception as e:
+        print(f"Error initializing ranker: {e}")
         return
         
-    # Ensure output directory exists
+    # Create output directory
     os.makedirs(stage_c_output_dir, exist_ok=True)
     
-    # Get all page titles from Stage B
+    # Process all pages that have Stage B results
     if not os.path.exists(stage_b_output_dir):
         print(f"Error: Stage B output directory not found: {stage_b_output_dir}")
         return
         
-    page_titles = set()
-    for filename in os.listdir(stage_b_output_dir):
-        if filename.endswith("_filtered.json"):
-            page_titles.add(filename.replace("_filtered.json", ""))
-            
-    if not page_titles:
-        print(f"No processed pages found in {stage_b_output_dir}")
+    stage_b_files = [f for f in os.listdir(stage_b_output_dir) if f.endswith('_filtered.json')]
+    
+    if not stage_b_files:
+        print("No Stage B files found to process")
         return
         
-    # Process pages
-    for page_title in sorted(list(page_titles)):
-        print(f"Ranking prerequisites for page: {page_title}")
-        ranked_prerequisites = process_page_ranking(
-            page_title=page_title,
-            raw_data_dir=raw_data_dir,
-            stage_b_output_dir=stage_b_output_dir,
-            stage_c_output_dir=stage_c_output_dir,
-            ranker=ranker
-        )
-        print(f"Ranked {len(ranked_prerequisites)} expressions for page {page_title}")
+    print(f"Found {len(stage_b_files)} pages to process")
+    
+    # Process each page
+    all_results = {}
+    for stage_b_file in tqdm.tqdm(stage_b_files, desc="Processing pages"):
+        page_title = stage_b_file.replace('_filtered.json', '')
         
+        try:
+            ranked_expressions = process_page_ranking(
+                page_title=page_title,
+                raw_data_dir=raw_data_dir,
+                stage_b_output_dir=stage_b_output_dir,
+                stage_c_output_dir=stage_c_output_dir,
+                ranker=ranker
+            )
+            
+            if ranked_expressions:
+                all_results[page_title] = ranked_expressions
+                
+        except Exception as e:
+            print(f"Error processing {page_title}: {e}")
+            continue
+            
+    print(f"\nProcessing complete. Successfully processed {len(all_results)} pages.")
+    print(f"Results saved to {stage_c_output_dir}")
+
 if __name__ == "__main__":
     main()
