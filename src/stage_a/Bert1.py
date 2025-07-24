@@ -125,7 +125,8 @@ class KnowFlowBERT1Detector:
                 probs = torch.softmax(logits, dim=1)[0]
                 if probs[1].item() >= threshold:
                     results.append(phrase)
-                    
+             
+        print(list(set(results)))       
         return sorted(list(set(results)))
 
 

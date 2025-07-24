@@ -130,7 +130,7 @@ def main():
     
     # Model paths
     ensemble_dir = "models/ensemble_ranker"
-    feature_model_path = "models/stage_c_ranker.joblib"
+    feature_model_path = "models/stage_c_ranker_encoder_penalty.pt"
     encoder_model_path = "models/encoder_ranker.pt"
     
     # Check if models exist

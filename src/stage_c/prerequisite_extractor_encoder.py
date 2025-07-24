@@ -33,11 +33,13 @@ class PrerequisiteRankerEncoder:
         print(f"Using device: {self.device}")
         
         # Load model
+       
+       
         try:
-            checkpoint = torch.load(model_path, map_location=self.device)
-            self.encoder_name = checkpoint['encoder_name']
-            self.use_regression = checkpoint.get('use_regression', True)
-            
+            # Set these explicitly since the checkpoint doesn't contain metadata
+            self.encoder_name = 'bert-base-uncased'  # update if different
+            self.use_regression = True
+
             # Load tokenizer
             tokenizer_path = os.path.join(os.path.dirname(model_path), 'tokenizer')
             if os.path.exists(tokenizer_path):
@@ -45,24 +47,35 @@ class PrerequisiteRankerEncoder:
             else:
                 print(f"Tokenizer not found at {tokenizer_path}, loading from HuggingFace")
                 self.tokenizer = AutoTokenizer.from_pretrained(self.encoder_name)
-                
+
             # Initialize model architecture (same as training script)
             from transformers import AutoModel
-            
+
             class PrerequisiteRankerModel(nn.Module):
                 def __init__(self, encoder_name, use_regression=True):
                     super(PrerequisiteRankerModel, self).__init__()
                     self.encoder = AutoModel.from_pretrained(encoder_name)
                     self.use_regression = use_regression
                     hidden_size = self.encoder.config.hidden_size
-                    
+
                     if use_regression:
+                        # self.regressor = nn.Sequential(
+                        #     nn.Linear(hidden_size, 256),
+                        #     nn.ReLU(),
+                        #     nn.Dropout(0.1),
+                        #     nn.Linear(256, 1)
+                        # )
+                        # self.regressor = nn.Sequential(
+                        #     nn.Linear(hidden_size, 384),  # must be 384
+                        #     nn.ReLU(),
+                        #     nn.Dropout(0.1),
+                        #     nn.Linear(384, 1)
+                        # )
                         self.regressor = nn.Sequential(
-                            nn.Dropout(0.1),
-                            nn.Linear(hidden_size, 256),
+                            nn.Linear(hidden_size, hidden_size // 2),
                             nn.ReLU(),
                             nn.Dropout(0.1),
-                            nn.Linear(256, 1)  # Single output for regression
+                            nn.Linear(hidden_size // 2, 1)
                         )
                     else:
                         self.classifier = nn.Sequential(
@@ -70,9 +83,9 @@ class PrerequisiteRankerEncoder:
                             nn.Linear(hidden_size, 256),
                             nn.ReLU(),
                             nn.Dropout(0.1),
-                            nn.Linear(256, 4)  # 4 classes for ranks 0-3
+                            nn.Linear(256, 4)
                         )
-                
+
                 def forward(self, input_ids, attention_mask, token_type_ids=None):
                     outputs = self.encoder(
                         input_ids=input_ids,
@@ -80,25 +93,27 @@ class PrerequisiteRankerEncoder:
                         token_type_ids=token_type_ids if token_type_ids is not None else None
                     )
                     cls_output = outputs.last_hidden_state[:, 0, :]
-                    
+
                     if self.use_regression:
                         output = self.regressor(cls_output)
-                        return output.squeeze(-1)  # Remove last dimension for regression
+                        return output.squeeze(-1)
                     else:
                         logits = self.classifier(cls_output)
                         return logits
-            
-            # Create model and load state
+
+            # Create model and load weights
             self.model = PrerequisiteRankerModel(encoder_name=self.encoder_name, use_regression=self.use_regression)
-            self.model.load_state_dict(checkpoint['model_state_dict'])
+            state_dict = torch.load(model_path, map_location=self.device)
+            self.model.load_state_dict(state_dict)
             self.model.to(self.device)
             self.model.eval()
-            
+
             print(f"Encoder model loaded from {model_path} (regression={self.use_regression})")
-            
+
         except Exception as e:
             raise RuntimeError(f"Error loading model: {e}")
-    
+
+       
     def rank_expressions(self, 
                          filtered_expressions: Dict[str, float], 
                          document_text: str,
@@ -262,7 +277,7 @@ def main():
     Main function for ranking expressions using the encoder-based model
     """
     # Configuration
-    model_path = "models/stage_c_ranker_encoder.pt"
+    model_path = "models/stage_c_ranker_encoder_penalty.pt"
     raw_data_dir = "data/raw/raw_texts"
     stage_b_output_dir = "data/processed/stage_b"
     stage_c_output_dir = "data/processed/stage_c_encoder"

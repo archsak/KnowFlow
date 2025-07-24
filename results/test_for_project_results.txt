@@ -1,0 +1,6 @@
+that batch normalization adjusts	Rank: 3
+internal covariate shift	Rank: 3
+parameter initialization	Rank: 3
+a normalization technique	Rank: 3
+batch normalization	Rank: 3
+the learning rate	Rank: 2

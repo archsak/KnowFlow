@@ -15,7 +15,7 @@ article_titles = [
     "U-Net",
     "Capsule neural network",
     "Neural differential equation", 
-    "DeepDream", 
+    "DeepDream", #10
     "Batch normalization", 
     "Swish function", 
     "Microhistory",
@@ -24,21 +24,52 @@ article_titles = [
     "Cook–Levin theorem",   
     "Beowulf: The Monsters and the Critics",
     "Pathetic fallacy",
+    "Neural tangent kernel",
+    "Prospect theory", #20
+    "Cumulative prospect theory",
+    "Autoassociative memory", 
+    "Statistical significance",
+    "Asch conformity experiments",
+    "Certainty effect",
+    "More Product, Less Process",
+    "Bonferroni correction",
+    "One-tailed test",   
+    "Lake Wobegon",
+    "Collective memory", #30
+    "Raft (computer science)",
+    "Micropayment",
+    "Peer review",
+    "Open access",
+    "Green–Tao theorem",
+    "Approximate entropy",
+    "Algorithmic composition",
+    "Stanford prison experiment",
+    "P-value",
+    "Milgram experiment", #40
+    "Tuskegee Syphilis Study",
+    "Type I and type II errors",
+    "Bootstrap aggregating",
+    "False discovery rate",
+    "Sanger sequencing",
+    "ResNet",
+    "Elliptic curve primality proving",
     
+    
+    
+    
+
+    
+    
+
     # Will tag before final submission for better results
-#     "ResNet",
 #     "Transformer (deep learning architecture)",
 #     "Generative adversarial network",
 #     "Stochastic gradient descent",
 #     "DropConnect",
-#     "Neural tangent kernel",
 #     "Graph neural network", 
-#     "Autoassociative memory", 
 #     "CRISPR",
-#     "Sanger sequencing",
 #     "Structure of DNA",
 #     "Framingham Heart Study",
-#     "Stanford prison experiment",
 #     "RNA interference",
 #     "Human papillomavirus",
 #     "LRRK2",
@@ -62,9 +93,7 @@ article_titles = [
 #     "Computability theory",
 #     "Borsuk–Ulam theorem",
 #     "Szemerédi's theorem",
-#     "Green–Tao theorem",
 #     "Lorenz attractor",
-#     "Elliptic curve primality proving",
 #     "Langlands program",
 #     "Khovanov homology",
 #     "Catalan's conjecture",
@@ -72,16 +101,13 @@ article_titles = [
 #     "Nudge theory",
 #     "The Structure of Scientific Revolutions",
 #     "Game theory",
-#     "Lake Wobegon effect",
 #     "Cultural dimensions theory",
 #     "Capital asset pricing model",
-#     "Collective memory",
 #     "Ecological modernization",
 #     "The Rite of Spring",
 #     "Twelve-tone technique",
 #     "Extended technique",
 #     "Spectral music",
-#     "Algorithmic composition",
 #     "The Interpretation of Dreams",
 #     "Electronic literature",
 #     "Stylometry",
@@ -96,32 +122,14 @@ article_titles = [
 #     "Human Genome Project",
 #     "Genome-wide association study",
 #     "Zebrafish",
-#     "Bootstrap aggregating",
-#     "False discovery rate",
-#     "Approximate entropy",
 #     "Topological data analysis",
 #     "Bitcoin",
-#     "Raft (computer science)",
-#     "Micropayment",
-#     "Peer review",
-#     "Open access",
 #     "Retraction",
 #     "Open Science"
-#     "Prospect theory",
-#     "Cumulative prospect theory",
 #     "Null hypothesis significance testing",
-#     "P-value",
-#     "Statistical significance",
-#     "Certainty effect",
-#     "Asch conformity experiments",
-#     "Milgram experiment",
 #     "Bystander effect",
-#     "Tuskegee Syphilis Study",
-#     "More Product, Less Process",
+
 #     "Silent Spring",
-#     "Bonferroni correction",
-#     "Type II error",
-#     "One-tailed test",
 ]
 
 
@@ -142,7 +150,7 @@ def extract_filtered_links(source_title):
 
     links = []
     stop_headings = {
-        "See_also", "Notes", "References", "Further_reading", "External_links",
+        "See_also", "See Also", "Further Reading", "External Links", "Notes", "References", "Further_reading", "External_links",
         "Citations", "Bibliography", "Sources"
     }
 
@@ -159,7 +167,7 @@ def extract_filtered_links(source_title):
             parent_table = tag.find_parent("table")
             if parent_table:
                 pretitle_cell = parent_table.find("td", class_="sidebar-pretitle")
-                if pretitle_cell and "Part of a series on" in pretitle_cell.text:
+                if pretitle_cell and "Part of a" in pretitle_cell.text:
                     continue  
                 
             if (
