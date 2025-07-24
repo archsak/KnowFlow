@@ -10,7 +10,7 @@ import spacy
 import nltk
 from nltk.corpus import stopwords
 from sklearn.ensemble import RandomForestRegressor
-from sklearn.metrics import mean_squared_error, accuracy_score
+from sklearn.metrics import mean_squared_error, accuracy_score, confusion_matrix
 
 # Add src to path to import get_raw_text
 sys.path.append('src')
@@ -293,6 +293,23 @@ def detailed_prediction_analysis(predictions: np.ndarray, labels: np.ndarray, mo
     dist_df = pd.DataFrame({'predictions': pred_counts, 'labels': label_counts}).fillna(0).astype(int)
     print(dist_df)
     
+    # Add confusion matrix for detailed accuracy
+    print("\nConfusion Matrix:")
+    cm = confusion_matrix(labels, final_preds, labels=[0, 1, 2, 3])
+    cm_df = pd.DataFrame(cm, index=[f'Actual {i}' for i in range(4)], columns=[f'Predicted {i}' for i in range(4)])
+    print(cm_df)
+
+    # Calculate and print accuracy for classes 2 and 3
+    print("\nAccuracy for key classes:")
+    for i in [2, 3]:
+        correct = cm[i, i]
+        total = np.sum(cm[i, :])
+        if total > 0:
+            accuracy = correct / total
+            print(f"Class {i}: Accuracy = {accuracy:.4f} ({correct}/{total} correct)")
+        else:
+            print(f"Class {i}: No samples in test set.")
+            
     return best_method
 
 # --- Main Training Logic ---
