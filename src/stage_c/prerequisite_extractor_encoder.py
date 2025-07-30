@@ -6,9 +6,6 @@ from transformers import AutoTokenizer
 import tqdm
 from typing import List, Dict, Any, Tuple
 
-# Import concept grouping functionality
-
-
 class PrerequisiteRankerEncoder:
     """
     Ranks expressions based on their importance for understanding text

@@ -11,6 +11,7 @@ from sklearn.metrics.pairwise import cosine_similarity
 import json
 import re
 from typing import List, Dict, Tuple
+sys.path.append('src/util')
 from src.util.get_raw_text import get_raw_text
 
 class ContentDomainFilter:

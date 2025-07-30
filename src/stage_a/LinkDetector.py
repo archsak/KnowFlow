@@ -15,6 +15,8 @@ from sklearn.metrics import classification_report, precision_recall_fscore_suppo
 import pandas as pd
 
 from bs4 import BeautifulSoup
+import sys
+sys.path.append('src/util')
 from src.util.get_raw_text import get_raw_text
 
 class LinkDetectionDataset(Dataset):

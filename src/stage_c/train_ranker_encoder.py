@@ -14,11 +14,8 @@ import random
 
 # Add src to path for imports
 sys.path.append('src')
-sys.path.append('src/stage_a')
+sys.path.append('src/util')
 from src.util.get_raw_text import get_raw_text
-
-# Load spaCy for concept normalization
-
 
 def set_seed(seed=42):
     """Set all random seeds for reproducibility."""
@@ -31,7 +28,7 @@ def set_seed(seed=42):
     torch.backends.cudnn.deterministic = True
     torch.backends.cudnn.benchmark = False
 
-# --- Dataset and Model ---
+# Dataset and Model
 class PrerequisiteDataset(Dataset):
     """Dataset for prerequisite ranking using a transformer encoder."""
     
