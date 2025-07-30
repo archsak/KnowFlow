@@ -14,7 +14,7 @@
 # sys.path.append(os.path.join(os.path.dirname(__file__), 'src'))
 
 # from stage_a.pdf_to_txt import pdf_to_clean_text
-# from stage_a.Bert1 import KnowFlowBERT1Detector
+from stage_a.LinkDetector import KnowFlowLinkDetector
 # from stage_b.filter import ContentDomainFilter
 # from stage_c.prerequisite_extractor_encoder import PrerequisiteRankerEncoder
 
@@ -44,10 +44,10 @@
 # bert_model = AutoModel.from_pretrained(bert_model_name).to(device)
 
 # # Stage A
-# print("Loading Stage A: BERT1 Link Detector...")
-# BERT1_MODEL_PATH = 'models/bert1_link_detector.pt'
-# bert1_detector = KnowFlowBERT1Detector(
-#     model_path=BERT1_MODEL_PATH,
+# print("Loading Stage A: Link Detector...")
+# LINK_DETECTOR_MODEL_PATH = 'models/link_detector.pt'
+# link_detector = KnowFlowLinkDetector(
+#     model_path=LINK_DETECTOR_MODEL_PATH,
 #     bert_model=bert_model,
 #     tokenizer=tokenizer,
 #     device=device
@@ -147,8 +147,8 @@
 #         if not text.strip():
 #             raise Exception('Could not extract text from file.')
 
-#         print("Running Stage A: Identifying concepts with Bert1...")
-#         concepts = bert1_detector.predict_links(text)
+#         print("Running Stage A: Identifying concepts with LinkDetector...")
+#         concepts = link_detector.predict_links(text)
 #         if not concepts:
 #             print("Stage A did not find any concepts.")
 #             return {'concepts': {}}
@@ -196,7 +196,7 @@ from transformers import AutoTokenizer, AutoModel
 sys.path.append(os.path.join(os.path.dirname(__file__), 'src'))
 
 from stage_a.pdf_to_txt import pdf_to_clean_text
-from stage_a.Bert1 import KnowFlowBERT1Detector
+from stage_a.LinkDetector import KnowFlowLinkDetector
 from stage_b.filter import ContentDomainFilter
 from stage_c.prerequisite_extractor_encoder import PrerequisiteRankerEncoder
 
@@ -227,15 +227,18 @@ bert_model_name = 'bert-base-uncased'
 tokenizer = AutoTokenizer.from_pretrained(bert_model_name)
 bert_model = AutoModel.from_pretrained(bert_model_name).to(device)
 
+
 # Stage A
-print("Loading Stage A: BERT1 Link Detector...")
-BERT1_MODEL_PATH = 'models/bert1_link_detector.pt'
-bert1_detector = KnowFlowBERT1Detector(
-    model_path=BERT1_MODEL_PATH,
+print("Loading Stage A: Link Detector...")
+LINK_DETECTOR_MODEL_PATH = 'models/link_detector.pt'
+link_detector = KnowFlowLinkDetector(
+    model_path=LINK_DETECTOR_MODEL_PATH,
     bert_model=bert_model,
     tokenizer=tokenizer,
     device=device
 )
+
+
 
 # Stage B
 print("Loading Stage B: Content Domain Filter...")
@@ -245,7 +248,7 @@ content_filter = ContentDomainFilter(
 )
 
 # Stage C
-print("Loading Stage C: Prerequisite Ranker (Features)...")
+print("Loading Stage C: Prerequisite Ranker...")
 RANKER_MODEL_PATH = 'models/stage_c_ranker_encoder_penalty.pt'
 prerequisite_ranker = PrerequisiteRankerEncoder(model_path=RANKER_MODEL_PATH)
 
@@ -302,8 +305,11 @@ class CustomHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
                     for item in response_data['concepts']:
                         rf.write(f"{item['phrase']}\tRank: {item['rank']}\n")
 
-                # Return download link only
-                response_payload = {'download_url': f'/results/{result_filename}'}
+                # Return both the concepts for display and a download link
+                response_payload = {
+                    'concepts': response_data['concepts'],
+                    'download_url': f'/results/{result_filename}'
+                }
 
                 self.send_response(200)
                 self.send_header('Content-Type', 'application/json')
@@ -340,8 +346,8 @@ class CustomHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
         if not text.strip():
             raise Exception('Could not extract text from file.')
 
-        print("Running Stage A: Identifying concepts with Bert1...")
-        concepts = bert1_detector.predict_links(text)
+        print("Running Stage A: Identifying concepts with LinkDetector...")
+        concepts = link_detector.predict_links(text)
         if not concepts:
             print("Stage A did not find any concepts.")
             return {'concepts': []}
@@ -354,13 +360,11 @@ class CustomHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
 
         print("Running Stage C: Ranking concepts...")
         ranked_concepts = prerequisite_ranker.rank_expressions(filtered_expressions, text)
-
         frontend_concepts = [
             {"phrase": phrase, "rank": rank}
             for phrase, rank in ranked_concepts.items()
         ]
         frontend_concepts.sort(key=lambda x: x['rank'], reverse=True)
-
         return {'concepts': frontend_concepts}
 
 Handler = CustomHTTPRequestHandler

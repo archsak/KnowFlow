@@ -1,0 +1,157 @@
+Abstract	Rank: 3
+Performance	Rank: 3
+Robust	Rank: 3
+balanced
+set	Rank: 3
+benchmark	Rank: 3
+language	Rank: 3
+language model	Rank: 3
+large language	Rank: 3
+large-scale rephrasing	Rank: 3
+phrasing	Rank: 3
+Biased language models	Rank: 2
+Blyachman	Rank: 2
+Ethical	Rank: 2
+Human aging	Rank: 2
+Jurisprudence	Rank: 2
+Lens	Rank: 2
+Llama model	Rank: 2
+MMLU	Rank: 2
+Marketing	Rank: 2
+Mushlion	Rank: 2
+Omer	Rank: 2
+Set	Rank: 2
+Surface	Rank: 2
+accuracy	Rank: 2
+alization	Rank: 2
+bench-
+mark	Rank: 2
+computational cost	Rank: 2
+correlation	Rank: 2
+data leakage	Rank: 2
+de-
+velopment	Rank: 2
+edge	Rank: 2
+energy	Rank: 2
+energy consumption	Rank: 2
+eval-
+uation	Rank: 2
+generalizability	Rank: 2
+generalization	Rank: 2
+hibit	Rank: 2
+hibit consistency	Rank: 2
+inverse correlation	Rank: 2
+knowl-
+edge	Rank: 2
+large
+language models	Rank: 2
+large language
+models	Rank: 2
+mod-	Rank: 2
+multi-	Rank: 2
+multi-choice ques-
+tions	Rank: 2
+negative correlation be-
+tween rephrasing	Rank: 2
+noise	Rank: 2
+order	Rank: 2
+perfor-	Rank: 2
+prehension	Rank: 2
+rationality	Rank: 2
+re-
+sponse	Rank: 2
+relevance	Rank: 2
+robustness	Rank: 2
+uation	Rank: 2
+velopment	Rank: 2
+3-8B-Instruct	Rank: 1
+Alon	Rank: 1
+College biology	Rank: 1
+Cunxiang Wang	Rank: 1
+Darshan	Rank: 1
+Fu-
+ture studies	Rank: 1
+Git - Code
+https://github.cs.huji.ac.il/alonzo/NLP-project-
+Answer multi-choice question	Rank: 1
+Hao	Rank: 1
+Hillel	Rank: 1
+Jindong Wang	Rank: 1
+Jurisprudence
+
+College biology	Rank: 1
+Kaijie Zhu	Rank: 1
+Linyi Yang	Rank: 1
+Llama	Rank: 1
+Llama-3	Rank: 1
+Llama-3-8B-Instruct	Rank: 1
+Llama-3-8B-Instruct model	Rank: 1
+Marketing
+
+Human Aging
+
+Professional Law
+
+Llama Q&A	Rank: 1
+Meta-
+Llama-3-8B-Instruct model	Rank: 1
+Meta-Llama-3-8B-Instruct
+model	Rank: 1
+Meta-Llama-3-8B-Instruct model	Rank: 1
+NLP	Rank: 1
+Nuwa Xi	Rank: 1
+Omer Mushlion
+Abstract
+The rapid advancements	Rank: 1
+Oren
+Haochun Wang	Rank: 1
+Q&A	Rank: 1
+Qin	Rank: 1
+Runyu Peng	Rank: 1
+Sendong Zhao	Rank: 1
+Tengxiao	Rank: 1
+Tengxiao Liu	Rank: 1
+Xiaonan Li	Rank: 1
+Xiaoyuan Yi	Rank: 1
+Yang	Rank: 1
+Yidong Wang	Rank: 1
+Yupeng	Rank: 1
+alon.blyachman	Rank: 1
+alterna-
+tive prompts	Rank: 1
+biology	Rank: 1
+carbon footprint	Rank: 1
+chars	Rank: 1
+closed-
+source language models	Rank: 1
+context understanding	Rank: 1
+ef-
+fects	Rank: 1
+formance	Rank: 1
+genuine com-
+prehension	Rank: 1
+im-
+pact	Rank: 1
+ini-	Rank: 1
+leaked benchmarks	Rank: 1
+main-
+tain accuracy	Rank: 1
+multiple
+language models	Rank: 1
+multiple choice ques-
+tion	Rank: 1
+nu-
+merous benchmarks	Rank: 1
+overfitting	Rank: 1
+perfor-
+mance	Rank: 1
+pri-	Rank: 1
+pri-
+mary driver	Rank: 1
+real-world applica-
+tions	Rank: 1
+sam-
+ples	Rank: 1
+sponse	Rank: 1
+tion	Rank: 1
+ture	Rank: 1

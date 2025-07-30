@@ -1,4 +1,4 @@
-<!-- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -116,6 +116,8 @@
             <h2>Extracted Concepts</h2>
             <ul id="concept-list" class="concept-list"></ul>
         </div>
+        
+        <div id="downloadLink" style="text-align: center; margin-top: 1rem;"></div>
     </div>
 
     <script>
@@ -169,10 +171,18 @@
             })
             .then(data => {
                 loader.style.display = 'none';
-                if (data.concepts && Object.keys(data.concepts).length > 0) {
-                    displayConcepts(data.concepts);
-                } else {
-                    errorMessage.textContent = 'No concepts were extracted from the document.';
+                
+                // Display concepts on the page
+                displayConcepts(data.concepts);
+
+                // Create and display the download link
+                const downloadLinkDiv = document.getElementById('downloadLink');
+                if (downloadLinkDiv && data.download_url) {
+                    downloadLinkDiv.innerHTML = `
+                        <a href="${data.download_url}" download>
+                            <button style="margin-top: 15px;">Download Results (.txt)</button>
+                        </a>
+                    `;
                 }
             })
             .catch(error => {
@@ -182,60 +192,29 @@
         }
 
         function displayConcepts(concepts) {
-            concepts.forEach(concept => {
-                const li = document.createElement('li');
-                li.className = 'concept-item';
-                
-                const phraseSpan = document.createElement('span');
-                phraseSpan.className = 'phrase';
-                phraseSpan.textContent = concept.phrase;
-                
-                const rankSpan = document.createElement('span');
-                rankSpan.className = 'confidence'; // Keep class for styling
-                rankSpan.textContent = `Rank: ${concept.rank}`;
-                
-                li.appendChild(phraseSpan);
-                li.appendChild(rankSpan);
-                conceptList.appendChild(li);
-            });
-            resultsDiv.style.display = 'block';
+            conceptList.innerHTML = ''; // Clear previous results
+            if (concepts && concepts.length > 0) {
+                concepts.forEach(concept => {
+                    const li = document.createElement('li');
+                    li.className = 'concept-item';
+                    
+                    const phraseSpan = document.createElement('span');
+                    phraseSpan.className = 'phrase';
+                    phraseSpan.textContent = concept.phrase;
+                    
+                    const rankSpan = document.createElement('span');
+                    rankSpan.className = 'confidence'; // Keep class for styling
+                    rankSpan.textContent = `Rank: ${concept.rank}`;
+                    
+                    li.appendChild(phraseSpan);
+                    li.appendChild(rankSpan);
+                    conceptList.appendChild(li);
+                });
+                resultsDiv.style.display = 'block';
+            } else {
+                errorMessage.textContent = 'No concepts were extracted from the document.';
+            }
         }
     </script>
 </body>
-</html> -->
-
-<!-- 
-<form action="http://localhost:5002/upload" method="post" enctype="multipart/form-data">
-  <input type="file" name="file" />
-  <button type="submit">Upload</button>
-</form> -->
-
-
-<div id="downloadLink"></div>
-
-<script>
-  const form = document.querySelector('form');
-  form.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const fileInput = form.querySelector('input[type=file]');
-    const formData = new FormData();
-    formData.append('file', fileInput.files[0]);
-
-    const res = await fetch('/upload', {
-      method: 'POST',
-      body: formData
-    });
-
-    const data = await res.json();
-    const downloadLinkDiv = document.getElementById('downloadLink');
-    downloadLinkDiv.innerHTML = '';
-
-    if (data.download_url) {
-      downloadLinkDiv.innerHTML = `
-        <a href="${data.download_url}" download>
-          <button style="margin-top: 15px;">Download Results (.txt)</button>
-        </a>
-      `;
-    }
-  });
-</script>
+</html>

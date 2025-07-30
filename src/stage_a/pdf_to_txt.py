@@ -1,4 +1,4 @@
-import fitz  # PyMuPDF
+import fitz as PyMuPDF  # Use a specific alias
 import re
 
 def pdf_to_clean_text(pdf_path: str, output_txt_path: str = None) -> str:
@@ -12,7 +12,7 @@ def pdf_to_clean_text(pdf_path: str, output_txt_path: str = None) -> str:
     Returns:
         Extracted plain text from the PDF.
     """
-    doc = fitz.open(pdf_path)
+    doc = PyMuPDF.open(pdf_path)  # Use the alias here
     full_text = []
 
     for page_num in range(len(doc)):
@@ -27,7 +27,7 @@ def pdf_to_clean_text(pdf_path: str, output_txt_path: str = None) -> str:
     if output_txt_path:
         with open(output_txt_path, 'w', encoding='utf-8') as f:
             f.write(final_text)
-        print(f"✅ Saved extracted text to: {output_txt_path}")
+        print(f"Saved extracted text to: {output_txt_path}")
 
     return final_text
 

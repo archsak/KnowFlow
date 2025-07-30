@@ -1,0 +1,92 @@
+Adaptability	Rank: 3
+Algorithm	Rank: 3
+Communication	Rank: 3
+Communication
+Corps
+System Manager	Rank: 3
+HTML	Rank: 3
+Java	Rank: 3
+JavaScript	Rank: 3
+Leadership	Rank: 3
+Operating systems architecture	Rank: 3
+Python
+Java
+JavaScript
+C
+C++
+SQL
+Web Development	Rank: 3
+Web	Rank: 3
+architecture	Rank: 3
+computer
+architecture	Rank: 3
+computer science	Rank: 3
+design	Rank: 3
+distributed systems	Rank: 3
+engineering	Rank: 3
+enterprise environments	Rank: 3
+full-stack development	Rank: 3
+management	Rank: 3
+software
+engineering	Rank: 3
+software development	Rank: 3
+system
+architecture	Rank: 3
+team management	Rank: 3
+C++	Rank: 2
+CSS	Rank: 2
+Data	Rank: 2
+Encryption	Rank: 2
+Fluent	Rank: 2
+HTML
+CSS
+React
+Node.js
+Data	Rank: 2
+IDF	Rank: 2
+Multithreading	Rank: 2
+Native proficiency
+English	Rank: 2
+PostgreSQL	Rank: 2
+React	Rank: 2
+SQL	Rank: 2
+Science	Rank: 2
+advanced encryption techniques	Rank: 2
+communication
+protocols	Rank: 2
+cybersecurity	Rank: 2
+disconnections	Rank: 2
+file management operations
+Technologies	Rank: 2
+file recovery	Rank: 2
+hardware maintenance	Rank: 2
+intuitive user interface	Rank: 2
+network communication	Rank: 2
+partial
+network disconnections	Rank: 2
+project-based learning	Rank: 2
+AHARON
+SAKSONOV	Rank: 1
+English	Rank: 1
+Fluent
+Russian	Rank: 1
+Hebrew	Rank: 1
+Hesder	Rank: 1
+HuggingFace	Rank: 1
+IDF Cyber Command	Rank: 1
+Jerusalem	Rank: 1
+NLP	Rank: 1
+NLP
+HuggingFace
+PostgreSQL
+Tools	Rank: 1
+Python	Rank: 1
+Russian	Rank: 1
+Yeshivat	Rank: 1
+archsak@gmail.com	Rank: 1
+computer science fundamentals	Rank: 1
+critical healthcare applications
+EDUCATION	Rank: 1
+cybersecurity fundamentals	Rank: 1
+fundamentals	Rank: 1
+multiple programming paradigms	Rank: 1
