@@ -4,7 +4,7 @@ import time
 import json
 import random
 import requests
-from typing import List, Tuple, Dict
+from typing import List, Tuple
 from urllib.parse import unquote
 
 import torch
@@ -17,8 +17,7 @@ import pandas as pd
 from bs4 import BeautifulSoup
 import sys
 sys.path.append('src/util')
-from src.util.get_raw_text import get_raw_text
-
+from util.get_raw_text import get_raw_text
 class LinkDetectionDataset(Dataset):
     """PyTorch Dataset for BERT-based link detection."""
     def __init__(self, data: List[Tuple[str, str, int]], tokenizer, max_length=128):
@@ -319,7 +318,6 @@ def create_training_data(titles: List[str]) -> List[Tuple[str, str, int]]:
 
 
 def predict(args):
-    print("started predict")
     title = args.text_file
     raw_text = get_raw_text(title)
     candidates = generate_candidates(raw_text)
