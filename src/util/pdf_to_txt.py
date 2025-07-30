@@ -38,14 +38,3 @@ def clean_page_text(text: str) -> str:
     lines = text.strip().split('\n')
     lines = [line for line in lines if not re.match(r'^(arXiv|Page|doi|Proceedings|Copyright|.*[0-9]{4})', line)]
     return '\n'.join(lines).strip()
-
-if __name__ == "__main__":
-    pdf_path = "example.pdf"
-    txt_path = "example_arxiv_paper.txt"
-
-    text = pdf_to_clean_text(pdf_path, output_txt_path=txt_path)
-
-    # later:
-    # from Bert import AdvancedLinkDetector
-    # detector = AdvancedLinkDetector()
-    # detector.predict_links(text)

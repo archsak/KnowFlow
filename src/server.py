@@ -13,7 +13,7 @@
 # # --- Add src to path ---
 # sys.path.append(os.path.join(os.path.dirname(__file__), 'src'))
 
-# from stage_a.pdf_to_txt import pdf_to_clean_text
+# from stage_a.pdf_to_txt import pdf_to_text
 from stage_a.LinkDetector import KnowFlowLinkDetector
 # from stage_b.filter import ContentDomainFilter
 # from stage_c.prerequisite_extractor_encoder import PrerequisiteRankerEncoder
@@ -135,7 +135,7 @@ from stage_a.LinkDetector import KnowFlowLinkDetector
 #     def process_file(self, filepath, filename):
 #         text = ""
 #         if filename.lower().endswith('.pdf'):
-#             text = pdf_to_clean_text(filepath)
+#             text = pdf_to_text(filepath)
 #         elif DOCX_SUPPORTED and filename.lower().endswith('.docx'):
 #             text = docx_to_text(filepath)
 #         elif filename.lower().endswith('.txt'):
@@ -195,7 +195,7 @@ from transformers import AutoTokenizer, AutoModel
 # --- Add src to path ---
 sys.path.append(os.path.join(os.path.dirname(__file__), 'src'))
 
-from stage_a.pdf_to_txt import pdf_to_clean_text
+from src.util.pdf_to_txt import pdf_to_clean_text
 from stage_a.LinkDetector import KnowFlowLinkDetector
 from stage_b.filter import ContentDomainFilter
 from stage_c.prerequisite_extractor_encoder import PrerequisiteRankerEncoder

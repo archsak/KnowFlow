@@ -401,7 +401,6 @@ def train(args):
     print(f"Starting training with batch_size={args.batch_size}, epochs={args.epochs}")
     model = LinkClassifier().cuda()
     
-    # Use lower learning rate for better stability
     optimizer = torch.optim.AdamW(model.parameters(), lr=2e-5)
     
     loss_fn = nn.CrossEntropyLoss(weight=class_weights)
