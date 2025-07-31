@@ -1,4 +1,3 @@
-
 # KnowFlow
 
 KnowFlow is a modular system for identifying prerequisite concepts in text. It is designed to help readers understand complex documents by automatically extracting and ranking key expressions and terminology that are essential for comprehension.
@@ -30,7 +29,7 @@ The system can be used both as a command-line pipeline and as a web service for 
   - `util/` — Utilities for text extraction and preprocessing.
 - `models/` — Pretrained model weights for each stage.
 - `data/` — Contains raw and processed data used for training and evaluation.
-- `uploads/`, `results/`, `static/`, `templates/` — Used by the web server for file uploads and result display.
+- `results/`, `templates/` — Used by the web server for file uploads and result display.
 
 ## Installation
 
@@ -52,26 +51,51 @@ The system can be used both as a command-line pipeline and as a web service for 
 
 ## Running the Pipeline
 
-You can run the full pipeline using the main script:
+You can run the full pipeline or individual stages from the command line.
+
+### Run the Full Pipeline (Train All Stages)
 
 ```bash
-python main.py
+python main.py train
 ```
+- **Stage A:** Link detection using a fine-tuned classifier  
+- **Stage B:** Semantic and content-aware filtering  
+- **Stage C:** Regressor training for importance ranking  
 
-This will execute all available stages in order, using the scripts and models present in the repository.
+---
 
-Alternatively, you can run each stage individually:
+### Run Inference on New Articles and Concepts
 
-- **Stage A:**
+```bash
+python main.py predict --article path/to/article.txt --expressions "concept1" "concept2"
+```
+- Ranks how essential each concept is for understanding the article.
+- Input file can be `.txt`, `.pdf`, or `.docx`.
+
+---
+
+### Evaluate the Model on a Held-Out Annotated Set
+
+```bash
+python main.py eval
+```
+- Expects `data/raw/ranked_pages/eval_rated_pages.csv` to exist.
+- Results and error analysis saved to `results/eval_errors.csv`.
+
+---
+
+### Run Each Stage Individually
+
+- **Stage A:**  
   ```bash
   python src/stage_a/LinkDetector.py --mode train   # To train
   python src/stage_a/LinkDetector.py --mode predict # To predict links
   ```
-- **Stage B:**
+- **Stage B:**  
   ```bash
   python src/stage_b/filter.py
   ```
-- **Stage C:**
+- **Stage C:**  
   ```bash
   python src/stage_c/prerequisite_extractor_encoder.py
   ```
@@ -93,6 +117,8 @@ To reproduce the results:
 1. Ensure all required data files and pretrained models are in place.
 2. Run the pipeline as described above.
 3. Results will be saved in the `results/` directory and can be compared to reference outputs.
+
+Note: Wikipedia pages are constantly updated, so results may vary over time.
 
 ## System Requirements
 
