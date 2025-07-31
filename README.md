@@ -85,6 +85,8 @@ python src/server.py
 ```
 Then open [http://localhost:5002](http://localhost:5002) in your browser.
 
+Note: if you run it with CPU it will take several minutes to get the results
+
 ## Reproducibility
 
 To reproduce the results:
