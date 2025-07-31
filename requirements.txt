@@ -11,3 +11,5 @@ PyMuPDF
 python-docx
 werkzeug
 xgboost
+werkzeug
+python-docx
