@@ -39,18 +39,18 @@ class PrerequisiteDataset(Dataset):
         if article_texts:
             self.article_texts = article_texts
         else:
-            print("Caching article texts...")
+            print("Caching article texts")
             self.article_texts = {title: get_raw_text(title) for title in df['page_title'].unique()}
             print(f"Cached {len(self.article_texts)} article texts.")
 
-        # For each row, create a sample for the start of the doc and for each paragraph containing the expression
+        # For each row, create a sample for the start of the doc only (first 1000 characters)
         for i, row in df.iterrows():
             expression = str(row['expression'])
             page_title = str(row['page_title'])
             score = row['human_rank']
             document_text = self.article_texts[page_title]
 
-            # 1. Sample for the start of the document (as before)
+            # Only use the first 1000 characters of the document as context
             doc_snippet = document_text[:1000] if len(document_text) > 1000 else document_text
             self.samples.append({
                 'expression': expression,
@@ -58,17 +58,6 @@ class PrerequisiteDataset(Dataset):
                 'context': doc_snippet,
                 'score': score
             })
-
-            # 2. Samples for each paragraph containing the expression (case-insensitive)
-            paragraphs = [p.strip() for p in document_text.split('\n') if p.strip()]
-            for para in paragraphs:
-                if expression.lower() in para.lower() and para != doc_snippet:
-                    self.samples.append({
-                        'expression': expression,
-                        'page_title': page_title,
-                        'context': para,
-                        'score': score
-                    })
 
     def __len__(self):
         return len(self.samples)
@@ -378,7 +367,7 @@ def main():
     tokenizer = AutoTokenizer.from_pretrained(MODEL_NAME)
     
     # Cache all article texts once
-    print("Caching all article texts for cross-validation...")
+    print("Caching all article texts for cross-validation")
     all_article_texts = {title: get_raw_text(title) for title in data['page_title'].unique()}
     print(f"Cached {len(all_article_texts)} article texts.")
 
