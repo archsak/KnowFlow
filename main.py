@@ -11,6 +11,7 @@ def run_stage(description, command):
         sys.exit(1)
 
 def main():
+    from src.util.article_text_loader import extract_article_text
 
     if len(sys.argv) < 2 or sys.argv[1] not in ["train", "predict", "eval"]:
         print("Usage: python main.py [train|predict|eval]")
@@ -37,10 +38,55 @@ def main():
         print("\nAll training stages completed successfully.")
 
     elif mode == "predict":
-        if os.path.exists("src/stage_c/prerequisite_extractor_encoder.py"):
-            run_stage("Stage C: Encoder-based Prediction", "python src/stage_c/prerequisite_extractor_encoder.py")
-        else:
-            print("Stage C prediction script not found, skipping.")
+        import argparse
+        parser = argparse.ArgumentParser(description="Predict prerequisite ranks for expressions in an article.")
+        parser.add_argument('--article', type=str, required=True, help='Path to the article file (.txt, .pdf, .docx)')
+        parser.add_argument('--expressions', type=str, nargs='+', required=True, help='List of expressions to rank')
+        parser.add_argument('--model', type=str, default='models/stage_c_ranker_encoder_penalty.pt', help='Path to the trained model')
+        parser.add_argument('--model_name', type=str, default='bert-base-uncased', help='Model name for tokenizer')
+        args, unknown = parser.parse_known_args(sys.argv[2:])
+
+        article_path = args.article
+        expressions = args.expressions
+        model_path = args.model
+        model_name = args.model_name
+
+        article_text = extract_article_text(article_path)
+        if not article_text:
+            print(f"Could not extract text from article: {article_path}")
+            sys.exit(1)
+
+        import torch
+        from transformers import AutoTokenizer
+        from src.stage_c.train_ranker_encoder import PrerequisiteRankerModel
+        device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+        tokenizer = AutoTokenizer.from_pretrained(model_name)
+        model = PrerequisiteRankerModel(model_name).to(device)
+        model.load_state_dict(torch.load(model_path, map_location=device))
+        model.eval()
+
+        print(f"Predicting prerequisite ranks for {len(expressions)} expressions in {article_path}")
+        results = []
+        with torch.no_grad():
+            for expr in expressions:
+                doc_snippet = article_text[:1000] if len(article_text) > 1000 else article_text
+                input_text = f"Rate prerequisite importance (0-3): Is '{expr}' essential before reading '{os.path.basename(article_path)}'? Context: {doc_snippet}"
+                encoding = tokenizer(
+                    input_text,
+                    truncation=True,
+                    padding='max_length',
+                    max_length=512,
+                    return_tensors='pt'
+                )
+                input_ids = encoding['input_ids'].to(device)
+                attention_mask = encoding['attention_mask'].to(device)
+                output = model(input_ids, attention_mask)
+                pred = output.item()
+                results.append({'expression': expr, 'predicted_rank': pred, 'rounded_rank': round(pred)})
+
+        print("\nPrediction Results:")
+        for r in results:
+            print(f"{r['expression']}: predicted_rank={r['predicted_rank']:.3f}, rounded_rank={r['rounded_rank']}" )
 
         print("\nAll prediction stages completed successfully.")
 
@@ -86,9 +132,18 @@ def main():
         model.load_state_dict(torch.load(MODEL_PATH, map_location=device))
         model.eval()
 
-        # Prepare article texts
-        print("Caching article texts for evaluation...")
-        article_texts = {title: get_raw_text(title) for title in df['page_title'].unique()}
+
+        # Prepare article texts for evaluation from data/raw/raw_texts using the same logic as the server
+        print("Loading article texts for evaluation from data/raw/raw_texts (supports .txt, .pdf, .docx)...")
+        raw_texts_dir = os.path.join('data', 'raw', 'raw_texts')
+        article_texts = {}
+        loaded_count = 0
+        for title in df['page_title'].unique():
+            text = extract_article_text(title, search_dir=raw_texts_dir)
+            article_texts[title] = text
+            if text:
+                loaded_count += 1
+        print(f"Loaded {loaded_count} article texts out of {len(article_texts)}.")
 
 
         # Build a set of (page_title, expression) for ground truth and for predictions

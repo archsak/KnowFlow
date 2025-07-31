@@ -151,17 +151,8 @@ class CustomHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
         self.wfile.write(json.dumps({'error': 'No file found in upload'}).encode('utf-8'))
 
     def process_file(self, filepath, filename):
-        text = ""
-        if filename.lower().endswith('.pdf'):
-            text = pdf_to_clean_text(filepath)
-        elif DOCX_SUPPORTED and filename.lower().endswith('.docx'):
-            text = docx_to_text(filepath)
-        elif filename.lower().endswith('.txt'):
-            with open(filepath, 'r', encoding='utf-8') as f:
-                text = f.read()
-        else:
-            raise Exception('Unsupported file type')
-
+        from src.util.article_text_loader import extract_article_text
+        text = extract_article_text(filepath)
         if not text.strip():
             raise Exception('Could not extract text from file.')
 
