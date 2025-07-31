@@ -133,13 +133,12 @@ def main():
         model.eval()
 
 
-        # Prepare article texts for evaluation from data/raw/raw_texts using the same logic as the server
-        print("Loading article texts for evaluation from data/raw/raw_texts (supports .txt, .pdf, .docx)...")
-        raw_texts_dir = os.path.join('data', 'raw', 'raw_texts')
+        # Prepare article texts for evaluation from Wikipedia using get_raw_text
+        print("Loading article texts for evaluation from Wikipedia using get_raw_text ...")
         article_texts = {}
         loaded_count = 0
         for title in df['page_title'].unique():
-            text = extract_article_text(title, search_dir=raw_texts_dir)
+            text = get_raw_text(title)
             article_texts[title] = text
             if text:
                 loaded_count += 1
