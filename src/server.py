@@ -1,4 +1,3 @@
-
 import os
 import sys
 import json
@@ -12,7 +11,7 @@ from email.policy import default
 from transformers import AutoTokenizer, AutoModel
 
 # --- Add src to path ---
-sys.path.append(os.path.join(os.path.dirname(__file__), 'src'))
+sys.path.append(os.path.dirname(__file__))
 
 from util.pdf_to_txt import pdf_to_clean_text
 from stage_a.LinkDetector import KnowFlowLinkDetector
@@ -49,7 +48,7 @@ bert_model = AutoModel.from_pretrained(bert_model_name).to(device)
 
 # Stage A
 print("Loading Stage A: Link Detector...")
-LINK_DETECTOR_MODEL_PATH = 'models/link_detector.pt'
+LINK_DETECTOR_MODEL_PATH = '../models/link_detector.pt'
 link_detector = KnowFlowLinkDetector(
     model_path=LINK_DETECTOR_MODEL_PATH,
     bert_model=bert_model,
@@ -68,7 +67,7 @@ content_filter = ContentDomainFilter(
 
 # Stage C
 print("Loading Stage C: Prerequisite Ranker...")
-RANKER_MODEL_PATH = 'models/stage_c_ranker_encoder_penalty.pt'
+RANKER_MODEL_PATH = '../models/stage_c_ranker_encoder_penalty.pt'
 prerequisite_ranker = PrerequisiteRankerEncoder(model_path=RANKER_MODEL_PATH)
 
 class CustomHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
@@ -151,7 +150,7 @@ class CustomHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
         self.wfile.write(json.dumps({'error': 'No file found in upload'}).encode('utf-8'))
 
     def process_file(self, filepath, filename):
-        from src.util.article_text_loader import extract_article_text
+        from util.article_text_loader import extract_article_text
         text = extract_article_text(filepath)
         if not text.strip():
             raise Exception('Could not extract text from file.')

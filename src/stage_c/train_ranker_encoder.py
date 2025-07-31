@@ -15,7 +15,7 @@ import random
 # Add src to path for imports
 sys.path.append('src')
 sys.path.append('src/util')
-from src.util.get_raw_text import get_raw_text
+from util.get_raw_text import get_raw_text
 
 def set_seed(seed=42):
     """Set all random seeds for reproducibility."""

@@ -5,7 +5,7 @@ def extract_article_text(title_or_path, search_dir=None):
     Extract text from an article file (txt, pdf, docx) by path or by searching in a directory by title (without extension).
     If search_dir is None, treat title_or_path as a file path. If search_dir is given, search for file with supported extensions.
     """
-    from src.util.pdf_to_txt import pdf_to_clean_text
+    from util.pdf_to_txt import pdf_to_clean_text
     try:
         import docx
         def docx_to_text(path):
