@@ -13,6 +13,9 @@ from transformers import AutoTokenizer, AutoModel
 # --- Add src to path ---
 sys.path.append(os.path.dirname(__file__))
 
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+
 from util.pdf_to_txt import pdf_to_clean_text
 from stage_a.LinkDetector import KnowFlowLinkDetector
 from stage_b.filter import ContentDomainFilter
@@ -48,7 +51,7 @@ bert_model = AutoModel.from_pretrained(bert_model_name).to(device)
 
 # Stage A
 print("Loading Stage A: Link Detector...")
-LINK_DETECTOR_MODEL_PATH = '../models/link_detector.pt'
+LINK_DETECTOR_MODEL_PATH = os.path.join(BASE_DIR, 'models', 'link_detector.pt')
 link_detector = KnowFlowLinkDetector(
     model_path=LINK_DETECTOR_MODEL_PATH,
     bert_model=bert_model,
@@ -67,7 +70,8 @@ content_filter = ContentDomainFilter(
 
 # Stage C
 print("Loading Stage C: Prerequisite Ranker...")
-RANKER_MODEL_PATH = '../models/stage_c_ranker_encoder_penalty.pt'
+RANKER_MODEL_PATH = os.path.join(BASE_DIR, 'models', 'stage_c_ranker_encoder_penalty.pt')
+
 prerequisite_ranker = PrerequisiteRankerEncoder(model_path=RANKER_MODEL_PATH)
 
 class CustomHTTPRequestHandler(http.server.SimpleHTTPRequestHandler):
