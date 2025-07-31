@@ -197,7 +197,7 @@ def load_training_data(csv_path="rated_wiki_pages.csv", oversample_2_3=True, gro
 
     return df_combined.sample(frac=1, random_state=42).reset_index(drop=True)
 
-# --- Model Evaluation ---
+# Model Evaluation
 def detailed_prediction_analysis(predictions: np.ndarray, labels: np.ndarray, model_name: str, penalty_matrix: np.ndarray = None):
     """Provides a detailed analysis of prediction results and rounding methods."""
     print(f"\n {model_name}: Detailed Test Set Analysis")
@@ -334,7 +334,7 @@ def predict_with_concept_grouping(model_path: str, expressions: list, article_ti
                 'predicted_rank': predicted_rank,
                 'rounded_rank': round(predicted_rank)
             }
-    print(f"✅ Generated rankings for {len(concept_rankings)} expressions")
+    print(f"Generated rankings for {len(concept_rankings)} expressions")
     return concept_rankings
 
 def main():
