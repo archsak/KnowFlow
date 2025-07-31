@@ -1,0 +1,33 @@
+page_title,expression,error_type,true_rank,predicted_rank,predicted_rank_raw
+DALL-E,Text-to-image model,wrong_rank,3,1,0.9816010594367981
+IBM Granite,generative AI,wrong_rank,2,3,2.9678902626037598
+IBM Granite,Developer(s),wrong_rank,2,3,2.999042510986328
+Usurper,monarchy,wrong_rank,2,3,2.999467611312866
+IBM Granite,cloud-based,wrong_rank,2,3,2.9461264610290527
+Noblesse oblige,Pierre Marc Gaston de Lévis,wrong_rank,2,1,0.9218181371688843
+IBM Granite,IBM,wrong_rank,3,1,1.0005950927734375
+DALL-E,emoji,wrong_rank,2,1,0.9973711967468262
+DALL-E,diffusion model,wrong_rank,2,1,0.9119453430175781
+IBM Granite,Generative pre-trained transformer,wrong_rank,3,2,1.9879807233810425
+Noblesse oblige,"Pierre Marc Gaston de Lévis, Duke of Lévis",wrong_rank,2,1,0.9270703792572021
+IBM Granite,parameters,wrong_rank,2,3,2.9937891960144043
+DALL-E,Developer(s),wrong_rank,2,3,2.999549388885498
+DALL-E,byte pair encoding,wrong_rank,3,2,1.8993079662322998
+DALL-E,VAE,wrong_rank,2,1,0.918074905872345
+DALL-E,generative pre-trained transformer,wrong_rank,2,1,0.9795278310775757
+DALL-E,OpenAI,wrong_rank,3,1,0.9188714027404785
+Noblesse oblige,privilege,wrong_rank,2,3,2.9976272583007812
+DALL-E,prompts,wrong_rank,2,1,0.9126991033554077
+DALL-E,medium,wrong_rank,2,1,0.9173149466514587
+IBM Granite,IBM Research,wrong_rank,2,1,0.9178171157836914
+Usurper,Herodotus,wrong_rank,2,1,0.9341671466827393
+IBM Granite,Large language model,wrong_rank,3,1,1.1643470525741577
+DALL-E,ChatGPT,wrong_rank,2,1,0.9221731424331665
+IBM Granite,coding,wrong_rank,3,1,1.2653414011001587
+Noblesse oblige,urbanization and investment,wrong_rank,2,1,0.9580384492874146
+DALL-E,Transformer,wrong_rank,2,1,0.9786102175712585
+IBM Granite,AI,wrong_rank,3,2,1.907716155052185
+IBM Granite,Multimodal,wrong_rank,3,1,0.9154824614524841
+Noblesse oblige,power,wrong_rank,3,2,1.92025887966156
+DALL-E,service,wrong_rank,3,2,1.8963127136230469
+DALL-E,paintings,wrong_rank,2,1,0.9131567478179932
