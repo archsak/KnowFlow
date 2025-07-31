@@ -21,7 +21,7 @@ class ContentDomainFilter:
     """
     
     def __init__(self, model_name: str = "bert-base-uncased", 
-                 similarity_threshold: float = 0.35, 
+                 similarity_threshold: float = 0.5, 
                  bert_model=None, tokenizer=None):
         """
         Initialize the filter with a language model and enhanced heuristics.
@@ -157,7 +157,7 @@ class ContentDomainFilter:
             if re.search(pattern, doc_lower):
                 penalty += 0.05
                 
-        return min(penalty, 0.25)  # Lower cap since we're being more conservative
+        return min(penalty, 0.25)
     
     def _calculate_title_similarity_bonus(self, phrase: str, document: str) -> float:
         """Bonus if phrase is similar to title/main topic"""
@@ -343,10 +343,9 @@ def process_page(page_title: str,
     """
     Process a single page through the filter.
     """
-    # Load the raw document text using the function from LinkDetector (KnowFlowLinkDetector)
     document_text = get_raw_text(page_title)
 
-    # Load expressions identified by Stage A — now from CSV
+    # Load expressions identified by Stage A
     csv_path = os.path.join(stage_a_output_dir, f"{page_title}.csv")
     df = pd.read_csv(csv_path)
     expressions = df['phrase'].dropna().tolist()

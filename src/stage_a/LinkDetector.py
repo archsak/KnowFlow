@@ -14,6 +14,13 @@ from transformers import AutoTokenizer, AutoModel
 from sklearn.metrics import classification_report, precision_recall_fscore_support
 import pandas as pd
 
+from nltk.util import ngrams
+from nltk.tokenize import word_tokenize
+import nltk
+
+import spacy
+from spacy.cli import download
+
 from bs4 import BeautifulSoup
 import sys
 sys.path.append('src/util')
@@ -106,11 +113,11 @@ class KnowFlowLinkDetector:
         self.model.eval()
 
     def predict_links(self, text: str, threshold=0.25) -> List[str]:
-        print("Generating candidates for Link Detector...")
+        print("Generating candidates for Link Detector")
         candidates = generate_candidates(text)
         results = []
         
-        print(f"Predicting links for {len(candidates)} candidates...")
+        print(f"Predicting links for {len(candidates)} candidates")
         for phrase in candidates:
             encoded = self.tokenizer(
                 phrase,
@@ -136,7 +143,7 @@ def batch_tokenize(phrases, texts, tokenizer, batch_size=1024):
     input_ids_list = []
     attention_masks_list = []
 
-    print(f"Tokenizing {len(phrases)} samples in batches...")
+    print(f"Tokenizing {len(phrases)} samples in batches")
 
     for i in range(0, len(phrases), batch_size):
         batch_phrases = phrases[i:i+batch_size]
@@ -199,18 +206,6 @@ def extract_filtered_links(source_title: str) -> List[Tuple[str, str, str]]:
     print(f"Found {len(links)} valid links in {source_title}")
     return links
 
-
-
-
-
-from nltk.util import ngrams
-from nltk.tokenize import word_tokenize
-import nltk
-
-import spacy
-from spacy.cli import download
-
-# Load the spaCy model, downloading if necessary
 try:
     nlp = spacy.load("en_core_web_sm")
 except OSError:
@@ -224,7 +219,6 @@ def generate_candidates(text: str) -> List[str]:
     It extracts noun chunks and individual nouns/proper nouns using spaCy.
     Groups similar candidates but returns the version that appears in the text.
     """
-    # Process the text with spaCy
     doc = nlp(text)
     
     candidates = []
@@ -305,7 +299,6 @@ def create_training_data(titles: List[str]) -> List[Tuple[str, str, int]]:
     data = []
     for title in titles:
         true_links = extract_filtered_links(title)
-        # true_phrases = {phrase for _, phrase, _ in true_links}
         true_phrases = {phrase.strip().lower() for _, phrase, _ in true_links}
         raw_text = get_raw_text(title)
         candidates = generate_candidates(raw_text)
@@ -344,9 +337,9 @@ def predict(args):
             logits = model(input_ids, attention_mask)
             probs = torch.softmax(logits, dim=1)[0]
             if probs[1].item() >= args.threshold:
-                results.append(phrase)  # ⬅️ Only save the phrase
+                results.append(phrase)
 
-    results = sorted(set(results))  # optional: remove duplicates and sort alphabetically
+    results = sorted(set(results))
 
     # Save to CSV
     safe_title = title.replace(" ", "_").replace("/", "_")
@@ -354,7 +347,7 @@ def predict(args):
     os.makedirs(output_dir, exist_ok=True)
     output_path = os.path.join(output_dir, f"{safe_title}.csv")
 
-    df = pd.DataFrame(results, columns=["phrase"])  # ⬅️ Only one column: phrase
+    df = pd.DataFrame(results, columns=["phrase"]) 
     df.to_csv(output_path, index=False)
     print(f"Saved {len(results)} predicted link phrases to {output_path}")
 
@@ -362,7 +355,7 @@ def predict(args):
 
 def train(args):
     print("Loading training titles from training_titles.json...")
-    with open("training_titles.json") as f:
+    with open("data/raw/json/training_titles.json") as f:
         articles = json.load(f)
 
     print(f"Generating training data from {len(articles)} articles...")
