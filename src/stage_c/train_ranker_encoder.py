@@ -163,7 +163,7 @@ class SoftPenaltyMatrixLoss(nn.Module):
 # Data Loading and Splitting
 from sklearn.utils import resample
 
-def load_training_data(csv_path="rated_wiki_pages.csv", oversample_2_3=True, group_concepts=True):
+def load_training_data(csv_path="data/raw/ranked_pages/rated_wiki_pages.csv", oversample_2_3=True, group_concepts=True):
     """Loads data, groups similar concepts, and oversamples minority classes 2 and 3 more aggressively."""
     df = pd.read_csv(csv_path)
     df = df.rename(columns={
