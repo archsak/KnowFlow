@@ -10,14 +10,9 @@ def get_raw_text(source_title: str) -> str:
     try:
         response = requests.get(url, headers=headers)
         response.raise_for_status()
+        soup = BeautifulSoup(response.content, "html.parser")
+        paragraphs = soup.find_all("p")
+        return " ".join(p.get_text() for p in paragraphs)
     except Exception as e:
-        print(f"Error fetching page: {e}")
+        print(f"Error fetching raw text for {source_title}: {e}")
         return ""
-    soup = BeautifulSoup(response.content, "html.parser")
-    content_div = soup.find("div", {"id": "bodyContent"})
-    if not content_div:
-        print("No content found on page.")
-        return ""
-    # Extract all text from the content div
-    text = content_div.get_text(separator=" ", strip=True)
-    return text

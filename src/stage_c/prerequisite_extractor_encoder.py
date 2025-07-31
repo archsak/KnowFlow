@@ -33,11 +33,9 @@ class PrerequisiteRankerEncoder:
         print(f"Using device: {self.device}")
         
         # Load model
-       
-       
         try:
             # Set these explicitly since the checkpoint doesn't contain metadata
-            self.encoder_name = 'bert-base-uncased'  # update if different
+            self.encoder_name = 'bert-base-uncased'
             self.use_regression = True
 
             # Load tokenizer
@@ -107,7 +105,6 @@ class PrerequisiteRankerEncoder:
         except Exception as e:
             raise RuntimeError(f"Error loading model: {e}")
 
-       
     def rank_expressions(self, 
                          filtered_expressions: Dict[str, float], 
                          document_text: str,
@@ -137,7 +134,6 @@ class PrerequisiteRankerEncoder:
             # Prepare inputs
             batch_inputs = []
             for expr in batch_expressions:
-                # Use the same prompt format and context length as in training (first 1000 chars)
                 page_title = ""
                 doc_snippet = document_text[:1000] if len(document_text) > 1000 else document_text
                 input_text = f"Rate prerequisite importance (0-3): Is '{expr}' essential before reading '{page_title}'? Context: {doc_snippet}"
@@ -172,9 +168,6 @@ class PrerequisiteRankerEncoder:
                 )
                 
                 if self.use_regression:
-                    # DEBUG: Print raw outputs before rounding
-                    print(f"Raw model outputs (before rounding): {outputs.cpu().numpy()}")
-                    # For regression: round to nearest integer and clamp to valid range (identical to training/eval)
                     preds = torch.round(outputs).clamp(0, 3).int()
                 else:
                     # For classification: take argmax
@@ -244,7 +237,7 @@ def process_page_ranking_with_grouping(page_title: str,
     Returns:
         Dictionary of ranked concept groups
     """
-    print(f"🔄 Processing page: {page_title}")
+    print(f"Processing page: {page_title}")
     
     # Load raw document text
     raw_file_path = os.path.join(raw_data_dir, f"{page_title}.txt")
@@ -417,80 +410,5 @@ def main():
     print(f"\nProcessing complete. Successfully processed {len(all_results)} pages.")
     print(f"Results saved to {stage_c_output_dir}")
 
-def main_with_grouping():
-    """
-    Main function to run prerequisite ranking with concept grouping.
-    This version groups similar concepts together before ranking.
-    """
-    print("=== Stage C: Enhanced Prerequisite Ranking with Concept Grouping ===")
-    
-    # Configuration
-    MODEL_PATH = "models/stage_c_ranker_encoder_penalty.pt"
-    RAW_DATA_DIR = "data/raw/raw_texts"
-    STAGE_B_OUTPUT_DIR = "data/processed/stage_b"
-    STAGE_C_OUTPUT_DIR = "data/processed/stage_c_grouped"
-    
-    # Initialize ranker
-    print(f"Loading ranker from {MODEL_PATH}...")
-    try:
-        ranker = PrerequisiteRankerEncoder(MODEL_PATH)
-        print("✅ Ranker loaded successfully")
-    except Exception as e:
-        print(f"❌ Error loading ranker: {e}")
-        return
-        
-    # Create output directory
-    os.makedirs(STAGE_C_OUTPUT_DIR, exist_ok=True)
-    
-    # Find Stage B files to process
-    if not os.path.exists(STAGE_B_OUTPUT_DIR):
-        print(f"Stage B output directory not found: {STAGE_B_OUTPUT_DIR}")
-        return
-        
-    stage_b_files = [f for f in os.listdir(STAGE_B_OUTPUT_DIR) if f.endswith('_filtered.json')]
-    
-    if not stage_b_files:
-        print("No Stage B files found to process")
-        return
-        
-    print(f"Found {len(stage_b_files)} pages to process with concept grouping")
-    
-    # Process each page with grouping
-    all_results = {}
-    for stage_b_file in tqdm.tqdm(stage_b_files, desc="Processing pages with grouping"):
-        page_title = stage_b_file.replace('_filtered.json', '')
-        
-        try:
-            concept_rankings = process_page_ranking_with_grouping(
-                page_title=page_title,
-                raw_data_dir=RAW_DATA_DIR,
-                stage_b_output_dir=STAGE_B_OUTPUT_DIR,
-                stage_c_output_dir=STAGE_C_OUTPUT_DIR,
-                ranker=ranker
-            )
-            
-            if concept_rankings:
-                all_results[page_title] = concept_rankings
-                
-        except Exception as e:
-            print(f"Error processing {page_title}: {e}")
-            continue
-            
-    print(f"\n✅ Processing complete with concept grouping!")
-    print(f"Successfully processed {len(all_results)} pages.")
-    print(f"Grouped results saved to {STAGE_C_OUTPUT_DIR}")
-    
-    # Show summary statistics
-    total_concepts = sum(len(rankings) for rankings in all_results.values())
-    print(f"📊 Total unique concepts identified: {total_concepts}")
-    
-    # Show high-priority prerequisites
-    high_priority_count = 0
-    for rankings in all_results.values():
-        high_priority_count += sum(1 for info in rankings.values() if info['predicted_rank'] >= 2)
-    
-    print(f"🎯 High-priority prerequisites (rank ≥ 2): {high_priority_count}")
-
 if __name__ == "__main__":
-    # Run the enhanced version with concept grouping
-    main_with_grouping()
+    main()
